@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D9AF5A88-4F7E-4E87-A754-A9E273156B34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8339FA60-2016-4880-9EC7-D8755AB7D4F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{32258BA4-E917-4D6C-BDFB-FF9B99426DBD}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.gitlab-ci.yml = .gitlab-ci.yml
+		.gitmodules = .gitmodules
+		.vsts-ci.yml = .vsts-ci.yml
+		cake.config = cake.config
+		GitVersion.yml = GitVersion.yml
+		NuGet.config = NuGet.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{87383726-F9DC-468D-82E1-EA9ECD332202}"
+	ProjectSection(SolutionItems) = preProject
+		build.ps1 = build.ps1
+		cakefile.cake = cakefile.cake
+		Common.Build.props = Common.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Core.AutoMapper", "src\Core.AutoMapper\Rocket.Surgery.Core.AutoMapper.csproj", "{B3149027-38D6-4634-A293-A5C699E09235}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.AutoMapper.Tests", "test\AutoMapper.Tests\Rocket.Surgery.AutoMapper.Tests.csproj", "{D6875FEE-8BB5-48B0-8B75-81340E8A1B26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3149027-38D6-4634-A293-A5C699E09235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3149027-38D6-4634-A293-A5C699E09235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3149027-38D6-4634-A293-A5C699E09235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3149027-38D6-4634-A293-A5C699E09235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6875FEE-8BB5-48B0-8B75-81340E8A1B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6875FEE-8BB5-48B0-8B75-81340E8A1B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6875FEE-8BB5-48B0-8B75-81340E8A1B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6875FEE-8BB5-48B0-8B75-81340E8A1B26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3149027-38D6-4634-A293-A5C699E09235} = {D9AF5A88-4F7E-4E87-A754-A9E273156B34}
+		{D6875FEE-8BB5-48B0-8B75-81340E8A1B26} = {8339FA60-2016-4880-9EC7-D8755AB7D4F1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		        SolutionGuid = {18572E0C-AF86-4C28-985B-22DB74C9D75F}
+		SolutionGuid = {4653CEB3-DDBF-4510-AF1D-F3CD051B6F05}
+	EndGlobalSection
+	GlobalSection(CodealikeProperties) = postSolution
+		        SolutionGuid = 4f84a791-eb18-445e-af68-67b9574a8de2
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,13 @@
+<Project>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Common.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <IsPackable>true</IsPackable>
+        <RootNamespace>$(MSBuildProjectName.Replace('.Abstractions', ''))</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Rocket.Surgery.Build.Metadata" Version="$(RSG_Build_Version)" PrivateAssets="All" />
+        <PackageReference Include="SourceLink.Embed.AllSourceFiles" Version="$(SourceLink_Version)" PrivateAssets="All" />
+		<PackageReference Include="SourceLink.Copy.PdbFiles" Version="$(SourceLink_Version)" PrivateAssets="All" />
+    </ItemGroup>
+</Project>
