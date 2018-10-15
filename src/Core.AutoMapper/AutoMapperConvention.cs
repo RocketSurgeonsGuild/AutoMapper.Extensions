@@ -1,10 +1,10 @@
-﻿using Rocket.Surgery.Core.AutoMapper;
+﻿using Rocket.Surgery.Extensions.AutoMapper;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Extensions.DependencyInjection;
 
 [assembly: Convention(typeof(AutoMapperConvention))]
 
-namespace Rocket.Surgery.Core.AutoMapper
+namespace Rocket.Surgery.Extensions.AutoMapper
 {
     /// <summary>
     /// Class AutoMapperConvention.

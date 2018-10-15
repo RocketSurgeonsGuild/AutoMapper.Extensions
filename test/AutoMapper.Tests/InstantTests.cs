@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using NodaTime;
-using Rocket.Surgery.Core.AutoMapper;
+using Rocket.Surgery.Extensions.AutoMapper;
 using Xunit;
 
 namespace Rocket.Surgery.AutoMapper.Tests

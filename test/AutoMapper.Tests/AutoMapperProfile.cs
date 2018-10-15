@@ -3,7 +3,7 @@ using Rocket.Surgery.Extensions.Testing;
 using Xunit;
 using Xunit.Abstractions;
 using FluentAssertions;
-using Rocket.Surgery.Core.AutoMapper;
+using Rocket.Surgery.Extensions.AutoMapper;
 
 namespace Rocket.Surgery.AutoMapper.Tests
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Rocket.Surgery.Core.AutoMapper.Builders
+namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     class AutoMapperConfigurationDelegateContainer
     {

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Rocket.Surgery.Core.AutoMapper.Builders
+namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     public partial class AutoMapperServicesBuilder : Builder<IServiceConventionContext>
     {

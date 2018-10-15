@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using System;
 
-namespace Rocket.Surgery.Core.AutoMapper.Builders
+namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     class BuildObservable : IObserver<IServiceProvider>
     {

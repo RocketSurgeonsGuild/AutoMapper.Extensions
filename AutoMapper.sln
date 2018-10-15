@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{87383726
 		Common.Build.props = Common.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Core.AutoMapper", "src\Core.AutoMapper\Rocket.Surgery.Core.AutoMapper.csproj", "{B3149027-38D6-4634-A293-A5C699E09235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.AutoMapper", "src\Core.AutoMapper\Rocket.Surgery.Extensions.AutoMapper.csproj", "{B3149027-38D6-4634-A293-A5C699E09235}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.AutoMapper.Tests", "test\AutoMapper.Tests\Rocket.Surgery.AutoMapper.Tests.csproj", "{D6875FEE-8BB5-48B0-8B75-81340E8A1B26}"
 EndProject

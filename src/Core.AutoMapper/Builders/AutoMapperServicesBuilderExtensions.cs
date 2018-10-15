@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using AutoMapper;
 
-namespace Rocket.Surgery.Core.AutoMapper.Builders
+namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     public static class AutoMapperServicesBuilderExtensions
     {

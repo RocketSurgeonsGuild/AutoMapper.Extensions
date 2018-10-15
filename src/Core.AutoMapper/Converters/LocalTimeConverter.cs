@@ -2,7 +2,7 @@
 using AutoMapper;
 using NodaTime;
 
-namespace Rocket.Surgery.Core.AutoMapper.Converters
+namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     public class LocalTimeConverter :
         ITypeConverter<LocalTime, TimeSpan>,

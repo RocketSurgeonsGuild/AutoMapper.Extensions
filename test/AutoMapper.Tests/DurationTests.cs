@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using NodaTime;
-using Rocket.Surgery.Core.AutoMapper;
+using Rocket.Surgery.Extensions.AutoMapper;
 using Xunit;
 
 namespace Rocket.Surgery.AutoMapper.Tests
@@ -11,7 +11,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
         private readonly IMapper _mapper;
 
         public DurationTests()
-        { 
+        {
             var config = new MapperConfiguration(x =>
                 {
                     x.AddProfile<NodaTimeProfile>();

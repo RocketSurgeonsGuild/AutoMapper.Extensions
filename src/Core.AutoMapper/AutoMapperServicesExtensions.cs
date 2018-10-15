@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Rocket.Surgery.Core.AutoMapper;
-using Rocket.Surgery.Core.AutoMapper.Builders;
+using Rocket.Surgery.Extensions.AutoMapper;
+using Rocket.Surgery.Extensions.AutoMapper.Builders;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Extensions.DependencyInjection;
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Reflection;
 using Mapper = AutoMapper.Mapper;
 
-namespace Rocket.Surgery.Core.AutoMapper
+namespace Rocket.Surgery.Extensions.AutoMapper
 {
     public static class AutoMapperServicesExtensions
     {

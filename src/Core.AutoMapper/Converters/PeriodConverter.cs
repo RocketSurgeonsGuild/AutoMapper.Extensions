@@ -2,7 +2,7 @@
 using NodaTime;
 using NodaTime.Text;
 
-namespace Rocket.Surgery.Core.AutoMapper.Converters
+namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     public class PeriodConverter :
         ITypeConverter<Period, string>,

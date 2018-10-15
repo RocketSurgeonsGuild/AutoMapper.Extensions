@@ -6,7 +6,7 @@ using AutoMapper.Configuration.Conventions;
 using AutoMapper.Mappers;
 using Rocket.Surgery.Unions;
 
-namespace Rocket.Surgery.Core.AutoMapper
+namespace Rocket.Surgery.Extensions.AutoMapper
 {
     public static class AutoMapperProfileExpressionExtensions
     {

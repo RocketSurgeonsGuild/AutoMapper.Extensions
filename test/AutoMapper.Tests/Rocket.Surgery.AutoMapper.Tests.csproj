@@ -4,7 +4,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection" />
-        <ProjectReference Include="..\..\src\Core.AutoMapper\Rocket.Surgery.Core.AutoMapper.csproj" />
+        <ProjectReference Include="..\..\src\Core.AutoMapper\Rocket.Surgery.Extensions.AutoMapper.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Fixtures\" />

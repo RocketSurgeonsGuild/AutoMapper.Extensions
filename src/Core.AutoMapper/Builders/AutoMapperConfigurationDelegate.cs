@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace Rocket.Surgery.Core.AutoMapper.Builders
+namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     /// <summary>
     /// Delegate AutoMapperConfigurationDelegate
