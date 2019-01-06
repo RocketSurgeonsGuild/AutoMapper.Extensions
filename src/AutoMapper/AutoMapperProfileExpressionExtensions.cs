@@ -140,7 +140,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
     {
         public static bool ForStrings(PropertyMap map)
         {
-            if (map.HasSource() && map.SourceType == typeof(string) && map.DestinationPropertyType == typeof(string))
+            if (map.HasSource && map.SourceType == typeof(string) && map.DestinationType == typeof(string))
             {
                 return true;
             }
@@ -161,9 +161,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper
 
         public static bool ForValueTypes(PropertyMap map)
         {
-            if (!map.HasSource()) return false;
+            if (!map.HasSource) return false;
             var source = map.SourceType.GetTypeInfo();
-            var destination = map.DestinationPropertyType.GetTypeInfo();
+            var destination = map.DestinationType.GetTypeInfo();
             if (source != null && !source.IsEnum && source.IsValueType && destination.IsValueType)
             {
                 return true;
@@ -173,9 +173,10 @@ namespace Rocket.Surgery.Extensions.AutoMapper
 
         public static void ValueTypeCondition(PropertyMap map, IMemberConfigurationExpression expression)
         {
+            var defaultValue = Activator.CreateInstance(map.SourceType);
             expression.Condition((source, destination, sourceValue, sourceDestination, context) =>
             {
-                if (!Activator.CreateInstance(map.SourceType).Equals(sourceValue))
+                if (!defaultValue.Equals(sourceValue))
                 {
                     return true;
                 }
@@ -185,9 +186,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper
 
         public static bool ForNullableValueTypes(PropertyMap map)
         {
-            if (!map.HasSource()) return false;
+            if (!map.HasSource) return false;
             var source = Nullable.GetUnderlyingType(map.SourceType)?.GetTypeInfo();
-            var destination = Nullable.GetUnderlyingType(map.DestinationPropertyType)?.GetTypeInfo();
+            var destination = Nullable.GetUnderlyingType(map.DestinationType)?.GetTypeInfo();
             if (source == null || destination == null)
             {
                 return false;
