@@ -1,9 +1,12 @@
 <Project>
     <ItemGroup>
         <PackageReference Update="Rocket.Surgery.Builders" Version="3.2.1" />
+        <PackageReference Update="Rocket.Surgery.Builders.Abstractions" Version="3.2.1" />
+        <PackageReference Update="Rocket.Surgery.Conventions" Version="2.2.1" />
+        <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="2.2.1" />
         <PackageReference Update="Rocket.Surgery.Extensions" Version="0.11.1" />
-        <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="1.0.3" />
-        <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="1.0.3" />
+        <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="1.1.0" />
+        <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="1.1.0" />
         <PackageReference Update="AutoMapper" Version="8.0.0" />
         <PackageReference Update="NodaTime" Version="2.4.4" />
     </ItemGroup>
