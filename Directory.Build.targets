@@ -1,5 +1,6 @@
 <Project>
     <ItemGroup>
+        <PackageReference Update="Rocket.Surgery.Builders" Version="5.0.1" />
         <PackageReference Update="Rocket.Surgery.Conventions" Version="5.0.1" />
         <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="5.0.1" />
         <PackageReference Update="Rocket.Surgery.Extensions" Version="1.0.0" />
