@@ -3,7 +3,7 @@ using System;
 namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     /// <summary>
-    /// Class AutoMapperConfigurationDelegateContainer.
+    /// AutoMapperConfigurationDelegateContainer.
     /// </summary>
     class AutoMapperConfigurationDelegateContainer
     {

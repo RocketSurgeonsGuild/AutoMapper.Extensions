@@ -9,7 +9,7 @@ using Rocket.Surgery.Unions;
 namespace Rocket.Surgery.Extensions.AutoMapper
 {
     /// <summary>
-    /// Class AutoMapperProfileExpressionExtensions.
+    /// AutoMapperProfileExpressionExtensions.
     /// </summary>
     public static class AutoMapperProfileExpressionExtensions
     {
@@ -176,7 +176,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
     }
 
     /// <summary>
-    /// Class OnlyDefinedPropertiesMethods.
+    /// OnlyDefinedPropertiesMethods.
     /// </summary>
     static class OnlyDefinedPropertiesMethods
     {

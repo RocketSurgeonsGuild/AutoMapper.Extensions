@@ -5,7 +5,7 @@ using NodaTime;
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
-    /// Class LocalDateConverter.
+    /// LocalDateConverter.
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.LocalDate, System.DateTime}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.LocalDate?, System.DateTime?}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTime, NodaTime.LocalDate}" />

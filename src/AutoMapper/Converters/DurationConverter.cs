@@ -5,7 +5,7 @@ using NodaTime;
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
-    /// Class DurationConverter.
+    /// DurationConverter.
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.TimeSpan}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.TimeSpan?}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{System.TimeSpan, NodaTime.Duration}" />

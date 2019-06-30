@@ -11,7 +11,7 @@ using System.Reflection;
 namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     /// <summary>
-    /// Class AutoMapperServicesBuilder.
+    /// AutoMapperServicesBuilder.
     /// Implements the <see cref="Rocket.Surgery.Builders.Builder{Rocket.Surgery.Extensions.DependencyInjection.IServiceConventionContext}" />
     /// </summary>
     /// <seealso cref="Rocket.Surgery.Builders.Builder{Rocket.Surgery.Extensions.DependencyInjection.IServiceConventionContext}" />

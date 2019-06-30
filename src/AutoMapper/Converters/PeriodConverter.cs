@@ -5,7 +5,7 @@ using NodaTime.Text;
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
-    /// Class PeriodConverter.
+    /// PeriodConverter.
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Period, System.String}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{System.String, NodaTime.Period}" />
     /// </summary>

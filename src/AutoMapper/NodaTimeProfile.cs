@@ -6,7 +6,7 @@ using Rocket.Surgery.Extensions.AutoMapper.Converters;
 namespace Rocket.Surgery.Extensions.AutoMapper
 {
     /// <summary>
-    /// Class NodaTimeProfile.
+    /// NodaTimeProfile.
     /// Implements the <see cref="AutoMapper.Profile" />
     /// </summary>
     /// <seealso cref="AutoMapper.Profile" />

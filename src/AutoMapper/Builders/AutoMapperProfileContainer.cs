@@ -6,7 +6,7 @@ using System.Text;
 namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     /// <summary>
-    /// Class AutoMapperProfileContainer.
+    /// AutoMapperProfileContainer.
     /// </summary>
     class AutoMapperProfileContainer
     {

@@ -5,7 +5,7 @@ using NodaTime;
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
-    /// Class OffsetConverter.
+    /// OffsetConverter.
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Offset, System.TimeSpan}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Offset?, System.TimeSpan?}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{System.TimeSpan, NodaTime.Offset}" />

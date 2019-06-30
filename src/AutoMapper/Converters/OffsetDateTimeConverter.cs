@@ -5,7 +5,7 @@ using NodaTime;
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
-    /// Class OffsetDateTimeConverter.
+    /// OffsetDateTimeConverter.
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.OffsetDateTime, System.DateTimeOffset}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.OffsetDateTime?, System.DateTimeOffset?}" />
     /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTimeOffset, NodaTime.OffsetDateTime}" />

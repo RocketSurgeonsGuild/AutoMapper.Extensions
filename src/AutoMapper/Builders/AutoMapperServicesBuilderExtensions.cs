@@ -6,7 +6,7 @@ using AutoMapper;
 namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     /// <summary>
-    /// Class AutoMapperServicesBuilderExtensions.
+    /// AutoMapperServicesBuilderExtensions.
     /// </summary>
     public static class AutoMapperServicesBuilderExtensions
     {

@@ -14,7 +14,7 @@ using Mapper = AutoMapper.Mapper;
 namespace Rocket.Surgery.Extensions.AutoMapper
 {
     /// <summary>
-    /// Class AutoMapperServicesExtensions.
+    /// AutoMapperServicesExtensions.
     /// </summary>
     public static class AutoMapperServicesExtensions
     {

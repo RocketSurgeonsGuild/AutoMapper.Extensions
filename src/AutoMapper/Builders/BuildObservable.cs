@@ -4,7 +4,7 @@ using System;
 namespace Rocket.Surgery.Extensions.AutoMapper.Builders
 {
     /// <summary>
-    /// Class BuildObservable.
+    /// BuildObservable.
     /// Implements the <see cref="System.IObserver{System.IServiceProvider}" />
     /// </summary>
     /// <seealso cref="System.IObserver{System.IServiceProvider}" />
