@@ -8,8 +8,17 @@ using Rocket.Surgery.Unions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper
 {
+    /// <summary>
+    /// Class AutoMapperProfileExpressionExtensions.
+    /// </summary>
     public static class AutoMapperProfileExpressionExtensions
     {
+        /// <summary>
+        /// Called when [defined properties].
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>T.</returns>
         public static T OnlyDefinedProperties<T>(this T configuration)
             where T : IProfileExpression
         {
@@ -27,6 +36,16 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return configuration;
         }
 
+        /// <summary>
+        /// Maps the with postfix.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="sourcePostFix">The source post fix.</param>
+        /// <param name="destinationPostFix">The destination post fix.</param>
+        /// <param name="memberList">The member list.</param>
+        /// <param name="ignoreInaccessibleProperties">if set to <c>true</c> [ignore inaccessible properties].</param>
+        /// <returns>T.</returns>
         public static T MapWithPostfix<T>(
             this T configuration,
             string sourcePostFix,
@@ -66,6 +85,13 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return configuration;
         }
 
+        /// <summary>
+        /// Maps the dto to model.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="modelPostfix">The model postfix.</param>
+        /// <returns>T.</returns>
         public static T MapDtoToModel<T>(this T configuration, string modelPostfix = null)
             where T : IProfileExpression
         {
@@ -76,6 +102,13 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return configuration;
         }
 
+        /// <summary>
+        /// Maps the model to dto.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="modelPostfix">The model postfix.</param>
+        /// <returns>T.</returns>
         public static T MapModelToDto<T>(this T configuration, string modelPostfix = null)
             where T : IProfileExpression
         {
@@ -85,6 +118,12 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return configuration;
         }
 
+        /// <summary>
+        /// Maps the unions.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="profile">The profile.</param>
+        /// <returns>T.</returns>
         public static T MapUnions<T>(this T profile)
            where T : IProfileExpression
         {
@@ -136,8 +175,16 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         }
     }
 
+    /// <summary>
+    /// Class OnlyDefinedPropertiesMethods.
+    /// </summary>
     static class OnlyDefinedPropertiesMethods
     {
+        /// <summary>
+        /// Fors the strings.
+        /// </summary>
+        /// <param name="map">The map.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool ForStrings(PropertyMap map)
         {
             if (map.HasSource && map.SourceType == typeof(string) && map.DestinationType == typeof(string))
@@ -147,6 +194,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return false;
         }
 
+        /// <summary>
+        /// Strings the condition.
+        /// </summary>
+        /// <param name="map">The map.</param>
+        /// <param name="expression">The expression.</param>
         public static void StringCondition(PropertyMap map, IMemberConfigurationExpression expression)
         {
             expression.Condition((source, destination, sourceValue, sourceDestination, context) =>
@@ -159,6 +211,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             });
         }
 
+        /// <summary>
+        /// Fors the value types.
+        /// </summary>
+        /// <param name="map">The map.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool ForValueTypes(PropertyMap map)
         {
             if (!map.HasSource) return false;
@@ -171,6 +228,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return false;
         }
 
+        /// <summary>
+        /// Values the type condition.
+        /// </summary>
+        /// <param name="map">The map.</param>
+        /// <param name="expression">The expression.</param>
         public static void ValueTypeCondition(PropertyMap map, IMemberConfigurationExpression expression)
         {
             var defaultValue = Activator.CreateInstance(map.SourceType);
@@ -184,6 +246,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             });
         }
 
+        /// <summary>
+        /// Fors the nullable value types.
+        /// </summary>
+        /// <param name="map">The map.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool ForNullableValueTypes(PropertyMap map)
         {
             if (!map.HasSource) return false;
@@ -202,6 +269,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return false;
         }
 
+        /// <summary>
+        /// Nullables the value type condition.
+        /// </summary>
+        /// <param name="map">The map.</param>
+        /// <param name="expression">The expression.</param>
         public static void NullableValueTypeCondition(PropertyMap map, IMemberConfigurationExpression expression)
         {
             expression.Condition((source, destination, sourceValue, sourceDestination, context) =>

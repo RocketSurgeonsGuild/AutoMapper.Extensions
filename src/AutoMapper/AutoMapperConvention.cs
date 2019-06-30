@@ -7,17 +7,17 @@ using Rocket.Surgery.Extensions.DependencyInjection;
 namespace Rocket.Surgery.Extensions.AutoMapper
 {
     /// <summary>
-    /// Class AutoMapperConvention.
+    /// AutoMapperConvention.
+    /// Implements the <see cref="Rocket.Surgery.Extensions.DependencyInjection.IServiceConvention" />
     /// </summary>
+    /// <seealso cref="Rocket.Surgery.Extensions.DependencyInjection.IServiceConvention" />
     /// <seealso cref="IServiceConvention" />
-    /// TODO Edit XML Comment Template for AutoMapperConvention
     public class AutoMapperConvention : IServiceConvention
     {
         /// <summary>
         /// Registers the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// TODO Edit XML Comment Template for Register
         public void Register(IServiceConventionContext context)
         {
             context.WithAutoMapper();

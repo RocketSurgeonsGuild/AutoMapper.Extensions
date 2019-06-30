@@ -13,8 +13,16 @@ using Mapper = AutoMapper.Mapper;
 
 namespace Rocket.Surgery.Extensions.AutoMapper
 {
+    /// <summary>
+    /// Class AutoMapperServicesExtensions.
+    /// </summary>
     public static class AutoMapperServicesExtensions
     {
+        /// <summary>
+        /// Withes the automatic mapper.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns>AutoMapperServicesBuilder.</returns>
         public static AutoMapperServicesBuilder WithAutoMapper(this IServiceConventionContext context)
         {
             AddAutoMapperClasses(context);
@@ -58,6 +66,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return context;
         }
 
+        /// <summary>
+        /// Configurations the action.
+        /// </summary>
+        /// <param name="serviceProvider">The service provider.</param>
+        /// <returns>Action&lt;IMapperConfigurationExpression&gt;.</returns>
         internal static Action<IMapperConfigurationExpression> ConfigAction(IServiceProvider serviceProvider)
         {
             return cfg =>
