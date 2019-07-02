@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JetBrains.Annotations;
 using NodaTime;
 using NodaTime.Text;
 
@@ -6,11 +7,12 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// PeriodConverter.
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Period, System.String}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.String, NodaTime.Period}" />
+    /// Implements the <see cref="ITypeConverter{Period, String}" />
+    /// Implements the <see cref="ITypeConverter{String, Period}" />
     /// </summary>
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Period, System.String}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.String, NodaTime.Period}" />
+    /// <seealso cref="ITypeConverter{Period, String}" />
+    /// <seealso cref="ITypeConverter{String, Period}" />
+    [PublicAPI]
     public class PeriodConverter :
         ITypeConverter<Period, string>,
         ITypeConverter<string, Period>

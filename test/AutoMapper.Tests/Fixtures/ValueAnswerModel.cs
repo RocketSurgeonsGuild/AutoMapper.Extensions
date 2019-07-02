@@ -1,4 +1,5 @@
-﻿using Rocket.Surgery.Unions;
+﻿using System;
+using Rocket.Surgery.Unions;
 
 namespace Rocket.Surgery.AutoMapper.Tests.Fixtures
 {
@@ -13,6 +14,11 @@ namespace Rocket.Surgery.AutoMapper.Tests.Fixtures
             return other is ValueAnswerModel model &&
                    IsEqual(other) &&
                    Value == model.Value;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Value, Type, Id);
         }
     }
 }

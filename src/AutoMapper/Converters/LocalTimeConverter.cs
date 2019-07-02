@@ -1,28 +1,22 @@
 ﻿using System;
 using AutoMapper;
+using JetBrains.Annotations;
 using NodaTime;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// LocalTimeConverter.
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.LocalTime, System.TimeSpan}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.LocalTime?, System.TimeSpan?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.TimeSpan, NodaTime.LocalTime}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.TimeSpan?, NodaTime.LocalTime?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.LocalTime, System.DateTime}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.LocalTime?, System.DateTime?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTime, NodaTime.LocalTime}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTime?, NodaTime.LocalTime?}" />
+    /// Implements the <see cref="ITypeConverter{LocalTime, TimeSpan}" />
+    /// Implements the <see cref="ITypeConverter{TimeSpan, LocalTime}" />
+    /// Implements the <see cref="ITypeConverter{LocalTime, DateTime}" />
+    /// Implements the <see cref="ITypeConverter{DateTime, LocalTime}" />
     /// </summary>
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.LocalTime, System.TimeSpan}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.LocalTime?, System.TimeSpan?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.TimeSpan, NodaTime.LocalTime}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.TimeSpan?, NodaTime.LocalTime?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.LocalTime, System.DateTime}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.LocalTime?, System.DateTime?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTime, NodaTime.LocalTime}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTime?, NodaTime.LocalTime?}" />
+    /// <seealso cref="ITypeConverter{LocalTime, TimeSpan}" />
+    /// <seealso cref="ITypeConverter{TimeSpan, LocalTime}" />
+    /// <seealso cref="ITypeConverter{LocalTime, DateTime}" />
+    /// <seealso cref="ITypeConverter{DateTime, LocalTime}" />
+    [PublicAPI]
     public class LocalTimeConverter :
         ITypeConverter<LocalTime, TimeSpan>,
         ITypeConverter<LocalTime?, TimeSpan?>,
@@ -138,7 +132,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.Nullable&lt;LocalTime&gt;.</returns>
+        /// <returns>System.Nullable{LocalTime}.</returns>
         public LocalTime? Convert(DateTime? source, LocalTime? destination, ResolutionContext context)
         {
             if (source == null)

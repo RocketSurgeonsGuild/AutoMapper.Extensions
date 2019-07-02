@@ -24,6 +24,11 @@ namespace Rocket.Surgery.AutoMapper.Tests.Fixtures
             return Equals(obj as AnswerModel);
         }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Type, Id);
+        }
+
         public static bool operator ==(AnswerModel model1, AnswerModel model2)
         {
             return EqualityComparer<AnswerModel>.Default.Equals(model1, model2);

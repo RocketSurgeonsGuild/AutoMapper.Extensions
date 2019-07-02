@@ -1,20 +1,18 @@
 ﻿using System;
 using AutoMapper;
+using JetBrains.Annotations;
 using NodaTime;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// OffsetConverter.
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Offset, System.TimeSpan}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Offset?, System.TimeSpan?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.TimeSpan, NodaTime.Offset}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.TimeSpan?, NodaTime.Offset?}" />
+    /// Implements the <see cref="ITypeConverter{Offset, TimeSpan}" />
+    /// Implements the <see cref="ITypeConverter{TimeSpan, Offset}" />
     /// </summary>
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Offset, System.TimeSpan}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Offset?, System.TimeSpan?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.TimeSpan, NodaTime.Offset}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.TimeSpan?, NodaTime.Offset?}" />
+    /// <seealso cref="ITypeConverter{Offset, TimeSpan}" />
+    /// <seealso cref="ITypeConverter{TimeSpan, Offset}" />
+    [PublicAPI]
     public class OffsetConverter :
         ITypeConverter<Offset, TimeSpan>,
         ITypeConverter<Offset?, TimeSpan?>,
@@ -63,7 +61,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.Nullable&lt;Offset&gt;.</returns>
+        /// <returns>System.Nullable{Offset}.</returns>
         public Offset? Convert(TimeSpan? source, Offset? destination, ResolutionContext context)
         {
             if (source == null)

@@ -1,52 +1,34 @@
 ﻿using System;
 using AutoMapper;
+using JetBrains.Annotations;
 using NodaTime;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// DurationConverter.
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.TimeSpan}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.TimeSpan?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.TimeSpan, NodaTime.Duration}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.TimeSpan?, NodaTime.Duration?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.Int64}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.Int64?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.Int64, NodaTime.Duration}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.Int64?, NodaTime.Duration?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.Int32}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.Int32?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.Int32, NodaTime.Duration}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.Int32?, NodaTime.Duration?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.Double}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.Double?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.Double, NodaTime.Duration}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.Double?, NodaTime.Duration?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.Decimal}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.Decimal?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.Decimal, NodaTime.Duration}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.Decimal?, NodaTime.Duration?}" />
+    /// Implements the <see cref="ITypeConverter{Duration, TimeSpan}" />
+    /// Implements the <see cref="ITypeConverter{TimeSpan, Duration}" />
+    /// Implements the <see cref="ITypeConverter{Duration, Int64}" />
+    /// Implements the <see cref="ITypeConverter{Int64, Duration}" />
+    /// Implements the <see cref="ITypeConverter{Duration, Int32}" />
+    /// Implements the <see cref="ITypeConverter{Int32, Duration}" />
+    /// Implements the <see cref="ITypeConverter{Duration, Double}" />
+    /// Implements the <see cref="ITypeConverter{Double, Duration}" />
+    /// Implements the <see cref="ITypeConverter{Duration, Decimal}" />
+    /// Implements the <see cref="ITypeConverter{Decimal, Duration}" />
     /// </summary>
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.TimeSpan}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.TimeSpan?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.TimeSpan, NodaTime.Duration}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.TimeSpan?, NodaTime.Duration?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.Int64}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.Int64?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.Int64, NodaTime.Duration}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.Int64?, NodaTime.Duration?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.Int32}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.Int32?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.Int32, NodaTime.Duration}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.Int32?, NodaTime.Duration?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.Double}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.Double?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.Double, NodaTime.Duration}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.Double?, NodaTime.Duration?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration, System.Decimal}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Duration?, System.Decimal?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.Decimal, NodaTime.Duration}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.Decimal?, NodaTime.Duration?}" />
+    /// <seealso cref="ITypeConverter{Duration, TimeSpan}" />
+    /// <seealso cref="ITypeConverter{TimeSpan, Duration}" />
+    /// <seealso cref="ITypeConverter{Duration, Int64}" />
+    /// <seealso cref="ITypeConverter{Int64, Duration}" />
+    /// <seealso cref="ITypeConverter{Duration, Int32}" />
+    /// <seealso cref="ITypeConverter{Int32, Duration}" />
+    /// <seealso cref="ITypeConverter{Duration, Double}" />
+    /// <seealso cref="ITypeConverter{Double, Duration}" />
+    /// <seealso cref="ITypeConverter{Duration, Decimal}" />
+    /// <seealso cref="ITypeConverter{Decimal, Duration}" />
+    [PublicAPI]
     public class DurationConverter :
         ITypeConverter<Duration, TimeSpan>,
         ITypeConverter<Duration?, TimeSpan?>,
@@ -336,7 +318,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.Nullable&lt;Duration&gt;.</returns>
+        /// <returns>System.Nullable{Duration}.</returns>
         public Duration? Convert(decimal? source, Duration? destination, ResolutionContext context)
         {
             if (source == null)

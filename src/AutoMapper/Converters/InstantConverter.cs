@@ -1,28 +1,22 @@
 ﻿using System;
 using AutoMapper;
+using JetBrains.Annotations;
 using NodaTime;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// InstantConverter.
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Instant, System.DateTime}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Instant?, System.DateTime?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Instant, System.DateTimeOffset}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.Instant?, System.DateTimeOffset?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTime, NodaTime.Instant}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTime?, NodaTime.Instant?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTimeOffset, NodaTime.Instant}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTimeOffset?, NodaTime.Instant?}" />
+    /// Implements the <see cref="ITypeConverter{Instant, DateTime}" />
+    /// Implements the <see cref="ITypeConverter{Instant, DateTimeOffset}" />
+    /// Implements the <see cref="ITypeConverter{DateTime, Instant}" />
+    /// Implements the <see cref="ITypeConverter{DateTimeOffset, Instant}" />
     /// </summary>
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Instant, System.DateTime}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Instant?, System.DateTime?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Instant, System.DateTimeOffset}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.Instant?, System.DateTimeOffset?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTime, NodaTime.Instant}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTime?, NodaTime.Instant?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTimeOffset, NodaTime.Instant}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTimeOffset?, NodaTime.Instant?}" />
+    /// <seealso cref="ITypeConverter{Instant, DateTime}" />
+    /// <seealso cref="ITypeConverter{Instant, DateTimeOffset}" />
+    /// <seealso cref="ITypeConverter{DateTime, Instant}" />
+    /// <seealso cref="ITypeConverter{DateTimeOffset, Instant}" />
+    [PublicAPI]
     public class InstantConverter :
         ITypeConverter<Instant, DateTime>,
         ITypeConverter<Instant?, DateTime?>,
@@ -137,7 +131,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.Nullable&lt;Instant&gt;.</returns>
+        /// <returns>System.Nullable{Instant}.</returns>
         public Instant? Convert(DateTimeOffset? source, Instant? destination, ResolutionContext context)
         {
             if (source == null)

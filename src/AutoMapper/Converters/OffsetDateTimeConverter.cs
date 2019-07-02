@@ -1,20 +1,18 @@
 ﻿using System;
 using AutoMapper;
+using JetBrains.Annotations;
 using NodaTime;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// OffsetDateTimeConverter.
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.OffsetDateTime, System.DateTimeOffset}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.OffsetDateTime?, System.DateTimeOffset?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTimeOffset, NodaTime.OffsetDateTime}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTimeOffset?, NodaTime.OffsetDateTime?}" />
+    /// Implements the <see cref="ITypeConverter{OffsetDateTime, DateTimeOffset}" />
+    /// Implements the <see cref="ITypeConverter{DateTimeOffset, OffsetDateTime}" />
     /// </summary>
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.OffsetDateTime, System.DateTimeOffset}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.OffsetDateTime?, System.DateTimeOffset?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTimeOffset, NodaTime.OffsetDateTime}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTimeOffset?, NodaTime.OffsetDateTime?}" />
+    /// <seealso cref="ITypeConverter{OffsetDateTime, DateTimeOffset}" />
+    /// <seealso cref="ITypeConverter{DateTimeOffset, OffsetDateTime}" />
+    [PublicAPI]
     public class OffsetDateTimeConverter :
         ITypeConverter<OffsetDateTime, DateTimeOffset>,
         ITypeConverter<OffsetDateTime?, DateTimeOffset?>,
@@ -63,7 +61,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.Nullable&lt;OffsetDateTime&gt;.</returns>
+        /// <returns>System.Nullable{OffsetDateTime}.</returns>
         public OffsetDateTime? Convert(DateTimeOffset? source, OffsetDateTime? destination, ResolutionContext context)
         {
             if (source == null)

@@ -7,9 +7,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper
 {
     /// <summary>
     /// NodaTimeProfile.
-    /// Implements the <see cref="AutoMapper.Profile" />
+    /// Implements the <see cref="Profile" />
     /// </summary>
-    /// <seealso cref="AutoMapper.Profile" />
+    /// <seealso cref="Profile" />
     public class NodaTimeProfile : Profile
     {
         /// <summary>

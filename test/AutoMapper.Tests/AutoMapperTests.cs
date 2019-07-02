@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Rocket.Surgery.Extensions.AutoMapper;
-using Rocket.Surgery.Extensions.AutoMapper.Builders;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Conventions.Scanners;
 using Rocket.Surgery.Extensions.DependencyInjection;
@@ -21,89 +20,6 @@ using Rocket.Surgery.AutoMapper.Tests.Fixtures;
 
 namespace Rocket.Surgery.AutoMapper.Tests
 {
-    public class AutoMapperServicesBuilderTests : AutoTestBase
-    {
-        public AutoMapperServicesBuilderTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
-
-        [Fact]
-        public void MustCallDelegatesOnBuild()
-        {
-            var configurationDelegate = A.Fake<AutoMapperConfigurationDelegate>();
-            var componentConfigurationDelegate = A.Fake<AutoMapperComponentConfigurationDelegate>();
-
-            AutoFake.Provide<IServiceCollection>(new ServiceCollection());
-            var servicesBuilder = AutoFake.Resolve<ServicesBuilder>();
-            servicesBuilder.Services.AddSingleton<ILoggerFactory>(LoggerFactory);
-            var AutoMapperBuilder = servicesBuilder
-                .WithAutoMapper()
-                .UseStaticRegistration()
-                .Configure(configurationDelegate)
-                .Configure(componentConfigurationDelegate);
-
-            var serviceProvider = servicesBuilder.Build();
-
-            var mapper = serviceProvider.GetRequiredService<IMapper>();
-            mapper.Should().NotBeNull();
-
-            var config = serviceProvider.GetRequiredService<global::AutoMapper.IConfigurationProvider>();
-            config.Should().NotBeNull();
-
-            A.CallTo(() => configurationDelegate(A<IMapperConfigurationExpression>._))
-                .MustHaveHappened(Repeated.Exactly.Once)
-                .Then(A.CallTo(() => componentConfigurationDelegate(serviceProvider, A<IMapperConfigurationExpression>._))
-                    .MustHaveHappened(Repeated.Exactly.Once));
-        }
-
-        [Fact]
-        public void Should_Work_Without_StaticRegistration()
-        {
-            var configurationDelegate = A.Fake<AutoMapperConfigurationDelegate>();
-            var componentConfigurationDelegate = A.Fake<AutoMapperComponentConfigurationDelegate>();
-
-            AutoFake.Provide<IServiceCollection>(new ServiceCollection());
-            var servicesBuilder = AutoFake.Resolve<ServicesBuilder>();
-            servicesBuilder.Services.AddSingleton<ILoggerFactory>(LoggerFactory);
-            var AutoMapperBuilder = servicesBuilder
-                .WithAutoMapper()
-                .Configure(configurationDelegate)
-                .Configure(componentConfigurationDelegate);
-
-            var serviceProvider = servicesBuilder.Build();
-
-            var mapper = serviceProvider.GetRequiredService<IMapper>();
-            mapper.Should().NotBeNull();
-
-            var config = serviceProvider.GetRequiredService<global::AutoMapper.IConfigurationProvider>();
-            config.Should().NotBeNull();
-
-            A.CallTo(() => configurationDelegate(A<IMapperConfigurationExpression>._))
-                .MustHaveHappened(Repeated.Exactly.Once)
-                .Then(A.CallTo(() => componentConfigurationDelegate(A<IServiceProvider>._, A<IMapperConfigurationExpression>._))
-                    .MustHaveHappened(Repeated.Exactly.Once));
-        }
-
-        class Profile1 : Profile { }
-        class Profile2 : Profile { }
-
-        [Fact]
-        public void Should_Add_Profiles()
-        {
-            var configurationDelegate = A.Fake<AutoMapperConfigurationDelegate>();
-            var componentConfigurationDelegate = A.Fake<AutoMapperComponentConfigurationDelegate>();
-
-            AutoFake.Provide<IServiceCollection>(new ServiceCollection());
-            var servicesBuilder = AutoFake.Resolve<ServicesBuilder>();
-            servicesBuilder.Services.AddSingleton<ILoggerFactory>(LoggerFactory);
-            var AutoMapperBuilder = servicesBuilder
-                .WithAutoMapper()
-                .WithProfile(typeof(Profile1))
-                .WithProfile(typeof(Profile2).GetTypeInfo());
-
-            var serviceProvider = servicesBuilder.Build();
-
-        }
-    }
-
     public class UnionMapperTests : AutoTestBase
     {
         private readonly IMapper _mapper;

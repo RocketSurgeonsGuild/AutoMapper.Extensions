@@ -33,5 +33,10 @@ namespace Rocket.Surgery.AutoMapper.Tests.Fixtures
         {
             return !(answer1 == answer2);
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Type, Id);
+        }
     }
 }

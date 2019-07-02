@@ -1,20 +1,18 @@
 ﻿using System;
 using AutoMapper;
+using JetBrains.Annotations;
 using NodaTime;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// LocalDateConverter.
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.LocalDate, System.DateTime}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{NodaTime.LocalDate?, System.DateTime?}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTime, NodaTime.LocalDate}" />
-    /// Implements the <see cref="AutoMapper.ITypeConverter{System.DateTime?, NodaTime.LocalDate?}" />
+    /// Implements the <see cref="ITypeConverter{LocalDate, DateTime}" />
+    /// Implements the <see cref="ITypeConverter{DateTime, LocalDate}" />
     /// </summary>
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.LocalDate, System.DateTime}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{NodaTime.LocalDate?, System.DateTime?}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTime, NodaTime.LocalDate}" />
-    /// <seealso cref="AutoMapper.ITypeConverter{System.DateTime?, NodaTime.LocalDate?}" />
+    /// <seealso cref="ITypeConverter{LocalDate, DateTime}" />
+    /// <seealso cref="ITypeConverter{DateTime, LocalDate}" />
+    [PublicAPI]
     public class LocalDateConverter :
         ITypeConverter<LocalDate, DateTime>,
         ITypeConverter<LocalDate?, DateTime?>,
@@ -66,7 +64,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="source">The source.</param>
         /// <param name="destination">The destination.</param>
         /// <param name="context">The context.</param>
-        /// <returns>System.Nullable&lt;LocalDate&gt;.</returns>
+        /// <returns>System.Nullable{LocalDate}.</returns>
         public LocalDate? Convert(DateTime? source, LocalDate? destination, ResolutionContext context)
         {
             if (source == null)
