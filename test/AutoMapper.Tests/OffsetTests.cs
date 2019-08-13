@@ -1,18 +1,17 @@
-using System;
+﻿using System;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
-using NodaTime.Text;
 using Rocket.Surgery.Extensions.AutoMapper;
 using Xunit;
 
 namespace Rocket.Surgery.AutoMapper.Tests
 {
-    public class OffsetDateTimeTests
+    public class OffsetTests
     {
         private readonly MapperConfiguration _config;
 
-        public OffsetDateTimeTests()
+        public OffsetTests()
         {
             _config = new MapperConfiguration(x =>
             {
@@ -35,11 +34,11 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
             var foo = new Foo1()
             {
-                Bar = OffsetDateTime.FromDateTimeOffset(DateTimeOffset.Now)
+                Bar = Offset.FromHours(11)
             };
 
             var result = mapper.Map<Foo3>(foo).Bar;
-            result.Should().Be(foo.Bar.ToDateTimeOffset());
+            result.Should().Be(foo.Bar.ToTimeSpan());
         }
 
         [Fact]
@@ -49,21 +48,21 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
             var foo = new Foo3()
             {
-                Bar = DateTimeOffset.Now
+                Bar = TimeSpan.FromHours(10)
             };
 
             var result = mapper.Map<Foo1>(foo).Bar;
-            result.Should().Be(OffsetDateTime.FromDateTimeOffset(foo.Bar));
+            result.Should().Be(Offset.FromTimeSpan(foo.Bar));
         }
 
         public class Foo1
         {
-            public OffsetDateTime Bar { get; set; }
+            public Offset Bar { get; set; }
         }
 
         public class Foo3
         {
-            public DateTimeOffset Bar { get; set; }
+            public TimeSpan Bar { get; set; }
         }
     }
 }

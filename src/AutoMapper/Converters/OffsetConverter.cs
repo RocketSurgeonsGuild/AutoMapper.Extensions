@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AutoMapper;
 using JetBrains.Annotations;
 using NodaTime;
@@ -15,9 +15,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
     [PublicAPI]
     public class OffsetConverter :
         ITypeConverter<Offset, TimeSpan>,
-        ITypeConverter<Offset?, TimeSpan?>,
-        ITypeConverter<TimeSpan, Offset>,
-        ITypeConverter<TimeSpan?, Offset?>
+        ITypeConverter<TimeSpan, Offset>
     {
         /// <summary>
         /// Performs conversion from source to destination type
@@ -38,38 +36,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
-        public TimeSpan? Convert(Offset? source, TimeSpan? destination, ResolutionContext context)
-        {
-            return source?.ToTimeSpan();
-        }
-
-        /// <summary>
-        /// Performs conversion from source to destination type
-        /// </summary>
-        /// <param name="source">Source object</param>
-        /// <param name="destination">Destination object</param>
-        /// <param name="context">Resolution context</param>
-        /// <returns>Destination object</returns>
         public Offset Convert(TimeSpan source, Offset destination, ResolutionContext context)
         {
             return Offset.FromTicks(source.Ticks);
-        }
-
-        /// <summary>
-        /// Converts the specified source.
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="destination">The destination.</param>
-        /// <param name="context">The context.</param>
-        /// <returns>System.Nullable{Offset}.</returns>
-        public Offset? Convert(TimeSpan? source, Offset? destination, ResolutionContext context)
-        {
-            if (source == null)
-            {
-                return null;
-            }
-
-            return Offset.FromTicks(source.Value.Ticks);
         }
     }
 }

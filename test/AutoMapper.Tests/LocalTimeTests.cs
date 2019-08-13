@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
@@ -7,11 +7,11 @@ using Xunit;
 
 namespace Rocket.Surgery.AutoMapper.Tests
 {
-    public class InstantTests
+    public class LocalTimeTests
     {
         private readonly MapperConfiguration _config;
 
-        public InstantTests()
+        public LocalTimeTests()
         {
             _config = new MapperConfiguration(x =>
             {
@@ -36,11 +36,11 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
             var foo = new Foo1()
             {
-                Bar = Instant.FromDateTimeOffset(DateTimeOffset.Now)
+                Bar = LocalTime.FromTicksSinceMidnight(10000)
             };
 
             var result = mapper.Map<Foo3>(foo).Bar;
-            result.Should().Be(foo.Bar.ToDateTimeOffset().UtcDateTime);
+            result.Should().Be(new TimeSpan(foo.Bar.TickOfDay));
         }
 
         [Fact]
@@ -50,11 +50,11 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
             var foo = new Foo3()
             {
-                Bar = DateTime.UtcNow
+                Bar = TimeSpan.FromMinutes(502)
             };
 
             var result = mapper.Map<Foo1>(foo).Bar;
-            result.Should().Be(Instant.FromDateTimeUtc(foo.Bar));
+            result.Should().Be(new LocalTime(502 / 60, 502 % 60));
         }
 
         [Fact]
@@ -64,11 +64,11 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
             var foo = new Foo1()
             {
-                Bar = Instant.FromDateTimeOffset(DateTimeOffset.Now)
+                Bar = LocalTime.FromTicksSinceMidnight(10000)
             };
 
             var result = mapper.Map<Foo5>(foo).Bar;
-            result.Should().Be(foo.Bar.ToDateTimeOffset());
+            result.Should().Be(foo.Bar.On(new LocalDate(1, 1, 1)).ToDateTimeUnspecified());
         }
 
         [Fact]
@@ -78,26 +78,26 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
             var foo = new Foo5()
             {
-                Bar = DateTimeOffset.Now
+                Bar = DateTime.Now
             };
 
             var result = mapper.Map<Foo1>(foo).Bar;
-            result.Should().Be(Instant.FromDateTimeOffset(foo.Bar));
+            result.Should().Be(LocalDateTime.FromDateTime(foo.Bar).TimeOfDay);
         }
 
         public class Foo1
         {
-            public Instant Bar { get; set; }
+            public LocalTime Bar { get; set; }
         }
 
         public class Foo3
         {
-            public DateTime Bar { get; set; }
+            public TimeSpan Bar { get; set; }
         }
 
         public class Foo5
         {
-            public DateTimeOffset Bar { get; set; }
+            public DateTime Bar { get; set; }
         }
     }
 }
