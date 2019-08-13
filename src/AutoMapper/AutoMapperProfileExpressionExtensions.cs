@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using AutoMapper;
@@ -37,141 +38,40 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         }
 
         /// <summary>
-        /// Maps the with postfix.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="configuration">The configuration.</param>
-        /// <param name="sourcePostFix">The source post fix.</param>
-        /// <param name="destinationPostFix">The destination post fix.</param>
-        /// <param name="memberList">The member list.</param>
-        /// <param name="ignoreInaccessibleProperties">if set to <c>true</c> [ignore inaccessible properties].</param>
-        /// <returns>T.</returns>
-        public static T MapWithPostfix<T>(
-            this T configuration,
-            string sourcePostFix,
-            string destinationPostFix,
-            MemberList memberList,
-            bool ignoreInaccessibleProperties = true
-        ) where T : IProfileExpression
-        {
-            configuration
-                .AddMemberConfiguration()
-                .AddName<PrePostfixName>(_ =>
-                {
-                    _.AddStrings(p => p.Postfixes, sourcePostFix);
-                    _.AddStrings(p => p.DestinationPostfixes, destinationPostFix);
-                });
-
-            configuration
-                .AddConditionalObjectMapper()
-                .Where(PostfixCondition(sourcePostFix, destinationPostFix));
-
-            configuration.ForAllMaps((map, expression) =>
-            {
-                expression.ValidateMemberList(memberList);
-                if (ignoreInaccessibleProperties)
-                {
-                    if (memberList == MemberList.Source)
-                    {
-                        expression.IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
-                    }
-                    else if (memberList == MemberList.Destination)
-                    {
-                        expression.IgnoreAllPropertiesWithAnInaccessibleSetter();
-                    }
-                }
-            });
-
-            return configuration;
-        }
-
-        /// <summary>
-        /// Maps the dto to model.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="configuration">The configuration.</param>
-        /// <param name="modelPostfix">The model postfix.</param>
-        /// <returns>T.</returns>
-        public static T MapDtoToModel<T>(this T configuration, string modelPostfix = null)
-            where T : IProfileExpression
-        {
-            configuration.AllowNullCollections = false;
-            configuration.AllowNullDestinationValues = false;
-            MapWithPostfix(configuration, "Dto", modelPostfix ?? "Model", MemberList.Destination, false);
-
-            return configuration;
-        }
-
-        /// <summary>
-        /// Maps the model to dto.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="configuration">The configuration.</param>
-        /// <param name="modelPostfix">The model postfix.</param>
-        /// <returns>T.</returns>
-        public static T MapModelToDto<T>(this T configuration, string modelPostfix = null)
-            where T : IProfileExpression
-        {
-            configuration.MapWithPostfix(modelPostfix ?? "Model", "Dto", MemberList.Source);
-            configuration.OnlyDefinedProperties();
-
-            return configuration;
-        }
-
-        /// <summary>
         /// Maps the unions.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="profile">The profile.</param>
-        /// <returns>T.</returns>
-        public static T MapUnions<T>(this T profile)
-           where T : IProfileExpression
+        /// <param name="configuration">The options.</param>
+        /// <param name="assemblies">The assemblies.</param>
+        public static T MapUnions<T>(this T configuration, IEnumerable<Assembly> assemblies)
+            where T : IProfileExpression
         {
-            profile.ForAllMaps((map, expression) =>
+            foreach (var item in UnionHelper.GetAll(assemblies).GroupBy(x => x.enumType).Where(x => x.Count() > 1))
             {
-                if (map.SourceType == null || map.DestinationType == null) return;
+                var key = item.Key;
+                var unions = item.ToList();
+                var enumType = unions.First().enumType;
+                var len = unions.Count;
 
-                var sourceRootType = UnionHelper.GetRootType(map.SourceType);
-                var destinationRootType = UnionHelper.GetRootType(map.DestinationType);
-                if (sourceRootType == null || destinationRootType == null) return;
-
-                var sourceEnumType = UnionHelper.GetUnionEnumType(sourceRootType);
-                var destinationEnumType = UnionHelper.GetUnionEnumType(destinationRootType);
-                if (sourceEnumType != destinationEnumType) return;
-
-                expression.ForMember(
-                    sourceRootType.GetCustomAttribute<UnionKeyAttribute>(true).Key,
-                    x => x.Ignore()
-                );
-
-                if (sourceRootType.AsType() == map.SourceType && destinationRootType.AsType() == map.DestinationType)
+                for (var i = 0; i < unions.Count; i++)
                 {
-                    var sourceUnion = UnionHelper.GetUnion(sourceRootType);
-                    var destinationUnion = UnionHelper.GetUnion(destinationRootType);
+                    var sourceUnion = UnionHelper.GetUnion(unions[i].rootType);
 
-                    var invertedSourceUnion = sourceUnion.ToDictionary(x => x.Value, x => x.Key);
-                    expression.ConstructUsing((src, context) =>
+                    for (var j = i + 1; j < unions.Count; j++)
                     {
-                        return context.Mapper.Map(src, src.GetType(), destinationUnion[invertedSourceUnion[src.GetType()]]);
-                    });
+                        var destinationUnion = UnionHelper.GetUnion(unions[j].rootType);
+                        foreach (var (source, destination) in sourceUnion.Join(destinationUnion, x => x.Key, x => x.Key, (left, right) => (left.Value, right.Value)))
+                        {
+                            configuration.CreateMap(source, destination)
+                                .ForMember(source.GetCustomAttribute<UnionKeyAttribute>(true).Key, x => x.Ignore());
+                            configuration.CreateMap(destination, source)
+                                .ForMember(destination.GetCustomAttribute<UnionKeyAttribute>(true).Key, x => x.Ignore());
+
+                        }
+                    }
                 }
-            });
-
-            return profile;
-        }
-
-        private static Func<Type, Type, bool> PostfixCondition(string sourcePostFix, string destinationPostFix)
-        {
-            return (source, destination) =>
-            {
-                if (!source.Name.EndsWith(sourcePostFix)) return false;
-                if (!destination.Name.EndsWith(destinationPostFix)) return false;
-
-                var sourceName = source.Name.Substring(0, source.Name.IndexOf(sourcePostFix));
-                var destinationName = destination.Name.Substring(0, destination.Name.IndexOf(destinationPostFix));
-
-                return sourceName == destinationName;
-            };
+            }
+            return configuration;
         }
     }
 

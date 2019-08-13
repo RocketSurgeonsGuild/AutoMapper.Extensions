@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Rocket.Surgery.Unions;
 
 namespace Rocket.Surgery.AutoMapper.Tests.Fixtures

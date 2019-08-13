@@ -6,6 +6,7 @@
     <PackageReference Include="Rocket.Surgery.Extensions" />
     <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="AutoMapper" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <PackageReference Include="NodaTime" />
     <PackageReference Include="Microsoft.Extensions.Options" />
   </ItemGroup>

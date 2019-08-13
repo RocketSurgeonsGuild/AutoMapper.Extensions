@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Autofac.Extras.FakeItEasy;
 using FakeItEasy;
@@ -26,10 +26,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
         public UnionMapperTests(ITestOutputHelper outputHelper) : base(outputHelper, LogLevel.Debug)
         {
-            _mapper = new MapperConfiguration(expression =>
-            {
-                expression.MapUnions().MapDtoToModel().MapModelToDto();
-            }).CreateMapper();
+            _mapper = new MapperConfiguration(expression => expression.MapUnions(new[] { typeof(TextAnswerModel).Assembly })).CreateMapper();
         }
 
         [Fact]

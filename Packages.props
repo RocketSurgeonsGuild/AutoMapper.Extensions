@@ -25,7 +25,8 @@
     <PackageReference Update="Rocket.Surgery.Extensions" Version="1.0.3" />
     <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="6.0.5" />
     <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="6.0.5" />
-    <PackageReference Update="AutoMapper" Version="8.1.1" />
+    <PackageReference Update="AutoMapper" Version="9.0.0" />
+    <PackageReference Update="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Update="NodaTime" Version="2.4.6" />
   </ItemGroup>
   <ItemGroup>
