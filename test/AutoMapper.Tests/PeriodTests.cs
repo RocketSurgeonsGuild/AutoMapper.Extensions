@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentAssertions;
 using NodaTime;
 using NodaTime.Text;
@@ -22,10 +22,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
         }
 
         [Fact]
-        public void ValidateMapping()
-        {
-            _config.AssertConfigurationIsValid();
-        }
+        public void ValidateMapping() => _config.AssertConfigurationIsValid();
 
         [Fact]
         public void MapsFrom()
@@ -57,12 +54,12 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
         public class Foo1
         {
-            public Period Bar { get; set; }
+            public Period? Bar { get; set; }
         }
 
         public class Foo3
         {
-            public string Bar { get; set; }
+            public string? Bar { get; set; }
         }
     }
 }

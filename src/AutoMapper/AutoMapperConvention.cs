@@ -31,7 +31,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         /// Initializes a new instance of the <see cref="AutoMapperConvention"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        public AutoMapperConvention(AutoMapperOptions options = null)
+        public AutoMapperConvention(AutoMapperOptions? options = null)
         {
             _options = options ?? new AutoMapperOptions();
         }

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Rocket.Surgery.Extensions.Testing;
 using Xunit;
 using Xunit.Abstractions;
@@ -13,10 +13,10 @@ namespace Rocket.Surgery.AutoMapper.Tests
         {
             public int Integer { get; set; }
             public int? NullableInteger { get; set; }
-            public string String { get; set; }
+            public string? String { get; set; }
             public decimal Decimal { get; set; }
             public decimal? NullableDecimal { get; set; }
-            public ChildModel Child { get; set; }
+            public ChildModel? Child { get; set; }
         }
 
         class ParentDto
@@ -24,17 +24,17 @@ namespace Rocket.Surgery.AutoMapper.Tests
             public int Integer { get; set; }
             public int Version { get; set; }
             public int? NullableInteger { get; set; }
-            public string String { get; set; }
+            public string? String { get; set; }
             public decimal Decimal { get; set; }
             public decimal? NullableDecimal { get; set; }
-            public ChildDto Child { get; set; }
+            public ChildDto? Child { get; set; }
         }
 
         class ChildModel
         {
             public int Integer { get; set; }
             public int? NullableInteger { get; set; }
-            public string String { get; set; }
+            public string? String { get; set; }
             public decimal Decimal { get; set; }
             public decimal? NullableDecimal { get; set; }
         }
@@ -44,7 +44,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
             public int Integer { get; set; }
             public int Version { get; set; }
             public int? NullableInteger { get; set; }
-            public string String { get; set; }
+            public string? String { get; set; }
             public decimal Decimal { get; set; }
             public decimal? NullableDecimal { get; set; }
         }

@@ -15,7 +15,7 @@ namespace Rocket.Surgery.Conventions
         /// <param name="container">The container.</param>
         /// <param name="options">The options object</param>
         /// <returns>IConventionHostBuilder.</returns>
-        public static IConventionHostBuilder UseAutoMapper(this IConventionHostBuilder container, AutoMapperOptions options = null)
+        public static IConventionHostBuilder UseAutoMapper(this IConventionHostBuilder container, AutoMapperOptions? options = null)
         {
             container.Set(options ?? new AutoMapperOptions());
             container.Scanner.PrependConvention<AutoMapperConvention>();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
@@ -22,10 +22,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
         }
 
         [Fact]
-        public void ValidateMapping()
-        {
-            _config.AssertConfigurationIsValid();
-        }
+        public void ValidateMapping() => _config.AssertConfigurationIsValid();
 
         [Fact]
         public void MapsFrom()

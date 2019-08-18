@@ -7,18 +7,12 @@ namespace Rocket.Surgery.AutoMapper.Tests.Fixtures
     public class TextAnswerModel : AnswerModel
     {
         public TextAnswerModel() : base(AnswerType.Text) { }
-        public string Label { get; set; }
+        public string? Label { get; set; }
 
-        public override bool Equals(AnswerModel other)
-        {
-            return other is TextAnswerModel model &&
+        public override bool Equals(AnswerModel? other) => other is TextAnswerModel model &&
                    IsEqual(other) &&
                    Label == model.Label;
-        }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Label, Type, Id);
-        }
+        public override int GetHashCode() => HashCode.Combine(Label, Type, Id);
     }
 }

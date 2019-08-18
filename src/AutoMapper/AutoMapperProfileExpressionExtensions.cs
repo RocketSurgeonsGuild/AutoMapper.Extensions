@@ -63,9 +63,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper
                         foreach (var (source, destination) in sourceUnion.Join(destinationUnion, x => x.Key, x => x.Key, (left, right) => (left.Value, right.Value)))
                         {
                             configuration.CreateMap(source, destination)
-                                .ForMember(source.GetCustomAttribute<UnionKeyAttribute>(true).Key, x => x.Ignore());
+                                .ForMember(source.GetCustomAttribute<UnionKeyAttribute>(true)?.Key, x => x.Ignore());
                             configuration.CreateMap(destination, source)
-                                .ForMember(destination.GetCustomAttribute<UnionKeyAttribute>(true).Key, x => x.Ignore());
+                                .ForMember(destination.GetCustomAttribute<UnionKeyAttribute>(true)?.Key, x => x.Ignore());
 
                         }
                     }
@@ -138,7 +138,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             var defaultValue = Activator.CreateInstance(map.SourceType);
             expression.Condition((source, destination, sourceValue, sourceDestination, context) =>
             {
-                if (!defaultValue.Equals(sourceValue))
+                if (!object.Equals(defaultValue, sourceValue))
                 {
                     return true;
                 }

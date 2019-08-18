@@ -22,7 +22,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         /// <param name="context">The context.</param>
         public void Register(IServiceConventionContext context)
         {
-            var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(typeof(UnionAttribute).Assembly.GetName().Name);
+            var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(typeof(UnionAttribute).Assembly.GetName().Name!);
 
             context.Services.Configure<MapperConfigurationExpression>(options =>
             {

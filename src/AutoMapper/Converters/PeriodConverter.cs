@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using JetBrains.Annotations;
 using NodaTime;
 using NodaTime.Text;
@@ -26,7 +26,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <returns>Destination object</returns>
         public string Convert(Period source, string destination, ResolutionContext context)
         {
-            return source?.ToString();
+            return source?.ToString()!;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         {
             if (source == null)
             {
-                return null;
+                return null!;
             }
 
             return PeriodPattern.Roundtrip.Parse(source).Value;
