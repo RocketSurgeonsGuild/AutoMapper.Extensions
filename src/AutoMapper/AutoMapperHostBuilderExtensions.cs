@@ -22,16 +22,16 @@ namespace Rocket.Surgery.Conventions
             return container;
         }
 
-        /// <summary>
-        /// Uses AutoMapper.
-        /// </summary>
-        /// <param name="container">The container.</param>
-        /// <returns>IConventionHostBuilder.</returns>
-        public static IConventionHostBuilder UseAutoMapperUnions(this IConventionHostBuilder container)
-        {
-            UseAutoMapper(container);
-            container.Scanner.PrependConvention<AutoMapperUnionConvention>();
-            return container;
-        }
+        // /// <summary>
+        // /// Uses AutoMapper.
+        // /// </summary>
+        // /// <param name="container">The container.</param>
+        // /// <returns>IConventionHostBuilder.</returns>
+        // public static IConventionHostBuilder UseAutoMapperUnions(this IConventionHostBuilder container)
+        // {
+        //     UseAutoMapper(container);
+        //     container.Scanner.PrependConvention<AutoMapperUnionConvention>();
+        //     return container;
+        // }
     }
 }

@@ -5,7 +5,6 @@ using System.Reflection;
 using AutoMapper;
 using AutoMapper.Configuration.Conventions;
 using AutoMapper.Mappers;
-using Rocket.Surgery.Unions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper
 {
@@ -37,42 +36,42 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             return configuration;
         }
 
-        /// <summary>
-        /// Maps the unions.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="configuration">The options.</param>
-        /// <param name="assemblies">The assemblies.</param>
-        public static T MapUnions<T>(this T configuration, IEnumerable<Assembly> assemblies)
-            where T : IProfileExpression
-        {
-            foreach (var item in UnionHelper.GetAll(assemblies).GroupBy(x => x.enumType).Where(x => x.Count() > 1))
-            {
-                var key = item.Key;
-                var unions = item.ToList();
-                var enumType = unions.First().enumType;
-                var len = unions.Count;
+    //     /// <summary>
+    //     /// Maps the unions.
+    //     /// </summary>
+    //     /// <typeparam name="T"></typeparam>
+    //     /// <param name="configuration">The options.</param>
+    //     /// <param name="assemblies">The assemblies.</param>
+    //     public static T MapUnions<T>(this T configuration, IEnumerable<Assembly> assemblies)
+    //         where T : IProfileExpression
+    //     {
+    //         foreach (var item in UnionHelper.GetAll(assemblies).GroupBy(x => x.enumType).Where(x => x.Count() > 1))
+    //         {
+    //             var key = item.Key;
+    //             var unions = item.ToList();
+    //             var enumType = unions.First().enumType;
+    //             var len = unions.Count;
 
-                for (var i = 0; i < unions.Count; i++)
-                {
-                    var sourceUnion = UnionHelper.GetUnion(unions[i].rootType);
+    //             for (var i = 0; i < unions.Count; i++)
+    //             {
+    //                 var sourceUnion = UnionHelper.GetUnion(unions[i].rootType);
 
-                    for (var j = i + 1; j < unions.Count; j++)
-                    {
-                        var destinationUnion = UnionHelper.GetUnion(unions[j].rootType);
-                        foreach (var (source, destination) in sourceUnion.Join(destinationUnion, x => x.Key, x => x.Key, (left, right) => (left.Value, right.Value)))
-                        {
-                            configuration.CreateMap(source, destination)
-                                .ForMember(source.GetCustomAttribute<UnionKeyAttribute>(true)?.Key, x => x.Ignore());
-                            configuration.CreateMap(destination, source)
-                                .ForMember(destination.GetCustomAttribute<UnionKeyAttribute>(true)?.Key, x => x.Ignore());
+    //                 for (var j = i + 1; j < unions.Count; j++)
+    //                 {
+    //                     var destinationUnion = UnionHelper.GetUnion(unions[j].rootType);
+    //                     foreach (var (source, destination) in sourceUnion.Join(destinationUnion, x => x.Key, x => x.Key, (left, right) => (left.Value, right.Value)))
+    //                     {
+    //                         configuration.CreateMap(source, destination)
+    //                             .ForMember(source.GetCustomAttribute<UnionKeyAttribute>(true)?.Key, x => x.Ignore());
+    //                         configuration.CreateMap(destination, source)
+    //                             .ForMember(destination.GetCustomAttribute<UnionKeyAttribute>(true)?.Key, x => x.Ignore());
 
-                        }
-                    }
-                }
-            }
-            return configuration;
-        }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //         return configuration;
+    //     }
     }
 
     /// <summary>

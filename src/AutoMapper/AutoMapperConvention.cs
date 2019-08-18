@@ -7,11 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Rocket.Surgery.Extensions.AutoMapper;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Reflection;
 using Rocket.Surgery.Extensions.DependencyInjection;
 using Rocket.Surgery.Conventions.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Rocket.Surgery.Unions;
 using System.Collections.Generic;
 
 [assembly: Convention(typeof(AutoMapperConvention))]
