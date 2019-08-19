@@ -20,16 +20,16 @@
     <PackageReference Update="Microsoft.Extensions.Options" Version="3.0.0-preview8.19405.4" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Rocket.Surgery.Conventions" Version="7.0.3" />
-    <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="7.0.3" />
+    <PackageReference Update="Rocket.Surgery.Conventions" Version="7.0.4" />
+    <PackageReference Update="Rocket.Surgery.Conventions.Abstractions" Version="7.0.4" />
     <PackageReference Update="Rocket.Surgery.Extensions" Version="1.0.4" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="7.0.3" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="7.0.3" />
+    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="7.0.4" />
+    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="7.0.4" />
     <PackageReference Update="AutoMapper" Version="9.0.0" />
     <PackageReference Update="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Rocket.Surgery.Extensions.Testing" Version="1.2.0" />
+    <PackageReference Update="Rocket.Surgery.Extensions.Testing" Version="1.2.1" />
     <PackageReference Update="Autofac.Extras.FakeItEasy" Version="5.0.1" />
     <PackageReference Update="Bogus" Version="28.0.2" />
     <PackageReference Update="coverlet.collector" Version="1.0.1" />
