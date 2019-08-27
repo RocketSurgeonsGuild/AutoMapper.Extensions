@@ -22,8 +22,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         public static T OnlyDefinedProperties<T>(this T configuration)
             where T : IProfileExpression
         {
-            configuration.AllowNullDestinationValues = configuration.AllowNullDestinationValues ?? true;
-            configuration.AllowNullCollections = configuration.AllowNullCollections ?? true;
             configuration.ForAllPropertyMaps(
                 OnlyDefinedPropertiesMethods.ForStrings,
                 OnlyDefinedPropertiesMethods.StringCondition);

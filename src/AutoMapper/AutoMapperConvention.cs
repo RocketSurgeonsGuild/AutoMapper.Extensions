@@ -50,7 +50,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             context.Services.Replace(ServiceDescriptor.Singleton<IConfigurationProvider>(_ =>
             {
                 var options = _.GetRequiredService<IOptions<MapperConfigurationExpression>>();
-                options.Value.ConstructServicesUsing(_.GetService);
+                options.Value.AddMaps(assemblies);
                 return new MapperConfiguration(options.Value);
             }));
         }
