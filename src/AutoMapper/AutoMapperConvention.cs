@@ -47,6 +47,12 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         {
             var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(AutoMapper)).ToArray();
             context.Services.AddAutoMapper(assemblies, _options.ServiceLifetime);
+            context.Services.Replace(ServiceDescriptor.Singleton<IConfigurationProvider>(_ =>
+            {
+                var options = _.GetRequiredService<IOptions<MapperConfigurationExpression>>();
+                options.Value.AddMaps(assemblies);
+                return new MapperConfiguration(options.Value);
+            }));
         }
     }
 }
