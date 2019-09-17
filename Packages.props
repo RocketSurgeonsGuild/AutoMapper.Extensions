@@ -14,10 +14,10 @@
     <PackageReference Update="ReportGenerator" Version="4.2.20" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.1" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='netcoreapp2.1'">
-    <PackageReference Update="Microsoft.Extensions.Options" Version="3.0.0-preview9.19423.4" />
+    <PackageReference Update="Microsoft.Extensions.Options" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Rocket.Surgery.Conventions" Version="7.1.0" />
