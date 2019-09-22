@@ -20,7 +20,7 @@
 
 // namespace Rocket.Surgery.AutoMapper.Tests
 // {
-//     public class UnionMapperTests : AutoTestBase
+//     public class UnionMapperTests : AutoFakeTest
 //     {
 //         private readonly IMapper _mapper;
 

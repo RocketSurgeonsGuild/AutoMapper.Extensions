@@ -49,7 +49,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
             public decimal? NullableDecimal { get; set; }
         }
 
-        public class OnlyDefinedPropertiesTests : AutoTestBase
+        public class OnlyDefinedPropertiesTests : AutoFakeTest
         {
             public OnlyDefinedPropertiesTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
