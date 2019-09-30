@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+    <PackageDescription>Provides AutoMapper support for a Rocket Surgery Application</PackageDescription>
+    <PackageTags>$(PackageTags);automapper</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" />
