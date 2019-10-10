@@ -1,6 +1,5 @@
 // using System;
 // using System.Collections.Generic;
-// using Newtonsoft.Json;
 // using Rocket.Surgery.Unions;
 
 // namespace Rocket.Surgery.AutoMapper.Tests.Fixtures
