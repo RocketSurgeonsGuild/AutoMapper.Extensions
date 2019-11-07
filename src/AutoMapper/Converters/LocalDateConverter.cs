@@ -15,7 +15,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
     [PublicAPI]
     public class LocalDateConverter :
         ITypeConverter<LocalDate, DateTime>,
-        ITypeConverter<DateTime, LocalDate>
+        ITypeConverter<LocalDate?, DateTime?>,
+        ITypeConverter<DateTime, LocalDate>,
+        ITypeConverter<DateTime?, LocalDate?>
     {
         /// <summary>
         /// Performs conversion from source to destination type
