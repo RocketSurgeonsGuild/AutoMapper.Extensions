@@ -31,15 +31,25 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
     [PublicAPI]
     public class DurationConverter :
         ITypeConverter<Duration, TimeSpan>,
+        ITypeConverter<Duration?, TimeSpan?>,
         ITypeConverter<TimeSpan, Duration>,
+        ITypeConverter<TimeSpan?, Duration?>,
         ITypeConverter<Duration, long>,
+        ITypeConverter<Duration?, long?>,
         ITypeConverter<long, Duration>,
+        ITypeConverter<long?, Duration?>,
         ITypeConverter<Duration, int>,
+        ITypeConverter<Duration?, int?>,
         ITypeConverter<int, Duration>,
+        ITypeConverter<int?, Duration?>,
         ITypeConverter<Duration, double>,
+        ITypeConverter<Duration?, double?>,
         ITypeConverter<double, Duration>,
+        ITypeConverter<double?, Duration?>,
         ITypeConverter<Duration, decimal>,
-        ITypeConverter<decimal, Duration>
+        ITypeConverter<Duration?, decimal?>,
+        ITypeConverter<decimal, Duration>,
+        ITypeConverter<decimal?, Duration?>
     {
         /// <summary>
         /// Performs conversion from source to destination type
@@ -159,6 +169,126 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         public Duration Convert(decimal source, Duration destination, ResolutionContext context)
         {
             return Duration.FromTicks((long)(source * NodaConstants.TicksPerMillisecond));
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public TimeSpan? Convert(Duration? source, TimeSpan? destination, ResolutionContext context)
+        {
+            return source?.ToTimeSpan();
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public Duration? Convert(TimeSpan? source, Duration? destination, ResolutionContext context)
+        {
+            return source.HasValue ? Duration.FromTimeSpan(source.Value) : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public long? Convert(Duration? source, long? destination, ResolutionContext context)
+        {
+            return source.HasValue ? source.Value.BclCompatibleTicks / NodaConstants.TicksPerMillisecond : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public Duration? Convert(long? source, Duration? destination, ResolutionContext context)
+        {
+            return source.HasValue ? Duration.FromTicks(source.Value * NodaConstants.TicksPerMillisecond) : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public int? Convert(Duration? source, int? destination, ResolutionContext context)
+        {
+            return source.HasValue ? (int)(source.Value.BclCompatibleTicks / NodaConstants.TicksPerSecond) : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public Duration? Convert(int? source, Duration? destination, ResolutionContext context)
+        {
+            return source.HasValue ? Duration.FromTicks(source.Value * NodaConstants.TicksPerSecond) : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public double? Convert(Duration? source, double? destination, ResolutionContext context)
+        {
+            return source.HasValue ? (double)source.Value.BclCompatibleTicks / NodaConstants.TicksPerMillisecond : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public Duration? Convert(double? source, Duration? destination, ResolutionContext context)
+        {
+            return source.HasValue ? Duration.FromTicks((long)(source.Value * NodaConstants.TicksPerMillisecond)) : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public decimal? Convert(Duration? source, decimal? destination, ResolutionContext context)
+        {
+            return source.HasValue ? (decimal)source.Value.BclCompatibleTicks / NodaConstants.TicksPerMillisecond : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public Duration? Convert(decimal? source, Duration? destination, ResolutionContext context)
+        {
+            return source.HasValue ? Duration.FromTicks((long)(source.Value * NodaConstants.TicksPerMillisecond)) : destination;
         }
     }
 }

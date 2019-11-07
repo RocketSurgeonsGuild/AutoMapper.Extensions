@@ -1,24 +1,21 @@
+using System;
+using System.Linq;
+using System.Reflection;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
 using NodaTime.Text;
 using Rocket.Surgery.Extensions.AutoMapper;
+using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
 
 namespace Rocket.Surgery.AutoMapper.Tests
 {
-    public class PeriodTests
+    public class PeriodTests : TypeConverterTest<PeriodConverter>
     {
-        private readonly MapperConfiguration _config;
-
-        public PeriodTests()
+        protected override void Configure(IMapperConfigurationExpression x)
         {
-            _config = new MapperConfiguration(x =>
-            {
-                x.AddProfile<NodaTimeProfile>();
-                x.CreateMap<Foo1, Foo3>().ReverseMap();
-            }
-            );
+            x.CreateMap<Foo1, Foo3>().ReverseMap();
         }
 
         [Fact]

@@ -15,7 +15,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
     [PublicAPI]
     public class OffsetDateTimeConverter :
         ITypeConverter<OffsetDateTime, DateTimeOffset>,
-        ITypeConverter<DateTimeOffset, OffsetDateTime>
+        ITypeConverter<OffsetDateTime?, DateTimeOffset?>,
+        ITypeConverter<DateTimeOffset, OffsetDateTime>,
+        ITypeConverter<DateTimeOffset?, OffsetDateTime?>
     {
         /// <summary>
         /// Performs conversion from source to destination type
@@ -39,6 +41,30 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         public OffsetDateTime Convert(DateTimeOffset source, OffsetDateTime destination, ResolutionContext context)
         {
             return OffsetDateTime.FromDateTimeOffset(source);
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public DateTimeOffset? Convert(OffsetDateTime? source, DateTimeOffset? destination, ResolutionContext context)
+        {
+            return source?.ToDateTimeOffset() ?? destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public OffsetDateTime? Convert(DateTimeOffset? source, OffsetDateTime? destination, ResolutionContext context)
+        {
+            return source.HasValue ? OffsetDateTime.FromDateTimeOffset(source.Value) : destination;
         }
     }
 }

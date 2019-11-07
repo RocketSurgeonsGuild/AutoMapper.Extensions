@@ -1,24 +1,20 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
 using Rocket.Surgery.Extensions.AutoMapper;
+using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
 
 namespace Rocket.Surgery.AutoMapper.Tests
 {
-    public class OffsetTests
+    public class OffsetTests : TypeConverterTest<OffsetConverter>
     {
-        private readonly MapperConfiguration _config;
-
-        public OffsetTests()
+        protected override void Configure(IMapperConfigurationExpression x)
         {
-            _config = new MapperConfiguration(x =>
-            {
-                x.AddProfile<NodaTimeProfile>();
-                x.CreateMap<Foo1, Foo3>().ReverseMap();
-            }
-            );
+            x.CreateMap<Foo1, Foo3>().ReverseMap();
         }
 
         [Fact]

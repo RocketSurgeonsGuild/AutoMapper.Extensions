@@ -1,30 +1,44 @@
 using System;
 using AutoMapper;
 using FluentAssertions;
+using System.Linq;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper;
 using Xunit;
+using Rocket.Surgery.Extensions.AutoMapper.Converters;
+using System.Reflection;
+using Microsoft.CodeAnalysis.CSharp;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Rocket.Surgery.AutoMapper.Tests
 {
-    public class DurationTests
+    public class DurationTests : TypeConverterTest<DurationConverter>
     {
-        private readonly IMapper _mapper;
-        private readonly MapperConfiguration _config;
-
-        public DurationTests()
+        [Theory]
+        [MemberData(nameof(GetTestCases))]
+        public void AutomatedTests(Type source, Type destination, object sourceValue)
         {
-            _config = new MapperConfiguration(x =>
+            var method = typeof(IMapper).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                .First(x => x.ContainsGenericParameters && x.IsGenericMethodDefinition && x.GetGenericMethodDefinition().GetGenericArguments().Length == 2 && x.GetParameters().Length == 1);
+            var result = method.MakeGenericMethod(source, destination).Invoke(_mapper, new[] { sourceValue });
+
+            if (sourceValue == null)
             {
-                x.AddProfile<NodaTimeProfile>();
-                x.CreateMap<Foo1, Foo3>().ReverseMap();
-                x.CreateMap<Foo1, Foo5>().ReverseMap();
-                x.CreateMap<Foo1, Foo7>().ReverseMap();
-                x.CreateMap<Foo1, Foo8>().ReverseMap();
-                x.CreateMap<Foo1, Foo9>().ReverseMap();
+                result.Should().BeNull();
             }
-            );
-            _mapper = _config.CreateMapper();
+            else
+            {
+                result.Should().BeOfType(Nullable.GetUnderlyingType(destination) ?? destination).And.NotBeNull();
+            }
+        }
+
+        protected override void Configure(IMapperConfigurationExpression x)
+        {
+            x.CreateMap<Foo1, Foo3>().ReverseMap();
+            x.CreateMap<Foo1, Foo5>().ReverseMap();
+            x.CreateMap<Foo1, Foo7>().ReverseMap();
+            x.CreateMap<Foo1, Foo8>().ReverseMap();
+            x.CreateMap<Foo1, Foo9>().ReverseMap();
         }
 
         [Fact]

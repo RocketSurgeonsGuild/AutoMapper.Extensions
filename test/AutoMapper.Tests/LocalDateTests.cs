@@ -1,24 +1,38 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
 using Rocket.Surgery.Extensions.AutoMapper;
+using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
 
 namespace Rocket.Surgery.AutoMapper.Tests
 {
-    public class LocalDateTests
+    public class LocalDateTests : TypeConverterTest<LocalDateConverter>
     {
-        private readonly MapperConfiguration _config;
-
-        public LocalDateTests()
+        [Theory]
+        [MemberData(nameof(GetTestCases))]
+        public void AutomatedTests(Type source, Type destination, object sourceValue)
         {
-            _config = new MapperConfiguration(x =>
+            var method = typeof(IMapper).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                .First(x => x.ContainsGenericParameters && x.IsGenericMethodDefinition && x.GetGenericMethodDefinition().GetGenericArguments().Length == 2 && x.GetParameters().Length == 1);
+            var result = method.MakeGenericMethod(source, destination).Invoke(_mapper, new[] { sourceValue });
+
+            if (sourceValue == null)
             {
-                x.AddProfile<NodaTimeProfile>();
-                x.CreateMap<Foo1, Foo3>().ReverseMap();
+                result.Should().BeNull();
             }
-            );
+            else
+            {
+                result.Should().BeOfType(Nullable.GetUnderlyingType(destination) ?? destination).And.NotBeNull();
+            }
+        }
+
+        protected override void Configure(IMapperConfigurationExpression x)
+        {
+            x.CreateMap<Foo1, Foo3>().ReverseMap();
         }
 
         [Fact]

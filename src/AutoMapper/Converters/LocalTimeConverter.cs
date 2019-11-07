@@ -70,5 +70,53 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         {
             return LocalDateTime.FromDateTime(source).TimeOfDay;
         }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public TimeSpan? Convert(LocalTime? source, TimeSpan? destination, ResolutionContext context)
+        {
+            return source.HasValue ? new TimeSpan(source.Value.TickOfDay) : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public LocalTime? Convert(TimeSpan? source, LocalTime? destination, ResolutionContext context)
+        {
+            return source.HasValue ? LocalTime.FromTicksSinceMidnight(source.Value.Ticks) : destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public DateTime? Convert(LocalTime? source, DateTime? destination, ResolutionContext context)
+        {
+            return source?.On(new LocalDate(1, 1, 1)).ToDateTimeUnspecified() ?? destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public LocalTime? Convert(DateTime? source, LocalTime? destination, ResolutionContext context)
+        {
+            return source.HasValue ? LocalDateTime.FromDateTime(source.Value).TimeOfDay : destination;
+        }
     }
 }

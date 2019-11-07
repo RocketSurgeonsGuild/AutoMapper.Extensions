@@ -15,7 +15,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
     [PublicAPI]
     public class OffsetConverter :
         ITypeConverter<Offset, TimeSpan>,
-        ITypeConverter<TimeSpan, Offset>
+        ITypeConverter<Offset?, TimeSpan?>,
+        ITypeConverter<TimeSpan, Offset>,
+        ITypeConverter<TimeSpan?, Offset?>
     {
         /// <summary>
         /// Performs conversion from source to destination type
@@ -39,6 +41,30 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         public Offset Convert(TimeSpan source, Offset destination, ResolutionContext context)
         {
             return Offset.FromTicks(source.Ticks);
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public TimeSpan? Convert(Offset? source, TimeSpan? destination, ResolutionContext context)
+        {
+            return source?.ToTimeSpan() ?? destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public Offset? Convert(TimeSpan? source, Offset? destination, ResolutionContext context)
+        {
+            return source.HasValue ? Offset.FromTicks(source.Value.Ticks) : destination;
         }
     }
 }

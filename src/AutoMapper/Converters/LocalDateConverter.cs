@@ -40,5 +40,29 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         {
             return LocalDateTime.FromDateTime(source).Date;
         }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public DateTime? Convert(LocalDate? source, DateTime? destination, ResolutionContext context)
+        {
+            return source?.AtMidnight().ToDateTimeUnspecified() ?? destination;
+        }
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public LocalDate? Convert(DateTime? source, LocalDate? destination, ResolutionContext context)
+        {
+            return source.HasValue ? LocalDateTime.FromDateTime(source.Value).Date : destination;
+        }
     }
 }
