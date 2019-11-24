@@ -13,13 +13,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
     public class NodaTimeProfile : Profile
     {
         /// <summary>
-        /// Gets the name of the profile.
-        /// </summary>
-        /// <value>The name of the profile.</value>
-        public override string ProfileName => nameof(NodaTimeProfile);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NodaTimeProfile"/> class.
+        /// Initializes a new instance of the <see cref="NodaTimeProfile" /> class.
         /// </summary>
         public NodaTimeProfile()
         {
@@ -32,6 +26,12 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             CreateMappingsForOffsetDateTimeConverter();
             CreateMappingsForPeriodConverter();
         }
+
+        /// <summary>
+        /// Gets the name of the profile.
+        /// </summary>
+        /// <value>The name of the profile.</value>
+        public override string ProfileName => nameof(NodaTimeProfile);
 
         private void CreateMappingsForDurationConverter()
         {

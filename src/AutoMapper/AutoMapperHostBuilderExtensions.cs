@@ -1,12 +1,14 @@
-using Rocket.Surgery.Conventions;
+using System;
+using JetBrains.Annotations;
 using Rocket.Surgery.Extensions.AutoMapper;
 
 // ReSharper disable once CheckNamespace
 namespace Rocket.Surgery.Conventions
 {
     /// <summary>
-    ///  AutoMapperHostBuilderExtensions.
+    /// AutoMapperHostBuilderExtensions.
     /// </summary>
+    [PublicAPI]
     public static class AutoMapperHostBuilderExtensions
     {
         /// <summary>
@@ -15,8 +17,16 @@ namespace Rocket.Surgery.Conventions
         /// <param name="container">The container.</param>
         /// <param name="options">The options object</param>
         /// <returns>IConventionHostBuilder.</returns>
-        public static IConventionHostBuilder UseAutoMapper(this IConventionHostBuilder container, AutoMapperOptions? options = null)
+        public static IConventionHostBuilder UseAutoMapper(
+            [NotNull] this IConventionHostBuilder container,
+            AutoMapperOptions? options = null
+        )
         {
+            if (container == null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
             container.Set(options ?? new AutoMapperOptions());
             container.Scanner.PrependConvention<AutoMapperConvention>();
             return container;

@@ -1,15 +1,15 @@
 using AutoMapper;
+using FluentAssertions;
 using Rocket.Surgery.Extensions.Testing;
 using Xunit;
 using Xunit.Abstractions;
-using FluentAssertions;
-using Rocket.Surgery.Extensions.AutoMapper;
+#pragma warning disable CA1034 // Nested types should not be visible
 
-namespace Rocket.Surgery.AutoMapper.Tests
+namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public static class AutoMapperProfile
     {
-        class ParentModel
+        private class ParentModel
         {
             public int Integer { get; set; }
             public int? NullableInteger { get; set; }
@@ -19,7 +19,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
             public ChildModel? Child { get; set; }
         }
 
-        class ParentDto
+        private class ParentDto
         {
             public int Integer { get; set; }
             public int Version { get; set; }
@@ -30,7 +30,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
             public ChildDto? Child { get; set; }
         }
 
-        class ChildModel
+        private class ChildModel
         {
             public int Integer { get; set; }
             public int? NullableInteger { get; set; }
@@ -39,7 +39,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
             public decimal? NullableDecimal { get; set; }
         }
 
-        class ChildDto
+        private class ChildDto
         {
             public int Integer { get; set; }
             public int Version { get; set; }
@@ -51,27 +51,19 @@ namespace Rocket.Surgery.AutoMapper.Tests
 
         public class OnlyDefinedPropertiesTests : AutoFakeTest
         {
-            public OnlyDefinedPropertiesTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
-
-            private class MyProfile : Profile
-            {
-                protected MyProfile()
-                {
-                    this.OnlyDefinedProperties();
-                }
-            }
-
             [Fact]
             public void ConfigurationIsValid()
             {
-                var mapper = new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<ChildModel, ChildDto>()
-                        .ForMember(x => x.Version, x => x.Ignore());
-                    cfg.CreateMap<ParentModel, ParentDto>()
-                        .ForMember(x => x.Version, x => x.Ignore());
-                    cfg.OnlyDefinedProperties();
-                }).CreateMapper();
+                var mapper = new MapperConfiguration(
+                    cfg =>
+                    {
+                        cfg.CreateMap<ChildModel, ChildDto>()
+                           .ForMember(x => x.Version, x => x.Ignore());
+                        cfg.CreateMap<ParentModel, ParentDto>()
+                           .ForMember(x => x.Version, x => x.Ignore());
+                        cfg.OnlyDefinedProperties();
+                    }
+                ).CreateMapper();
 
                 mapper.ConfigurationProvider.AssertConfigurationIsValid();
             }
@@ -79,36 +71,42 @@ namespace Rocket.Surgery.AutoMapper.Tests
             [Fact]
             public void ShouldMaintain_AllowNullDestinationValues()
             {
-                var mapper = new MapperConfiguration(cfg =>
-                {
-                    cfg.AllowNullDestinationValues = false;
-                    cfg.OnlyDefinedProperties();
-                    cfg.AllowNullDestinationValues.Should().BeFalse();
-                }).CreateMapper();
+                var mapper = new MapperConfiguration(
+                    cfg =>
+                    {
+                        cfg.AllowNullDestinationValues = false;
+                        cfg.OnlyDefinedProperties();
+                        cfg.AllowNullDestinationValues.Should().BeFalse();
+                    }
+                ).CreateMapper();
             }
 
             [Fact]
             public void ShouldMaintain_AllowNullCollections()
             {
-                var mapper = new MapperConfiguration(cfg =>
-                {
-                    cfg.AllowNullCollections = false;
-                    cfg.OnlyDefinedProperties();
-                    cfg.AllowNullCollections.Should().BeFalse();
-                }).CreateMapper();
+                var mapper = new MapperConfiguration(
+                    cfg =>
+                    {
+                        cfg.AllowNullCollections = false;
+                        cfg.OnlyDefinedProperties();
+                        cfg.AllowNullCollections.Should().BeFalse();
+                    }
+                ).CreateMapper();
             }
 
             [Fact]
             public void MapOnlyPropertiesThatWereSetOnTheLeftHandSide()
             {
-                var mapper = new MapperConfiguration(cfg =>
-                {
-                    cfg.OnlyDefinedProperties();
-                    cfg.CreateMap<ChildModel, ChildDto>();
-                    cfg.CreateMap<ParentModel, ParentDto>();
-                }).CreateMapper();
+                var mapper = new MapperConfiguration(
+                    cfg =>
+                    {
+                        cfg.OnlyDefinedProperties();
+                        cfg.CreateMap<ChildModel, ChildDto>();
+                        cfg.CreateMap<ParentModel, ParentDto>();
+                    }
+                ).CreateMapper();
 
-                var destination = new ParentDto()
+                var destination = new ParentDto
                 {
                     Integer = 1337,
                     NullableInteger = 1337,
@@ -118,7 +116,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
                 };
 
                 mapper.Map(
-                    new ParentModel()
+                    new ParentModel
                     {
                         Decimal = 2.2M,
                         NullableInteger = 123
@@ -137,39 +135,41 @@ namespace Rocket.Surgery.AutoMapper.Tests
             [Fact]
             public void MapOnlyPropertiesThatWereSetOnTheLeftHandSide_WithChildren()
             {
-                var mapper = new MapperConfiguration(cfg =>
-                {
-                    cfg.OnlyDefinedProperties();
-                    cfg.CreateMap<ChildModel, ChildDto>();
-                    cfg.CreateMap<ParentModel, ParentDto>();
-                }).CreateMapper();
+                var mapper = new MapperConfiguration(
+                    cfg =>
+                    {
+                        cfg.OnlyDefinedProperties();
+                        cfg.CreateMap<ChildModel, ChildDto>();
+                        cfg.CreateMap<ParentModel, ParentDto>();
+                    }
+                ).CreateMapper();
 
-                var destination = new ParentDto()
+                var destination = new ParentDto
                 {
                     Integer = 1337,
                     NullableInteger = 1337,
                     Decimal = 13.37M,
                     NullableDecimal = 13.37M,
                     String = "123",
-                    Child = new ChildDto()
+                    Child = new ChildDto
                     {
                         Integer = 1337,
                         NullableInteger = 1337,
                         Decimal = 13.37M,
                         NullableDecimal = 13.37M,
-                        String = "123",
+                        String = "123"
                     }
                 };
 
                 mapper.Map(
-                    new ParentModel()
+                    new ParentModel
                     {
                         Decimal = 2.2M,
                         NullableInteger = 123,
-                        Child = new ChildModel()
+                        Child = new ChildModel
                         {
                             NullableDecimal = 2.2M,
-                            Integer = 123,
+                            Integer = 123
                         }
                     },
                     destination
@@ -186,6 +186,13 @@ namespace Rocket.Surgery.AutoMapper.Tests
                 destination.Child.Decimal.Should().Be(13.37M);
                 destination.Child.NullableDecimal.Should().Be(2.2M);
                 destination.Child.String.Should().Be("123");
+            }
+
+            public OnlyDefinedPropertiesTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+            private class MyProfile : Profile
+            {
+                protected MyProfile() => this.OnlyDefinedProperties();
             }
         }
     }

@@ -1,32 +1,24 @@
 using System;
-using System.Linq;
-using System.Reflection;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
 using NodaTime.Text;
-using Rocket.Surgery.Extensions.AutoMapper;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
 
-namespace Rocket.Surgery.AutoMapper.Tests
+namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public class PeriodTests : TypeConverterTest<PeriodConverter>
     {
-        protected override void Configure(IMapperConfigurationExpression x)
-        {
-            x.CreateMap<Foo1, Foo3>().ReverseMap();
-        }
-
         [Fact]
-        public void ValidateMapping() => _config.AssertConfigurationIsValid();
+        public void ValidateMapping() => Config.AssertConfigurationIsValid();
 
         [Fact]
         public void MapsFrom()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo1()
+            var foo = new Foo1
             {
                 Bar = Period.FromMonths(10)
             };
@@ -38,9 +30,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsTo()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo3()
+            var foo = new Foo3
             {
                 Bar = "P5M"
             };
@@ -49,12 +41,22 @@ namespace Rocket.Surgery.AutoMapper.Tests
             result.Should().Be(PeriodPattern.Roundtrip.Parse(foo.Bar).Value);
         }
 
-        public class Foo1
+        protected override void Configure(IMapperConfigurationExpression x)
+        {
+            if (x == null)
+            {
+                throw new ArgumentNullException(nameof(x));
+            }
+
+            x.CreateMap<Foo1, Foo3>().ReverseMap();
+        }
+
+        private class Foo1
         {
             public Period? Bar { get; set; }
         }
 
-        public class Foo3
+        private class Foo3
         {
             public string? Bar { get; set; }
         }

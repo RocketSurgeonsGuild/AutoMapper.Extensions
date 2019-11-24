@@ -1,55 +1,27 @@
 using System;
+using System.Linq;
+using System.Reflection;
 using AutoMapper;
 using FluentAssertions;
-using System.Linq;
+using JetBrains.Annotations;
 using NodaTime;
-using Xunit;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
-using System.Reflection;
-using Microsoft.CodeAnalysis.CSharp;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Xunit;
+#pragma warning disable CA1034 // Nested types should not be visible
 
-namespace Rocket.Surgery.AutoMapper.Tests
+namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public class DurationTests : TypeConverterTest<DurationConverter>
     {
-        [Theory]
-        [MemberData(nameof(GetTestCases))]
-        public void AutomatedTests(Type source, Type destination, object sourceValue)
-        {
-            var method = typeof(IMapper).GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .First(x => x.ContainsGenericParameters && x.IsGenericMethodDefinition && x.GetGenericMethodDefinition().GetGenericArguments().Length == 2 && x.GetParameters().Length == 1);
-            var result = method.MakeGenericMethod(source, destination).Invoke(_mapper, new[] { sourceValue });
-
-            if (sourceValue == null)
-            {
-                result.Should().BeNull();
-            }
-            else
-            {
-                result.Should().BeOfType(Nullable.GetUnderlyingType(destination) ?? destination).And.NotBeNull();
-            }
-        }
-
-        protected override void Configure(IMapperConfigurationExpression x)
-        {
-            x.CreateMap<Foo1, Foo3>().ReverseMap();
-            x.CreateMap<Foo1, Foo5>().ReverseMap();
-            x.CreateMap<Foo1, Foo7>().ReverseMap();
-            x.CreateMap<Foo1, Foo8>().ReverseMap();
-            x.CreateMap<Foo1, Foo9>().ReverseMap();
-        }
-
         [Fact]
-        public void ValidateMapping() => _config.AssertConfigurationIsValid();
+        public void ValidateMapping() => Config.AssertConfigurationIsValid();
 
         [Fact]
         public void CanConvertDurationToMinutes()
         {
             var foo = new Foo1 { Bar = Duration.FromMinutes(300) };
 
-            var o = _mapper.Map<Foo7>(foo);
+            var o = Mapper.Map<Foo7>(foo);
 
             Assert.Equal(18000, o.Bar);
         }
@@ -59,7 +31,7 @@ namespace Rocket.Surgery.AutoMapper.Tests
         {
             var foo = new Foo7 { Bar = 300 };
 
-            var o = _mapper.Map<Foo1>(foo);
+            var o = Mapper.Map<Foo1>(foo);
 
             Assert.Equal(Duration.FromMinutes(5), o.Bar);
         }
@@ -67,9 +39,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsFrom_TimeSpan()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo1()
+            var foo = new Foo1
             {
                 Bar = Duration.FromDays(1)
             };
@@ -81,9 +53,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsTo_TimeSpan()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo3()
+            var foo = new Foo3
             {
                 Bar = TimeSpan.FromDays(1)
             };
@@ -95,9 +67,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsFrom_Int64()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo1()
+            var foo = new Foo1
             {
                 Bar = Duration.FromDays(1)
             };
@@ -109,9 +81,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsTo_Int64()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo5()
+            var foo = new Foo5
             {
                 Bar = 10000L
             };
@@ -123,9 +95,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsFrom_Int32()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo1()
+            var foo = new Foo1
             {
                 Bar = Duration.FromDays(1)
             };
@@ -137,9 +109,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsTo_Int32()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo7()
+            var foo = new Foo7
             {
                 Bar = 10000
             };
@@ -151,9 +123,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsFrom_Double()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo1()
+            var foo = new Foo1
             {
                 Bar = Duration.FromDays(1)
             };
@@ -165,9 +137,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsTo_Double()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo8()
+            var foo = new Foo8
             {
                 Bar = 10000.1256d
             };
@@ -179,9 +151,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsFrom_Decimal()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo1()
+            var foo = new Foo1
             {
                 Bar = Duration.FromDays(1)
             };
@@ -193,15 +165,51 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsTo_Decimal()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo9()
+            var foo = new Foo9
             {
                 Bar = 10000.125M
             };
 
             var result = mapper.Map<Foo1>(foo).Bar;
             result.Should().Be(Duration.FromTicks((double)foo.Bar * NodaConstants.TicksPerMillisecond));
+        }
+
+        [Theory]
+        [MemberData(nameof(GetTestCases))]
+        public void AutomatedTests(Type source, Type destination, object sourceValue)
+        {
+            var method = typeof(IMapper).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+               .First(
+                    x => x.ContainsGenericParameters && x.IsGenericMethodDefinition &&
+                        x.GetGenericMethodDefinition().GetGenericArguments().Length == 2 &&
+                        x.GetParameters().Length == 1
+                );
+            var result = method.MakeGenericMethod(source, destination).Invoke(Mapper, new[] { sourceValue });
+
+            if (sourceValue == null)
+            {
+                result.Should().BeNull();
+            }
+            else
+            {
+                result.Should().BeOfType(Nullable.GetUnderlyingType(destination) ?? destination).And.NotBeNull();
+            }
+        }
+
+        protected override void Configure([NotNull] IMapperConfigurationExpression x)
+        {
+            if (x == null)
+            {
+                throw new ArgumentNullException(nameof(x));
+            }
+
+            x.CreateMap<Foo1, Foo3>().ReverseMap();
+            x.CreateMap<Foo1, Foo5>().ReverseMap();
+            x.CreateMap<Foo1, Foo7>().ReverseMap();
+            x.CreateMap<Foo1, Foo8>().ReverseMap();
+            x.CreateMap<Foo1, Foo9>().ReverseMap();
         }
 
         public class Foo1

@@ -7,7 +7,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// PeriodConverter.
-    /// Implements the <see cref="ITypeConverter{Period, String}" />
+    /// Implements the <see cref="ITypeConverter{TSource,TDestination}" />
     /// Implements the <see cref="ITypeConverter{String, Period}" />
     /// </summary>
     /// <seealso cref="ITypeConverter{Period, String}" />
@@ -24,10 +24,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
-        public string Convert(Period source, string destination, ResolutionContext context)
-        {
-            return source?.ToString()!;
-        }
+        public string Convert(Period source, string destination, ResolutionContext context) => source?.ToString()!;
 
         /// <summary>
         /// Converts the specified source.

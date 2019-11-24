@@ -1,16 +1,15 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using AutoMapper;
 using AutoMapper.Configuration;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Rocket.Surgery.Extensions.AutoMapper;
-using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Extensions.DependencyInjection;
-using Rocket.Surgery.Conventions.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Collections.Generic;
+using Microsoft.Extensions.Options;
+using Rocket.Surgery.Conventions;
+using Rocket.Surgery.Conventions.Reflection;
+using Rocket.Surgery.Extensions.AutoMapper;
+using Rocket.Surgery.Extensions.DependencyInjection;
 
 [assembly: Convention(typeof(AutoMapperConvention))]
 
@@ -26,33 +25,39 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         private readonly AutoMapperOptions _options;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AutoMapperConvention"/> class.
+        /// Initializes a new instance of the <see cref="AutoMapperConvention" /> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        public AutoMapperConvention(AutoMapperOptions? options = null)
+        public AutoMapperConvention(AutoMapperOptions? options = null) => _options = options ?? new AutoMapperOptions();
+
+        private void AddAutoMapperClasses(IServiceConventionContext context)
         {
-            _options = options ?? new AutoMapperOptions();
+            var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(AutoMapper)).ToArray();
+            context.Services.AddAutoMapper(assemblies, _options.ServiceLifetime);
+            context.Services.Replace(
+                ServiceDescriptor.Singleton<IConfigurationProvider>(
+                    _ =>
+                    {
+                        var options = _.GetService<IOptions<MapperConfigurationExpression>>();
+                        options.Value.AddMaps(assemblies);
+                        return new MapperConfiguration(options?.Value ?? new MapperConfigurationExpression());
+                    }
+                )
+            );
         }
 
         /// <summary>
         /// Registers the specified context.
         /// </summary>
         /// <param name="context">The context.</param>
-        public void Register(IServiceConventionContext context)
+        public void Register([NotNull] IServiceConventionContext context)
         {
-            AddAutoMapperClasses(context);
-        }
-
-        private void AddAutoMapperClasses(IServiceConventionContext context)
-        {
-            var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(AutoMapper)).ToArray();
-            context.Services.AddAutoMapper(assemblies, _options.ServiceLifetime);
-            context.Services.Replace(ServiceDescriptor.Singleton<IConfigurationProvider>(_ =>
+            if (context == null)
             {
-                var options = _.GetService<IOptions<MapperConfigurationExpression>>();
-                options.Value.AddMaps(assemblies);
-                return new MapperConfiguration(options?.Value ?? new MapperConfigurationExpression());
-            }));
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            AddAutoMapperClasses(context);
         }
     }
 }

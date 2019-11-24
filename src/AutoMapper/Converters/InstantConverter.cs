@@ -7,7 +7,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
 {
     /// <summary>
     /// InstantConverter.
-    /// Implements the <see cref="ITypeConverter{Instant, DateTime}" />
+    /// Implements the <see cref="ITypeConverter{TSource,TDestination}" />
     /// Implements the <see cref="ITypeConverter{Instant, DateTimeOffset}" />
     /// Implements the <see cref="ITypeConverter{DateTime, Instant}" />
     /// Implements the <see cref="ITypeConverter{DateTimeOffset, Instant}" />
@@ -34,30 +34,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
-        public DateTime Convert(Instant source, DateTime destination, ResolutionContext context)
-        {
-            return source.ToDateTimeUtc();
-        }
-
-        /// <summary>
-        /// Performs conversion from source to destination type
-        /// </summary>
-        /// <param name="source">Source object</param>
-        /// <param name="destination">Destination object</param>
-        /// <param name="context">Resolution context</param>
-        /// <returns>Destination object</returns>
-        public DateTimeOffset Convert(Instant source, DateTimeOffset destination, ResolutionContext context)
-        {
-            return source.ToDateTimeOffset();
-        }
-
-        /// <summary>
-        /// Performs conversion from source to destination type
-        /// </summary>
-        /// <param name="source">Source object</param>
-        /// <param name="destination">Destination object</param>
-        /// <param name="context">Resolution context</param>
-        /// <returns>Destination object</returns>
         public Instant Convert(DateTime source, Instant destination, ResolutionContext context)
         {
             var utcDateTime = source.Kind == DateTimeKind.Unspecified
@@ -74,45 +50,12 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
-        public Instant Convert(DateTimeOffset source, Instant destination, ResolutionContext context)
-        {
-            return Instant.FromDateTimeOffset(source);
-        }
-
-        /// <summary>
-        /// Performs conversion from source to destination type
-        /// </summary>
-        /// <param name="source">Source object</param>
-        /// <param name="destination">Destination object</param>
-        /// <param name="context">Resolution context</param>
-        /// <returns>Destination object</returns>
-        public DateTime? Convert(Instant? source, DateTime? destination, ResolutionContext context)
-        {
-            return source?.ToDateTimeUtc() ?? destination;
-        }
-
-        /// <summary>
-        /// Performs conversion from source to destination type
-        /// </summary>
-        /// <param name="source">Source object</param>
-        /// <param name="destination">Destination object</param>
-        /// <param name="context">Resolution context</param>
-        /// <returns>Destination object</returns>
-        public DateTimeOffset? Convert(Instant? source, DateTimeOffset? destination, ResolutionContext context)
-        {
-            return source?.ToDateTimeOffset() ?? destination;
-        }
-
-        /// <summary>
-        /// Performs conversion from source to destination type
-        /// </summary>
-        /// <param name="source">Source object</param>
-        /// <param name="destination">Destination object</param>
-        /// <param name="context">Resolution context</param>
-        /// <returns>Destination object</returns>
         public Instant? Convert(DateTime? source, Instant? destination, ResolutionContext context)
         {
-            if (!source.HasValue) return destination;
+            if (!source.HasValue)
+            {
+                return destination;
+            }
 
             var utcDateTime = source.Value.Kind == DateTimeKind.Unspecified
                 ? DateTime.SpecifyKind(source.Value, DateTimeKind.Utc)
@@ -128,9 +71,57 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
+        public Instant Convert(DateTimeOffset source, Instant destination, ResolutionContext context)
+            => Instant.FromDateTimeOffset(source);
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
         public Instant? Convert(DateTimeOffset? source, Instant? destination, ResolutionContext context)
-        {
-            return source.HasValue ? Instant.FromDateTimeOffset(source.Value) : destination;
-        }
+            => source.HasValue ? Instant.FromDateTimeOffset(source.Value) : destination;
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public DateTime Convert(Instant source, DateTime destination, ResolutionContext context)
+            => source.ToDateTimeUtc();
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public DateTimeOffset Convert(Instant source, DateTimeOffset destination, ResolutionContext context)
+            => source.ToDateTimeOffset();
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public DateTime? Convert(Instant? source, DateTime? destination, ResolutionContext context)
+            => source?.ToDateTimeUtc() ?? destination;
+
+        /// <summary>
+        /// Performs conversion from source to destination type
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <param name="destination">Destination object</param>
+        /// <param name="context">Resolution context</param>
+        /// <returns>Destination object</returns>
+        public DateTimeOffset? Convert(Instant? source, DateTimeOffset? destination, ResolutionContext context)
+            => source?.ToDateTimeOffset() ?? destination;
     }
 }

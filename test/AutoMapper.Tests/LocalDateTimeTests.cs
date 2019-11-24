@@ -3,47 +3,25 @@ using System.Linq;
 using System.Reflection;
 using AutoMapper;
 using FluentAssertions;
+using JetBrains.Annotations;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
+#pragma warning disable CA1034 // Nested types should not be visible
 
-namespace Rocket.Surgery.AutoMapper.Tests
+namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public class LocalDateTimeTests : TypeConverterTest<LocalDateTimeConverter>
     {
-        [Theory]
-        [MemberData(nameof(GetTestCases))]
-        public void AutomatedTests(Type source, Type destination, object sourceValue)
-        {
-            var method = typeof(IMapper).GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .First(x => x.ContainsGenericParameters && x.IsGenericMethodDefinition && x.GetGenericMethodDefinition().GetGenericArguments().Length == 2 && x.GetParameters().Length == 1);
-            var result = method.MakeGenericMethod(source, destination).Invoke(_mapper, new[] { sourceValue });
-
-            if (sourceValue == null)
-            {
-                result.Should().BeNull();
-            }
-            else
-            {
-                result.Should().BeOfType(Nullable.GetUnderlyingType(destination) ?? destination).And.NotBeNull();
-            }
-        }
-
-        protected override void Configure(IMapperConfigurationExpression x)
-        {
-            x.CreateMap<Foo1, Foo3>().ReverseMap();
-        }
-
         [Fact]
-        public void ValidateMapping() => _config.AssertConfigurationIsValid();
+        public void ValidateMapping() => Config.AssertConfigurationIsValid();
 
         [Fact]
         public void MapsFrom()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo1()
+            var foo = new Foo1
             {
                 Bar = LocalDateTime.FromDateTime(DateTime.Now)
             };
@@ -55,9 +33,9 @@ namespace Rocket.Surgery.AutoMapper.Tests
         [Fact]
         public void MapsTo()
         {
-            var mapper = _config.CreateMapper();
+            var mapper = Config.CreateMapper();
 
-            var foo = new Foo3()
+            var foo = new Foo3
             {
                 Bar = DateTime.Now
             };
@@ -66,12 +44,44 @@ namespace Rocket.Surgery.AutoMapper.Tests
             result.Should().Be(LocalDateTime.FromDateTime(foo.Bar));
         }
 
-        public class Foo1
+        [Theory]
+        [MemberData(nameof(GetTestCases))]
+        public void AutomatedTests(Type source, Type destination, object sourceValue)
+        {
+            var method = typeof(IMapper).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+               .First(
+                    x => x.ContainsGenericParameters && x.IsGenericMethodDefinition &&
+                        x.GetGenericMethodDefinition().GetGenericArguments().Length == 2 &&
+                        x.GetParameters().Length == 1
+                );
+            var result = method.MakeGenericMethod(source, destination).Invoke(Mapper, new[] { sourceValue });
+
+            if (sourceValue == null)
+            {
+                result.Should().BeNull();
+            }
+            else
+            {
+                result.Should().BeOfType(Nullable.GetUnderlyingType(destination) ?? destination).And.NotBeNull();
+            }
+        }
+
+        protected override void Configure([NotNull] IMapperConfigurationExpression x)
+        {
+            if (x == null)
+            {
+                throw new ArgumentNullException(nameof(x));
+            }
+
+            x.CreateMap<Foo1, Foo3>().ReverseMap();
+        }
+
+        private class Foo1
         {
             public LocalDateTime Bar { get; set; }
         }
 
-        public class Foo3
+        private class Foo3
         {
             public DateTime Bar { get; set; }
         }
