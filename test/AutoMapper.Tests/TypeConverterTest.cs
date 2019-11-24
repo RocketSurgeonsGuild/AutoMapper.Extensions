@@ -6,12 +6,60 @@ using Bogus;
 using Bogus.Extensions;
 using JetBrains.Annotations;
 using NodaTime;
+
 #pragma warning disable CA1000 // Do not declare static members on generic types
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public abstract class TypeConverterTest<T>
     {
+        public static IEnumerable<object?[]> GetTestCases()
+        {
+            static (Type source, Type sourceClass, Type destination, Type destinationClass) GetWrappedClasses(
+                (Type source, Type destination) item
+            )
+            {
+                var (source, destination) = item;
+                var sourceFoo = typeof(Foo<>).MakeGenericType(source);
+                var destinationFoo = typeof(Foo<>).MakeGenericType(destination);
+                return ( source, sourceFoo, destination, destinationFoo );
+            }
+
+            static object CreateValue(Type type, object value) => typeof(Foo)
+                   .GetMethod(nameof(Foo.Create))!
+               .MakeGenericMethod(type).Invoke(null, new[] { value })!;
+
+            foreach (var (source, sourceClass, destination, destinationClass) in GetValueTypePairs()
+               .SelectMany(
+                    item => new[]
+                    {
+                        item,
+                        ( typeof(Nullable<>).MakeGenericType(item.source),
+                          typeof(Nullable<>).MakeGenericType(item.destination) ),
+                        ( item.source, typeof(Nullable<>).MakeGenericType(item.destination) )
+                    }
+                ).Select(GetWrappedClasses))
+            {
+                var sourceValue = CreateValue(source, GetRandomValue(source));
+                yield return new[] { sourceClass, destinationClass, sourceValue };
+
+                if (Nullable.GetUnderlyingType(source) == null)
+                {
+                    continue;
+                }
+
+                foreach (var item in Faker.Make(3, () => CreateValue(source, GetRandomValue(source).OrNull(Faker))))
+                {
+                    yield return new[]
+                    {
+                        sourceClass,
+                        destinationClass,
+                        item
+                    };
+                }
+            }
+        }
+
         private static IEnumerable<Type> GetAllTypeConverters() => typeof(T).GetInterfaces()
            .Where(x => x.IsGenericType && typeof(ITypeConverter<,>).IsAssignableFrom(x.GetGenericTypeDefinition()));
 
@@ -19,7 +67,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
            .Select(
                 x => (
                     source: Nullable.GetUnderlyingType(x.GetGenericArguments()[0]) ?? x.GetGenericArguments()[0],
-                    destination: Nullable.GetUnderlyingType(x.GetGenericArguments()[1]) ?? x.GetGenericArguments()[1])
+                    destination: Nullable.GetUnderlyingType(x.GetGenericArguments()[1]) ?? x.GetGenericArguments()[1] )
             )
            .Where(x => x.source.IsValueType && x.destination.IsValueType)
            .Distinct();
@@ -112,57 +160,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             throw new NotSupportedException($"type {type.FullName} is not supported");
         }
 
-        public static IEnumerable<object?[]> GetTestCases()
-        {
-            static (Type source, Type sourceClass, Type destination, Type destinationClass) GetWrappedClasses(
-                (Type source, Type destination) item
-            )
-            {
-                var (source, destination) = item;
-                var sourceFoo = typeof(Foo<>).MakeGenericType(source);
-                var destinationFoo = typeof(Foo<>).MakeGenericType(destination);
-                return ( source, sourceFoo, destination, destinationFoo );
-            }
-
-            static object CreateValue(Type type, object value) => typeof(Foo)
-                   .GetMethod(nameof(Foo.Create))!
-               .MakeGenericMethod(type).Invoke(null, new[] { value })!;
-
-            foreach (var (source, sourceClass, destination, destinationClass) in GetValueTypePairs()
-               .SelectMany(
-                    item => new[]
-                    {
-                        item,
-                        ( typeof(Nullable<>).MakeGenericType(item.source),
-                          typeof(Nullable<>).MakeGenericType(item.destination) ),
-                        ( item.source, typeof(Nullable<>).MakeGenericType(item.destination) )
-                    }
-                ).Select(GetWrappedClasses))
-            {
-                var sourceValue = CreateValue(source, GetRandomValue(source));
-                yield return new[] { sourceClass, destinationClass, sourceValue };
-
-                if (Nullable.GetUnderlyingType(source) == null)
-                {
-                    continue;
-                }
-
-                foreach (var item in Faker.Make(3, () => CreateValue(source, GetRandomValue(source).OrNull(Faker))))
-                {
-                    yield return new[]
-                    {
-                        sourceClass,
-                        destinationClass,
-                        item
-                    };
-                }
-            }
-        }
-
-
-        protected IMapper Mapper { get; }
-        protected MapperConfiguration Config { get; }
-
         protected TypeConverterTest()
         {
             Config = new MapperConfiguration(
@@ -187,6 +184,10 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             );
             Mapper = Config.CreateMapper();
         }
+
+
+        protected IMapper Mapper { get; }
+        protected MapperConfiguration Config { get; }
 
         protected abstract void Configure([NotNull] IMapperConfigurationExpression expression);
     }

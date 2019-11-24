@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using NodaTime;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
+
 #pragma warning disable CA1034 // Nested types should not be visible
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
