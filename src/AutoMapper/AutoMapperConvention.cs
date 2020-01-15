@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using AutoMapper;
 using AutoMapper.Configuration;
+using AutoMapper.Features;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -40,7 +41,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper
                     {
                         var options = _.GetService<IOptions<MapperConfigurationExpression>>();
                         options.Value.AddMaps(assemblies);
-                        return new MapperConfiguration(options?.Value ?? new MapperConfigurationExpression());
+                        var configuration = new MapperConfiguration(options?.Value ?? new MapperConfigurationExpression());
+                        configuration.Features.Set(_options);
+                        return configuration;
                     }
                 )
             );

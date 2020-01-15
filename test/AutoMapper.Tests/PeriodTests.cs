@@ -1,10 +1,12 @@
 using System;
 using AutoMapper;
 using FluentAssertions;
+using Newtonsoft.Json;
 using NodaTime;
 using NodaTime.Text;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {

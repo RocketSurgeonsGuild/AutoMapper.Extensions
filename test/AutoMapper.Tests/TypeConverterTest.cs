@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using AutoMapper.Features;
 using Bogus;
 using Bogus.Extensions;
 using JetBrains.Annotations;
@@ -165,6 +166,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             Config = new MapperConfiguration(
                 x =>
                 {
+                    x.SetFeature(Options);
                     x.AddProfile<NodaTimeProfile>();
                     foreach (var (source, destination) in GetValueTypePairs().SelectMany(
                         item => new[]
@@ -187,6 +189,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 
 
         protected IMapper Mapper { get; }
+        protected AutoMapperOptions Options { get; } = new AutoMapperOptions();
         protected MapperConfiguration Config { get; }
 
         protected abstract void Configure([NotNull] IMapperConfigurationExpression expression);

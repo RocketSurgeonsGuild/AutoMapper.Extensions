@@ -5,6 +5,7 @@
     <ItemGroup>
         <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection" />
         <ProjectReference Include="..\..\src\AutoMapper\Rocket.Surgery.Extensions.AutoMapper.csproj" />
+        <ProjectReference Include="..\..\src\AutoMapper.NewtonsoftJson\Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.csproj" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
     </ItemGroup>
     <ItemGroup>
