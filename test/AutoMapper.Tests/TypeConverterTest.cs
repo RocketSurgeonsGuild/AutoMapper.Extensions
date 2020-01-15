@@ -1,18 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
 using AutoMapper;
 using AutoMapper.Features;
 using Bogus;
 using Bogus.Extensions;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using NodaTime;
+using Rocket.Surgery.Extensions.Testing;
+using Serilog.Events;
+using Xunit.Abstractions;
 
 #pragma warning disable CA1000 // Do not declare static members on generic types
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public abstract class TypeConverterTest<T>
+    public abstract class TypeConverterTest<T> : AutoFakeTest
     {
         public static IEnumerable<object?[]> GetTestCases()
         {
@@ -27,8 +33,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             }
 
             static object CreateValue(Type type, object value) => typeof(Foo)
-                   .GetMethod(nameof(Foo.Create))!
-               .MakeGenericMethod(type).Invoke(null, new[] { value })!;
+                   .GetMethod(nameof(Foo.Create))!?.MakeGenericMethod(type).Invoke(null, new[] { value })!;
 
             foreach (var (source, sourceClass, destination, destinationClass) in GetValueTypePairs()
                .SelectMany(
@@ -161,12 +166,14 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             throw new NotSupportedException($"type {type.FullName} is not supported");
         }
 
-        protected TypeConverterTest()
+        // TODO: Refactor this to forward parent class constructor values
+        protected TypeConverterTest(ITestOutputHelper testOutputHelper) : base(testOutputHelper, LogEventLevel.Debug)
         {
             Config = new MapperConfiguration(
                 x =>
                 {
                     x.SetFeature(Options);
+                    x.SetFeature(new AutoMapperLogger(Logger));
                     x.AddProfile<NodaTimeProfile>();
                     foreach (var (source, destination) in GetValueTypePairs().SelectMany(
                         item => new[]

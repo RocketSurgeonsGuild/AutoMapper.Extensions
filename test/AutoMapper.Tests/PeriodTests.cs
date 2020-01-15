@@ -6,12 +6,15 @@ using NodaTime;
 using NodaTime.Text;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
+using Xunit.Abstractions;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public class PeriodTests : TypeConverterTest<PeriodConverter>
     {
+        public PeriodTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+
         [Fact]
         public void ValidateMapping() => Config.AssertConfigurationIsValid();
 

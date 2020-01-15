@@ -19,9 +19,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         // /// </summary>
         // public JsonDefaultValue JsonDefaultValue { get; set; } = JsonDefaultValue.NotNull;
 
-        void IRuntimeFeature.Seal(IConfigurationProvider configurationProvider)
-        {
-        }
+        void IRuntimeFeature.Seal(IConfigurationProvider configurationProvider) { }
 
         void IGlobalFeature.Configure(IConfigurationProvider configurationProvider)
         {

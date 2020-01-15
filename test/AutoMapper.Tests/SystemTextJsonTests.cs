@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using AutoMapper;
+using FakeItEasy;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson;
 using Xunit;
+using Xunit.Abstractions;
 
-namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
-    public class SystemTextJsonTests : TypeConverterTest<JsonElementConverter>
+namespace Rocket.Surgery.Extensions.AutoMapper.Tests
+{
+    public class SystemTextJsonWithNewtonsoftJsonTests : TypeConverterTest<SystemTextJsonAndNewtonsoftJsonConverter>
     {
-        public SystemTextJsonTests()
-        {
-        }
+        public SystemTextJsonWithNewtonsoftJsonTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
         [Fact]
         public void ValidateMapping() => Config.AssertConfigurationIsValid();
@@ -29,7 +33,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             var result = Mapper.Map<JTokenA>(item);
             result.Bar.Should().BeOfType(type);
         }
-        
+
         [Fact]
         public void ShouldMap_From_Nullable_JsonElement_To_JToken_Null()
         {
@@ -38,9 +42,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JTokenA>(item);
-            result.Bar.Should().BeOfType<JValue>();
+            result.Bar.Should().BeNull();
         }
-        
+
         [Fact]
         public void ShouldMap_From_Nullable_JsonElement_To_JToken_Null_Allow_Nulls()
         {
@@ -49,7 +53,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JTokenA>(item);
-            result.Bar.Should().BeOfType<JValue>();
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -74,7 +78,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Add("null", JsonValueKind.Null);
             }
         }
-        
+
         [Fact]
         public void ShouldMap_From_JToken_To_Nullable_JsonElement_Null()
         {
@@ -84,9 +88,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             };
             var result = Mapper.Map<JsonElementA>(item);
             result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JToken_To_Nullable_JsonElement_Null_Allow_Nulls()
         {
@@ -96,7 +100,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             };
             var result = Mapper.Map<JsonElementA>(item);
             result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
 
         [Theory]
@@ -112,7 +116,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             var result = Mapper.Map<JTokenA>(item);
             result.Bar.Should().BeOfType(type);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JsonElement_To_JToken_Null()
         {
@@ -121,9 +125,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = default
             };
             var result = Mapper.Map<JTokenA>(item);
-            result.Bar.Should().BeOfType<JValue>();
+            result.Bar.Should().BeNull();
         }
-        
+
         [Fact]
         public void ShouldMap_From_JsonElement_To_JToken_Null_Allow_Nulls()
         {
@@ -132,7 +136,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = default
             };
             var result = Mapper.Map<JTokenA>(item);
-            result.Bar.Should().BeOfType<JValue>();
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -156,7 +160,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Add("null", JsonValueKind.Null);
             }
         }
-        
+
         [Fact]
         public void ShouldMap_From_JToken_To_JsonElement_Null()
         {
@@ -165,9 +169,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JsonElementB>(item);
-            result.Bar.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JToken_To_JsonElement_Null_Allow_Nulls()
         {
@@ -176,7 +180,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JsonElementB>(item);
-            result.Bar.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
 
 
@@ -191,7 +195,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             var result = Mapper.Map<JArrayA>(item);
             result.Bar.Should().BeOfType(type);
         }
-        
+
         [Fact]
         public void ShouldMap_From_Nullable_JsonElement_To_JArray_Null()
         {
@@ -200,9 +204,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JArrayA>(item);
-            result.Bar.Should().BeOfType<JArray>();
+            result.Bar.Should().BeNull();
         }
-        
+
         [Fact]
         public void ShouldMap_From_Nullable_JsonElement_To_JArray_Null_Allow_Nulls()
         {
@@ -211,7 +215,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JArrayA>(item);
-            result.Bar.Should().BeOfType<JArray>();
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -234,7 +238,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Add("[]", JsonValueKind.Array);
             }
         }
-        
+
         [Fact]
         public void ShouldMap_From_JArray_To_Nullable_JsonElement_Null()
         {
@@ -244,9 +248,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             };
             var result = Mapper.Map<JsonElementA>(item);
             result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JArray_To_Nullable_JsonElement_Null_Allow_Nulls()
         {
@@ -256,7 +260,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             };
             var result = Mapper.Map<JsonElementA>(item);
             result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
 
         [Theory]
@@ -270,7 +274,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             var result = Mapper.Map<JArrayA>(item);
             result.Bar.Should().BeOfType(type);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JsonElement_To_JArray_Null()
         {
@@ -279,9 +283,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = default
             };
             var result = Mapper.Map<JArrayA>(item);
-            result.Bar.Should().BeOfType<JArray>();
+            result.Bar.Should().BeNull();
         }
-        
+
         [Fact]
         public void ShouldMap_From_JsonElement_To_JArray_Null_Allow_Nulls()
         {
@@ -290,7 +294,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = default
             };
             var result = Mapper.Map<JArrayA>(item);
-            result.Bar.Should().BeOfType<JArray>();
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -312,7 +316,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Add("[]", JsonValueKind.Array);
             }
         }
-        
+
         [Fact]
         public void ShouldMap_From_JArray_To_JsonElement_Null()
         {
@@ -321,9 +325,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JsonElementB>(item);
-            result.Bar.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JArray_To_JsonElement_Null_Allow_Nulls()
         {
@@ -332,7 +336,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JsonElementB>(item);
-            result.Bar.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
 
 
@@ -347,7 +351,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             var result = Mapper.Map<JObjectA>(item);
             result.Bar.Should().BeOfType(type);
         }
-        
+
         [Fact]
         public void ShouldMap_From_Nullable_JsonElement_To_JObject_Null()
         {
@@ -356,9 +360,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JObjectA>(item);
-            result.Bar.Should().BeOfType<JObject>();
+            result.Bar.Should().BeNull();
         }
-        
+
         [Fact]
         public void ShouldMap_From_Nullable_JsonElement_To_JObject_Null_Allow_Nulls()
         {
@@ -367,7 +371,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JObjectA>(item);
-            result.Bar.Should().BeOfType<JObject>();
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -390,7 +394,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Add("{}", JsonValueKind.Object);
             }
         }
-        
+
         [Fact]
         public void ShouldMap_From_JObject_To_Nullable_JsonElement_Null()
         {
@@ -400,9 +404,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             };
             var result = Mapper.Map<JsonElementA>(item);
             result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JObject_To_Nullable_JsonElement_Null_Allow_Nulls()
         {
@@ -412,7 +416,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             };
             var result = Mapper.Map<JsonElementA>(item);
             result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
 
         [Theory]
@@ -426,7 +430,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             var result = Mapper.Map<JObjectA>(item);
             result.Bar.Should().BeOfType(type);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JsonElement_To_JObject_Null()
         {
@@ -435,9 +439,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = default
             };
             var result = Mapper.Map<JObjectA>(item);
-            result.Bar.Should().BeOfType<JObject>();
+            result.Bar.Should().BeNull();
         }
-        
+
         [Fact]
         public void ShouldMap_From_JsonElement_To_JObject_Null_Allow_Nulls()
         {
@@ -446,7 +450,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = default
             };
             var result = Mapper.Map<JObjectA>(item);
-            result.Bar.Should().BeOfType<JObject>();
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -468,7 +472,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Add("{}", JsonValueKind.Object);
             }
         }
-        
+
         [Fact]
         public void ShouldMap_From_JObject_To_JsonElement_Null()
         {
@@ -477,9 +481,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JsonElementB>(item);
-            result.Bar.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.ValueKind.Should().Be(JsonValueKind.Undefined);
         }
-        
+
         [Fact]
         public void ShouldMap_From_JObject_To_JsonElement_Null_Allow_Nulls()
         {
@@ -488,15 +492,150 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
                 Bar = null
             };
             var result = Mapper.Map<JsonElementB>(item);
-            result.Bar.ValueKind.Should().Be(JsonValueKind.Null);
+            result.Bar.ValueKind.Should().Be(JsonValueKind.Undefined);
+        }
+
+        [Theory]
+        [ClassData(typeof(ShouldNotMap_From_Nullable_JsonElement_To_JObject_Given_Invalid_Element_Data))]
+        public void ShouldNotMap_From_Nullable_JsonElement_To_JObject_Given_Invalid_Element(JsonElement? element)
+        {
+            var item = new JsonElementA()
+            {
+                Bar = element
+            };
+            var result = Mapper.Map<JObjectA>(item);
+
+            A.CallTo(Logger)
+               .Where(x => x.Method.Name == nameof(Logger.Log))
+               .Where(x => x.Arguments.Get<LogLevel>(0) == LogLevel.Warning)
+               .Where(
+                    x => x.Arguments.Get<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(
+                        z => z.Value is string &&
+                            ( (string)z.Value ) == "Tried to convert non array JsonElement? to JObject"
+                    )
+                )
+               .MustHaveHappened();
+            result.Bar.Should().BeNull();
+        }
+
+        class ShouldNotMap_From_Nullable_JsonElement_To_JObject_Given_Invalid_Element_Data : TheoryData<JsonElement?>
+        {
+            public ShouldNotMap_From_Nullable_JsonElement_To_JObject_Given_Invalid_Element_Data()
+            {
+                Add(JsonDocument.Parse("[1234]").RootElement);
+                Add(JsonDocument.Parse("null").RootElement);
+                Add(JsonDocument.Parse("1234").RootElement);
+                Add(JsonDocument.Parse("\"1234\"").RootElement);
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(ShouldNotMap_From_JsonElement_To_JObject_Given_Invalid_Element_Data))]
+        public void ShouldNotMap_From_JsonElement_To_JObject_Given_Invalid_Element(JsonElement element)
+        {
+            var item = new JsonElementB()
+            {
+                Bar = element
+            };
+            var result = Mapper.Map<JObjectA>(item);
+
+            A.CallTo(Logger)
+               .Where(x => x.Method.Name == nameof(Logger.Log))
+               .Where(x => x.Arguments.Get<LogLevel>(0) == LogLevel.Warning)
+               .Where(
+                    x => x.Arguments.Get<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(
+                        z => z.Value is string &&
+                            ( (string)z.Value ) == "Tried to convert non array JsonElement to JObject"
+                    )
+                )
+               .MustHaveHappened();
+            result.Bar.Should().BeNull();
+        }
+
+        class ShouldNotMap_From_JsonElement_To_JObject_Given_Invalid_Element_Data : TheoryData<JsonElement>
+        {
+            public ShouldNotMap_From_JsonElement_To_JObject_Given_Invalid_Element_Data()
+            {
+                Add(JsonDocument.Parse("[1234]").RootElement);
+                Add(JsonDocument.Parse("null").RootElement);
+                Add(JsonDocument.Parse("1234").RootElement);
+                Add(JsonDocument.Parse("\"1234\"").RootElement);
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(ShouldNotMap_From_Nullable_JsonElement_To_JArray_Given_Invalid_Element_Data))]
+        public void ShouldNotMap_From_Nullable_JsonElement_To_JArray_Given_Invalid_Element(JsonElement? element)
+        {
+            var item = new JsonElementA()
+            {
+                Bar = element
+            };
+            var result = Mapper.Map<JArrayA>(item);
+
+            A.CallTo(Logger)
+               .Where(x => x.Method.Name == nameof(Logger.Log))
+               .Where(x => x.Arguments.Get<LogLevel>(0) == LogLevel.Warning)
+               .Where(
+                    x => x.Arguments.Get<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(
+                        z => z.Value is string &&
+                            ( (string)z.Value ) == "Tried to convert non array JsonElement? to JArray"
+                    )
+                )
+               .MustHaveHappened();
+            result.Bar.Should().BeNull();
+        }
+
+        class ShouldNotMap_From_Nullable_JsonElement_To_JArray_Given_Invalid_Element_Data : TheoryData<JsonElement?>
+        {
+            public ShouldNotMap_From_Nullable_JsonElement_To_JArray_Given_Invalid_Element_Data()
+            {
+                Add(JsonDocument.Parse("{\"a\": \"123\"}").RootElement);
+                Add(JsonDocument.Parse("null").RootElement);
+                Add(JsonDocument.Parse("1234").RootElement);
+                Add(JsonDocument.Parse("\"1234\"").RootElement);
+            }
+        }
+
+        [Theory]
+        [ClassData(typeof(ShouldNotMap_From_JsonElement_To_JArray_Given_Invalid_Element_Data))]
+        public void ShouldNotMap_From_JsonElement_To_JArray_Given_Invalid_Element(JsonElement element)
+        {
+            var item = new JsonElementB()
+            {
+                Bar = element
+            };
+            var result = Mapper.Map<JArrayA>(item);
+
+            A.CallTo(Logger)
+               .Where(x => x.Method.Name == nameof(Logger.Log))
+               .Where(x => x.Arguments.Get<LogLevel>(0) == LogLevel.Warning)
+               .Where(
+                    x => x.Arguments.Get<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(
+                        z => z.Value is string &&
+                            ( (string)z.Value ) == "Tried to convert non array JsonElement to JArray"
+                    )
+                )
+               .MustHaveHappened();
+            result.Bar.Should().BeNull();
+        }
+
+        class ShouldNotMap_From_JsonElement_To_JArray_Given_Invalid_Element_Data : TheoryData<JsonElement>
+        {
+            public ShouldNotMap_From_JsonElement_To_JArray_Given_Invalid_Element_Data()
+            {
+                Add(JsonDocument.Parse("{\"a\": \"123\"}").RootElement);
+                Add(JsonDocument.Parse("null").RootElement);
+                Add(JsonDocument.Parse("1234").RootElement);
+                Add(JsonDocument.Parse("\"1234\"").RootElement);
+            }
         }
 
         protected override void Configure(IMapperConfigurationExpression expression)
         {
             expression.AddProfile(new SystemJsonTextProfile());
             expression.AddProfile(new NewtonsoftJsonProfile());
-            expression.CreateMap<JsonElementA, JTokenA>();
-            expression.CreateMap<JTokenA, JsonElementA>();
+            expression.CreateMap<JsonElementA, JTokenA>().ReverseMap();
             expression.CreateMap<JsonElementB, JTokenA>().ReverseMap();
             expression.CreateMap<JsonElementA, JObjectA>().ReverseMap();
             expression.CreateMap<JsonElementB, JObjectA>().ReverseMap();
@@ -509,14 +648,14 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests {
             public JsonElement? Bar { get; set; }
         }
 
-        private class JTokenA
-        {
-            public JToken? Bar { get; set; }
-        }
-
         private class JsonElementB
         {
             public JsonElement Bar { get; set; }
+        }
+
+        private class JTokenA
+        {
+            public JToken? Bar { get; set; }
         }
 
         private class JObjectA

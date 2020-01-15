@@ -17,5 +17,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             CreateMap<byte[]?, JsonElement?>().ConvertUsing(converter);
             CreateMap<string?, JsonElement?>().ConvertUsing(converter);
         }
+
+        /// <summary>
+        /// Gets the name of the profile.
+        /// </summary>
+        /// <value>The name of the profile.</value>
+        public override string ProfileName => nameof(SystemJsonTextProfile);
     }
 }

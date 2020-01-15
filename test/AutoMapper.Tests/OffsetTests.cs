@@ -4,11 +4,14 @@ using FluentAssertions;
 using NodaTime;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public class OffsetTests : TypeConverterTest<OffsetConverter>
     {
+        public OffsetTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+
         [Fact]
         public void ValidateMapping() => Config.AssertConfigurationIsValid();
 

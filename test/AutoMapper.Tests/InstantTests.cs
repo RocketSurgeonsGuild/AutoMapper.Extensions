@@ -7,11 +7,14 @@ using JetBrains.Annotations;
 using NodaTime;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public class InstantTests : TypeConverterTest<InstantConverter>
     {
+        public InstantTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+
         [Fact]
         public void ValidateMapping() => Config.AssertConfigurationIsValid();
 

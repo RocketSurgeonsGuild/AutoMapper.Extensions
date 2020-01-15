@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using NodaTime;
 using Rocket.Surgery.Extensions.AutoMapper.Converters;
 using Xunit;
+using Xunit.Abstractions;
 
 #pragma warning disable CA1034 // Nested types should not be visible
 
@@ -14,6 +15,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
     public class DurationTests : TypeConverterTest<DurationConverter>
     {
+        public DurationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+
         [Fact]
         public void ValidateMapping() => Config.AssertConfigurationIsValid();
 

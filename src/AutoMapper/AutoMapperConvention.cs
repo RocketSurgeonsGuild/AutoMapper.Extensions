@@ -6,6 +6,7 @@ using AutoMapper.Features;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
@@ -43,6 +44,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
                         options.Value.AddMaps(assemblies);
                         var configuration = new MapperConfiguration(options?.Value ?? new MapperConfigurationExpression());
                         configuration.Features.Set(_options);
+                        configuration.Features.Set(
+                            new AutoMapperLogger(
+                                _.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(AutoMapperLogger))
+                            )
+                        );
                         return configuration;
                     }
                 )

@@ -35,88 +35,96 @@ namespace Rocket.Surgery.Extensions.AutoMapper
 
         private void CreateMappingsForDurationConverter()
         {
-            CreateMap<Duration, TimeSpan>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration?, TimeSpan?>().ConvertUsing<DurationConverter>();
-            CreateMap<TimeSpan, Duration>().ConvertUsing<DurationConverter>();
-            CreateMap<TimeSpan?, Duration?>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration, long>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration?, long?>().ConvertUsing<DurationConverter>();
-            CreateMap<long, Duration>().ConvertUsing<DurationConverter>();
-            CreateMap<long?, Duration?>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration, int>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration?, int?>().ConvertUsing<DurationConverter>();
-            CreateMap<int, Duration>().ConvertUsing<DurationConverter>();
-            CreateMap<int?, Duration?>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration, double>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration?, double?>().ConvertUsing<DurationConverter>();
-            CreateMap<double, Duration>().ConvertUsing<DurationConverter>();
-            CreateMap<double?, Duration?>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration, decimal>().ConvertUsing<DurationConverter>();
-            CreateMap<Duration?, decimal?>().ConvertUsing<DurationConverter>();
-            CreateMap<decimal, Duration>().ConvertUsing<DurationConverter>();
-            CreateMap<decimal?, Duration?>().ConvertUsing<DurationConverter>();
+            var converter = new DurationConverter();
+            CreateMap<Duration, TimeSpan>().ConvertUsing(converter);
+            CreateMap<Duration?, TimeSpan?>().ConvertUsing(converter);
+            CreateMap<TimeSpan, Duration>().ConvertUsing(converter);
+            CreateMap<TimeSpan?, Duration?>().ConvertUsing(converter);
+            CreateMap<Duration, long>().ConvertUsing(converter);
+            CreateMap<Duration?, long?>().ConvertUsing(converter);
+            CreateMap<long, Duration>().ConvertUsing(converter);
+            CreateMap<long?, Duration?>().ConvertUsing(converter);
+            CreateMap<Duration, int>().ConvertUsing(converter);
+            CreateMap<Duration?, int?>().ConvertUsing(converter);
+            CreateMap<int, Duration>().ConvertUsing(converter);
+            CreateMap<int?, Duration?>().ConvertUsing(converter);
+            CreateMap<Duration, double>().ConvertUsing(converter);
+            CreateMap<Duration?, double?>().ConvertUsing(converter);
+            CreateMap<double, Duration>().ConvertUsing(converter);
+            CreateMap<double?, Duration?>().ConvertUsing(converter);
+            CreateMap<Duration, decimal>().ConvertUsing(converter);
+            CreateMap<Duration?, decimal?>().ConvertUsing(converter);
+            CreateMap<decimal, Duration>().ConvertUsing(converter);
+            CreateMap<decimal?, Duration?>().ConvertUsing(converter);
         }
 
         private void CreateMappingsForInstantConvertor()
         {
-            CreateMap<Instant, DateTime>().ConvertUsing<InstantConverter>();
-            CreateMap<Instant?, DateTime?>().ConvertUsing<InstantConverter>();
-            CreateMap<Instant, DateTimeOffset>().ConvertUsing<InstantConverter>();
-            CreateMap<Instant?, DateTimeOffset?>().ConvertUsing<InstantConverter>();
-            CreateMap<DateTime, Instant>().ConvertUsing<InstantConverter>();
-            CreateMap<DateTime?, Instant?>().ConvertUsing<InstantConverter>();
-            CreateMap<DateTimeOffset, Instant>().ConvertUsing<InstantConverter>();
-            CreateMap<DateTimeOffset?, Instant?>().ConvertUsing<InstantConverter>();
+            var converter = new InstantConverter();
+            CreateMap<Instant, DateTime>().ConvertUsing(converter);
+            CreateMap<Instant?, DateTime?>().ConvertUsing(converter);
+            CreateMap<Instant, DateTimeOffset>().ConvertUsing(converter);
+            CreateMap<Instant?, DateTimeOffset?>().ConvertUsing(converter);
+            CreateMap<DateTime, Instant>().ConvertUsing(converter);
+            CreateMap<DateTime?, Instant?>().ConvertUsing(converter);
+            CreateMap<DateTimeOffset, Instant>().ConvertUsing(converter);
+            CreateMap<DateTimeOffset?, Instant?>().ConvertUsing(converter);
         }
 
         private void CreateMappingsForLocalDateConverter()
         {
-            CreateMap<LocalDate, DateTime>().ConvertUsing<LocalDateConverter>();
-            CreateMap<LocalDate?, DateTime?>().ConvertUsing<LocalDateConverter>();
-            CreateMap<DateTime, LocalDate>().ConvertUsing<LocalDateConverter>();
-            CreateMap<DateTime?, LocalDate?>().ConvertUsing<LocalDateConverter>();
+            var converter = new LocalDateConverter();
+            CreateMap<LocalDate, DateTime>().ConvertUsing(converter);
+            CreateMap<LocalDate?, DateTime?>().ConvertUsing(converter);
+            CreateMap<DateTime, LocalDate>().ConvertUsing(converter);
+            CreateMap<DateTime?, LocalDate?>().ConvertUsing(converter);
         }
 
         private void CreateMappingsForLocalDateTimeConverter()
         {
-            CreateMap<LocalDateTime, DateTime>().ConvertUsing<LocalDateTimeConverter>();
-            CreateMap<LocalDateTime?, DateTime?>().ConvertUsing<LocalDateTimeConverter>();
-            CreateMap<DateTime, LocalDateTime>().ConvertUsing<LocalDateTimeConverter>();
-            CreateMap<DateTime?, LocalDateTime?>().ConvertUsing<LocalDateTimeConverter>();
+            var converter = new LocalDateTimeConverter();
+            CreateMap<LocalDateTime, DateTime>().ConvertUsing(converter);
+            CreateMap<LocalDateTime?, DateTime?>().ConvertUsing(converter);
+            CreateMap<DateTime, LocalDateTime>().ConvertUsing(converter);
+            CreateMap<DateTime?, LocalDateTime?>().ConvertUsing(converter);
         }
 
         private void CreateMappingsForLocalTimeConverter()
         {
-            CreateMap<LocalTime, TimeSpan>().ConvertUsing<LocalTimeConverter>();
-            CreateMap<LocalTime?, TimeSpan?>().ConvertUsing<LocalTimeConverter>();
-            CreateMap<TimeSpan, LocalTime>().ConvertUsing<LocalTimeConverter>();
-            CreateMap<TimeSpan?, LocalTime?>().ConvertUsing<LocalTimeConverter>();
-            CreateMap<LocalTime, DateTime>().ConvertUsing<LocalTimeConverter>();
-            CreateMap<LocalTime?, DateTime?>().ConvertUsing<LocalTimeConverter>();
-            CreateMap<DateTime, LocalTime>().ConvertUsing<LocalTimeConverter>();
-            CreateMap<DateTime?, LocalTime?>().ConvertUsing<LocalTimeConverter>();
+            var converter = new LocalTimeConverter();
+            CreateMap<LocalTime, TimeSpan>().ConvertUsing(converter);
+            CreateMap<LocalTime?, TimeSpan?>().ConvertUsing(converter);
+            CreateMap<TimeSpan, LocalTime>().ConvertUsing(converter);
+            CreateMap<TimeSpan?, LocalTime?>().ConvertUsing(converter);
+            CreateMap<LocalTime, DateTime>().ConvertUsing(converter);
+            CreateMap<LocalTime?, DateTime?>().ConvertUsing(converter);
+            CreateMap<DateTime, LocalTime>().ConvertUsing(converter);
+            CreateMap<DateTime?, LocalTime?>().ConvertUsing(converter);
         }
 
         private void CreateMappingsForOffsetConverter()
         {
-            CreateMap<Offset, TimeSpan>().ConvertUsing<OffsetConverter>();
-            CreateMap<Offset?, TimeSpan?>().ConvertUsing<OffsetConverter>();
-            CreateMap<TimeSpan, Offset>().ConvertUsing<OffsetConverter>();
-            CreateMap<TimeSpan?, Offset?>().ConvertUsing<OffsetConverter>();
+            var converter = new OffsetConverter();
+            CreateMap<Offset, TimeSpan>().ConvertUsing(converter);
+            CreateMap<Offset?, TimeSpan?>().ConvertUsing(converter);
+            CreateMap<TimeSpan, Offset>().ConvertUsing(converter);
+            CreateMap<TimeSpan?, Offset?>().ConvertUsing(converter);
         }
 
         private void CreateMappingsForOffsetDateTimeConverter()
         {
-            CreateMap<OffsetDateTime, DateTimeOffset>().ConvertUsing<OffsetDateTimeConverter>();
-            CreateMap<OffsetDateTime?, DateTimeOffset?>().ConvertUsing<OffsetDateTimeConverter>();
-            CreateMap<DateTimeOffset, OffsetDateTime>().ConvertUsing<OffsetDateTimeConverter>();
-            CreateMap<DateTimeOffset?, OffsetDateTime?>().ConvertUsing<OffsetDateTimeConverter>();
+            var converter = new OffsetDateTimeConverter();
+            CreateMap<OffsetDateTime, DateTimeOffset>().ConvertUsing(converter);
+            CreateMap<OffsetDateTime?, DateTimeOffset?>().ConvertUsing(converter);
+            CreateMap<DateTimeOffset, OffsetDateTime>().ConvertUsing(converter);
+            CreateMap<DateTimeOffset?, OffsetDateTime?>().ConvertUsing(converter);
         }
 
         private void CreateMappingsForPeriodConverter()
         {
-            CreateMap<Period, string>().ConvertUsing<PeriodConverter>();
-            CreateMap<string, Period>().ConvertUsing<PeriodConverter>();
+            var converter = new PeriodConverter();
+            CreateMap<Period, string>().ConvertUsing(converter);
+            CreateMap<string, Period>().ConvertUsing(converter);
         }
     }
 }
