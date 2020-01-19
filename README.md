@@ -15,9 +15,10 @@
 <!-- history badges -->
 
 <!-- nuget packages -->
-| Package | NuGet | MyGet |
-| ------- | ----- | ----- |
-| Rocket.Surgery.Extensions.AutoMapper | [![nuget-version-g40cerr0u5ig-badge]![nuget-downloads-g40cerr0u5ig-badge]][nuget-g40cerr0u5ig] | [![myget-version-g40cerr0u5ig-badge]![myget-downloads-g40cerr0u5ig-badge]][myget-g40cerr0u5ig] |
+| Package | NuGet |
+| ------- | ----- |
+| Rocket.Surgery.Extensions.AutoMapper | [![nuget-version-g40cerr0u5ig-badge]![nuget-downloads-g40cerr0u5ig-badge]][nuget-g40cerr0u5ig] |
+| Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson | [![nuget-version-9vq2lyvvl54w-badge]![nuget-downloads-9vq2lyvvl54w-badge]][nuget-9vq2lyvvl54w] |
 <!-- nuget packages -->
 
 # Whats next?
@@ -41,9 +42,9 @@ TBD
 [nuget-g40cerr0u5ig]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.AutoMapper/
 [nuget-version-g40cerr0u5ig-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.AutoMapper.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-g40cerr0u5ig-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.AutoMapper.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-g40cerr0u5ig]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.AutoMapper
-[myget-version-g40cerr0u5ig-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.AutoMapper.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-g40cerr0u5ig-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.AutoMapper.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
+[nuget-9vq2lyvvl54w]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson/
+[nuget-version-9vq2lyvvl54w-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-9vq2lyvvl54w-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 <!-- generated references -->
 
 <!-- nuke-data
@@ -57,6 +58,4 @@ azurepipelines:
 appveyor:
   account: RocketSurgeonsGuild
   build: automapper-extensions
-myget:
-  account: rocket-surgeons-guild
 -->
