@@ -42,14 +42,13 @@ namespace Rocket.Surgery.Extensions.AutoMapper
                     {
                         var options = _.GetService<IOptions<MapperConfigurationExpression>>();
                         options.Value.AddMaps(assemblies);
-                        var configuration = new MapperConfiguration(options?.Value ?? new MapperConfigurationExpression());
-                        configuration.Features.Set(_options);
-                        configuration.Features.Set(
+                        options.Value.Features.Set(_options);
+                        options.Value.Features.Set(
                             new AutoMapperLogger(
                                 _.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(AutoMapperLogger))
                             )
                         );
-                        return configuration;
+                        return new MapperConfiguration(options?.Value ?? new MapperConfigurationExpression());
                     }
                 )
             );
