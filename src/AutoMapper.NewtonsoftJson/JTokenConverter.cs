@@ -23,7 +23,10 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
         ITypeConverter<JObject?, byte[]?>,
         ITypeConverter<byte[]?, JObject?>,
         ITypeConverter<JObject?, string?>,
-        ITypeConverter<string?, JObject?>
+        ITypeConverter<string?, JObject?>,
+        ITypeConverter<JObject?, JObject?>,
+        ITypeConverter<JArray?, JArray?>,
+        ITypeConverter<JToken?, JToken?>
     {
         public byte[]? Convert(JToken? source, byte[]? destination, ResolutionContext context)
         {
@@ -136,5 +139,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
                 return GetDefault(destination, context);
             }
         }
+
+        public JObject? Convert(JObject? source, JObject? destination, ResolutionContext context) => source ?? GetDefault(destination, context);
+
+        public JArray? Convert(JArray? source, JArray? destination, ResolutionContext context) => source ?? GetDefault(destination, context);
+
+        public JToken? Convert(JToken? source, JToken? destination, ResolutionContext context) => source ?? GetDefaultToken(destination, context);
     }
 }

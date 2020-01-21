@@ -231,7 +231,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 
             result.Bar.Should().BeNull();
         }
-        
+
 
         [Theory]
         [InlineData("[]")]
@@ -449,6 +449,164 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             result.Bar.Should().BeNull();
         }
 
+
+        [Fact]
+        public void ShouldMap_Nullable_JsonElement_To_Nullable_JsonElement()
+        {
+            var item = new JsonElementB()
+            {
+                Bar = JsonDocument.Parse("null").RootElement
+            };
+            var result = Mapper.Map<JsonElementB>(item);
+
+            result.Bar.Should().Be(item.Bar);
+        }
+
+        [Theory]
+        [InlineData("[1234,5678]")]
+        [InlineData("{\"a\":1234}")]
+        public void ShouldMap_Nullable_JsonElement_To_Nullable_JsonElement_With_Content(string value)
+        {
+            var item = new JsonElementB()
+            {
+                Bar = JsonDocument.Parse(value).RootElement
+            };
+            var result = Mapper.Map<JsonElementB>(item);
+
+            result.Bar.Should().Be(item.Bar);
+        }
+
+        [Fact]
+        public void ShouldMap_Nullable_JsonElement_To_Nullable_JsonElement_From_Null()
+        {
+            var item = new JsonElementB()
+            {
+                Bar = default
+            };
+            var result = Mapper.Map<JsonElementB>(item);
+
+            result.Bar.Should().BeNull();
+        }
+
+
+        [Fact]
+        public void ShouldMap_JsonElement_To_JsonElement()
+        {
+            var item = new JsonElementA()
+            {
+                Bar = JsonDocument.Parse("null").RootElement
+            };
+            var result = Mapper.Map<JsonElementA>(item);
+
+            result.Bar.Should().Be(item.Bar);
+        }
+
+        [Theory]
+        [InlineData("[1234,5678]")]
+        [InlineData("{\"a\":1234}")]
+        public void ShouldMap_JsonElement_To_JsonElement_With_Content(string value)
+        {
+            var item = new JsonElementA()
+            {
+                Bar = JsonDocument.Parse(value).RootElement
+            };
+            var result = Mapper.Map<JsonElementA>(item);
+
+            result.Bar.Should().Be(item.Bar);
+        }
+
+        [Fact]
+        public void ShouldMap_JsonElement_To_JsonElement_From_Null()
+        {
+            var item = new JsonElementA()
+            {
+                Bar = default
+            };
+            var result = Mapper.Map<JsonElementA>(item);
+
+            result.Bar.Should().NotBeNull();
+            result.Bar.ValueKind.Should().Be(JsonValueKind.Undefined);
+        }
+
+
+        [Fact]
+        public void ShouldMap_JsonElement_To_Nullable_JsonElement()
+        {
+            var item = new JsonElementA()
+            {
+                Bar = JsonDocument.Parse("null").RootElement
+            };
+            var result = Mapper.Map<JsonElementB>(item);
+
+            result.Bar.Should().Be(item.Bar);
+        }
+
+        [Theory]
+        [InlineData("[1234,5678]")]
+        [InlineData("{\"a\":1234}")]
+        public void ShouldMap_JsonElement_To_Nullable_JsonElement_With_Content(string value)
+        {
+            var item = new JsonElementA()
+            {
+                Bar = JsonDocument.Parse(value).RootElement
+            };
+            var result = Mapper.Map<JsonElementB>(item);
+
+            result.Bar.Should().Be(item.Bar);
+        }
+
+        [Fact]
+        public void ShouldMap_JsonElement_To_Nullable_JsonElement_From_Null()
+        {
+            var item = new JsonElementA()
+            {
+                Bar = default
+            };
+            var result = Mapper.Map<JsonElementB>(item);
+
+            result.Bar.Should().BeNull();
+        }
+
+
+        [Fact]
+        public void ShouldMap_Nullable_JsonElement_To_JsonElement()
+        {
+            var item = new JsonElementB()
+            {
+                Bar = JsonDocument.Parse("null").RootElement
+            };
+            var result = Mapper.Map<JsonElementA>(item);
+
+            result.Bar.Should().Be(item.Bar);
+        }
+
+        [Theory]
+        [InlineData("[1234,5678]")]
+        [InlineData("{\"a\":1234}")]
+        public void ShouldMap_Nullable_JsonElement_To_JsonElement_With_Content(string value)
+        {
+            var item = new JsonElementB()
+            {
+                Bar = JsonDocument.Parse(value).RootElement
+            };
+            var result = Mapper.Map<JsonElementA>(item);
+
+            result.Bar.Should().Be(item.Bar);
+        }
+
+        [Fact]
+        public void ShouldMap_Nullable_JsonElement_To_JsonElement_From_Null()
+        {
+            var item = new JsonElementB()
+            {
+                Bar = default
+            };
+            var result = Mapper.Map<JsonElementA>(item);
+
+            result.Bar.Should().NotBeNull();
+            result.Bar.ValueKind.Should().Be(JsonValueKind.Undefined);
+        }
+
         protected override void Configure(IMapperConfigurationExpression expression)
         {
             expression.AddProfile(new SystemJsonTextProfile());
@@ -457,6 +615,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             expression.CreateMap<ByteArray, JsonElementA>().ReverseMap();
             expression.CreateMap<StringValue, JsonElementB>().ReverseMap();
             expression.CreateMap<ByteArray, JsonElementB>().ReverseMap();
+            expression.CreateMap<JsonElementA, JsonElementB>().ReverseMap();
+            expression.CreateMap<JsonElementA, JsonElementA>().ReverseMap();
+            expression.CreateMap<JsonElementB, JsonElementB>().ReverseMap();
         }
 
         private class ByteArray

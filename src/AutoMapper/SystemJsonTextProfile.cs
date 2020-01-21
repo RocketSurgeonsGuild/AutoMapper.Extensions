@@ -16,6 +16,10 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             CreateMap<string?, JsonElement>().ConvertUsing(converter);
             CreateMap<byte[]?, JsonElement?>().ConvertUsing(converter);
             CreateMap<string?, JsonElement?>().ConvertUsing(converter);
+            CreateMap<JsonElement?, JsonElement?>().ConvertUsing(converter);
+            CreateMap<JsonElement?, JsonElement>().ConvertUsing(converter);
+            CreateMap<JsonElement, JsonElement?>().ConvertUsing(converter);
+            CreateMap<JsonElement, JsonElement>().ConvertUsing(converter);
         }
 
         /// <summary>

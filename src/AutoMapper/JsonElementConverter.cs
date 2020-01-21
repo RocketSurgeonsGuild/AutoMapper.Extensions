@@ -14,7 +14,11 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         ITypeConverter<JsonElement?, byte[]?>,
         ITypeConverter<byte[]?, JsonElement?>,
         ITypeConverter<JsonElement?, string?>,
-        ITypeConverter<string?, JsonElement?>
+        ITypeConverter<string?, JsonElement?>,
+        ITypeConverter<JsonElement, JsonElement>,
+        ITypeConverter<JsonElement?, JsonElement>,
+        ITypeConverter<JsonElement, JsonElement?>,
+        ITypeConverter<JsonElement?, JsonElement?>
     {
         private static readonly JsonElement _empty = JsonSerializer.Deserialize<JsonElement>("null");
 
@@ -26,7 +30,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
         private static JsonElement GetDefault(JsonElement value, ResolutionContext context) => GetJsonDefaultValue(context) switch
         {
             JsonDefaultValue.NotNull => value.ValueKind == JsonValueKind.Undefined ? _empty : value,
-            _                        => value
+            _ => value
         };
 
         private static JsonElement? GetDefault(JsonElement? value, ResolutionContext context) => GetJsonDefaultValue(context) switch
@@ -93,11 +97,12 @@ namespace Rocket.Surgery.Extensions.AutoMapper
 
         public JsonElement Convert(string? source, JsonElement destination, ResolutionContext context)
         {
-            try {
-            return string.IsNullOrEmpty(source)
-                ? GetDefault(destination, context)
-                : JsonSerializer.Deserialize<JsonElement>(source);
-            
+            try
+            {
+                return string.IsNullOrEmpty(source)
+                    ? GetDefault(destination, context)
+                    : JsonSerializer.Deserialize<JsonElement>(source);
+
             }
             catch (JsonException e)
             {
@@ -179,6 +184,26 @@ namespace Rocket.Surgery.Extensions.AutoMapper
                 );
                 return GetDefault(destination, context);
             }
+        }
+
+        public JsonElement Convert(JsonElement source, JsonElement destination, ResolutionContext context)
+        {
+            return source.ValueKind == JsonValueKind.Undefined ? GetDefault(destination, context) : source;
+        }
+
+        public JsonElement? Convert(JsonElement? source, JsonElement? destination, ResolutionContext context)
+        {
+            return source.HasValue && source.Value.ValueKind != JsonValueKind.Undefined ? source : GetDefault(destination, context);
+        }
+
+        public JsonElement? Convert(JsonElement source, JsonElement? destination, ResolutionContext context)
+        {
+            return source.ValueKind == JsonValueKind.Undefined ? GetDefault(destination, context) : source;
+        }
+
+        public JsonElement Convert(JsonElement? source, JsonElement destination, ResolutionContext context)
+        {
+            return source.HasValue && source.Value.ValueKind != JsonValueKind.Undefined ? source.Value : GetDefault(destination, context);
         }
     }
 }
