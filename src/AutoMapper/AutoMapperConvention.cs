@@ -37,12 +37,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(AutoMapper)).ToArray();
             context.Services.AddAutoMapper(assemblies, _options.ServiceLifetime);
 
-            context.Services.Configure<MapperConfigurationExpression>(expression =>
-            {
-                expression.AddProfile(new NodaTimeProfile());
-                expression.AddProfile(new SystemJsonTextProfile());
-            });
-
             context.Services.Configure<MapperConfigurationExpression>(expression => expression.Features.Set(_options));
 
             context.Services.Replace(

@@ -40,8 +40,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
             {
                 throw new ArgumentNullException(nameof(context));
             }
-
-            context.Services.Configure<MapperConfigurationExpression>(expression => expression.AddProfile(new NewtonsoftJsonProfile()));
         }
     }
 }
