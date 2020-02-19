@@ -30,7 +30,7 @@
     <PackageReference Update="NodaTime.Serialization.SystemTextJson" Version="1.0.0-beta01" />
     <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="9.1.1" />
     <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="9.1.1" />
-    <PackageReference Update="System.Text.Json" Version="4.7.0" />
+    <PackageReference Update="System.Text.Json" Version="4.7.1" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Bogus" Version="28.4.4" />
