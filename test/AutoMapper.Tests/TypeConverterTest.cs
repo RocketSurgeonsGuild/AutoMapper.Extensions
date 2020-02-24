@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autofac;
 using AutoMapper;
 using AutoMapper.Features;
 using Bogus;
@@ -29,7 +28,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
                 var (source, destination) = item;
                 var sourceFoo = typeof(Foo<>).MakeGenericType(source);
                 var destinationFoo = typeof(Foo<>).MakeGenericType(destination);
-                return ( source, sourceFoo, destination, destinationFoo );
+                return (source, sourceFoo, destination, destinationFoo);
             }
 
             static object CreateValue(Type type, object value) => typeof(Foo)
@@ -73,7 +72,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
            .Select(
                 x => (
                     source: Nullable.GetUnderlyingType(x.GetGenericArguments()[0]) ?? x.GetGenericArguments()[0],
-                    destination: Nullable.GetUnderlyingType(x.GetGenericArguments()[1]) ?? x.GetGenericArguments()[1] )
+                    destination: Nullable.GetUnderlyingType(x.GetGenericArguments()[1]) ?? x.GetGenericArguments()[1])
             )
            .Where(x => x.source.IsValueType && x.destination.IsValueType)
            .Distinct();
