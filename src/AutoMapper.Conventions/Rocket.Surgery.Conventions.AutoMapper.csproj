@@ -6,8 +6,10 @@
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson" />
+    <InternalsVisibleTo Include="Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson" />
     <InternalsVisibleTo Include="Rocket.Surgery.Extensions.AutoMapper.Tests" />
-    <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" />
+    <ProjectReference Include="../AutoMapper.Extensions/Rocket.Surgery.Extensions.AutoMapper.csproj" />
+    <PackageReference Include="Rocket.Surgery.Conventions.DependencyInjection.Abstractions" />
     <PackageReference Include="NodaTime" />
     <PackageReference Include="NodaTime.Serialization.SystemTextJson" />
     <PackageReference Include="System.Text.Json" />
