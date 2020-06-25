@@ -21,15 +21,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Microsoft.Extensions.Options" Version="3.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Update="AutoMapper" Version="9.0.0" />
     <PackageReference Update="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version="3.6.0" />
     <PackageReference Update="NodaTime" Version="3.0.0" />
     <PackageReference Update="NodaTime.Serialization.JsonNet" Version="2.3.0" />
     <PackageReference Update="NodaTime.Serialization.SystemTextJson" Version="1.0.0-beta02" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection" Version="9.1.1" />
-    <PackageReference Update="Rocket.Surgery.Extensions.DependencyInjection.Abstractions" Version="9.1.1" />
+    <PackageReference Update="Rocket.Surgery.Conventions" Version="10.0.0-beta.2" />
     <PackageReference Update="System.Text.Json" Version="4.7.2" />
   </ItemGroup>
   <ItemGroup>
@@ -46,5 +47,4 @@
     <PackageReference Update="xunit.analyzers" Version="0.10.0" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
   </ItemGroup>
-  <Import Project="$(MSBuildThisFileDirectory)/$(LegacySupportPackagesProps)" Condition="Exists('$(MSBuildThisFileDirectory)/$(LegacySupportPackagesProps)')" />
 </Project>

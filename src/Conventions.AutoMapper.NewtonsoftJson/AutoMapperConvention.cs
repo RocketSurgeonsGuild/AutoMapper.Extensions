@@ -1,21 +1,12 @@
 using System;
-using System.Linq;
-using AutoMapper;
-using AutoMapper.Configuration;
-using AutoMapper.Features;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Rocket.Surgery.Conventions;
-using Rocket.Surgery.Conventions.Reflection;
-using Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson;
-using Rocket.Surgery.Extensions.DependencyInjection;
+using Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson;
+using Rocket.Surgery.Conventions.DependencyInjection;
 
 [assembly: Convention(typeof(AutoMapperNewtonsoftJsonConvention))]
 
-namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
+namespace Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson
 {
     /// <summary>
     /// AutoMapperConvention.
@@ -25,11 +16,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
     [DependsOnConvention(typeof(AutoMapperConvention))]
     public class AutoMapperNewtonsoftJsonConvention : IServiceConvention
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutoMapperNewtonsoftJsonConvention" /> class.
-        /// </summary>
-        public AutoMapperNewtonsoftJsonConvention() { }
-
         /// <summary>
         /// Registers the specified context.
         /// </summary>

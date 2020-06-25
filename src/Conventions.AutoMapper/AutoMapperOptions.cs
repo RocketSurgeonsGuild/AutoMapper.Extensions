@@ -2,7 +2,7 @@ using AutoMapper;
 using AutoMapper.Features;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Rocket.Surgery.Extensions.AutoMapper
+namespace Rocket.Surgery.Conventions.AutoMapper
 {
     /// <summary>
     /// Class AutoMapperOptions.

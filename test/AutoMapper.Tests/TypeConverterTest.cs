@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NodaTime;
+using Rocket.Surgery.Conventions.AutoMapper;
 using Rocket.Surgery.Extensions.Testing;
 using Serilog.Events;
 using Xunit.Abstractions;

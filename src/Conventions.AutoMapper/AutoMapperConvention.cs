@@ -2,20 +2,20 @@ using System;
 using System.Linq;
 using AutoMapper;
 using AutoMapper.Configuration;
-using AutoMapper.Features;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Rocket.Surgery.Conventions;
+using Rocket.Surgery.Conventions.AutoMapper;
+using Rocket.Surgery.Conventions.DependencyInjection;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Extensions.AutoMapper;
-using Rocket.Surgery.Extensions.DependencyInjection;
 
 [assembly: Convention(typeof(AutoMapperConvention))]
 
-namespace Rocket.Surgery.Extensions.AutoMapper
+namespace Rocket.Surgery.Conventions.AutoMapper
 {
     /// <summary>
     /// AutoMapperConvention.
@@ -34,7 +34,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
 
         private void AddAutoMapperClasses(IServiceConventionContext context)
         {
-            var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(AutoMapper)).ToArray();
+            var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(Extensions.AutoMapper)).ToArray();
             context.Services.AddAutoMapper(assemblies, _options.ServiceLifetime);
 
             context.Services.Configure<MapperConfigurationExpression>(expression => expression.Features.Set(_options));

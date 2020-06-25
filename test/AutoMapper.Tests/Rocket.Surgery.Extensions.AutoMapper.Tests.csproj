@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
+        <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Rocket.Surgery.Extensions.DependencyInjection" />
-        <ProjectReference Include="..\..\src\AutoMapper\Rocket.Surgery.Extensions.AutoMapper.csproj" />
-        <ProjectReference Include="..\..\src\AutoMapper.NewtonsoftJson\Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.csproj" />
+        <PackageReference Include="Rocket.Surgery.Conventions" />
+        <ProjectReference Include="..\..\src\Conventions.AutoMapper\Rocket.Surgery.Conventions.AutoMapper.csproj" />
+        <ProjectReference Include="..\..\src\Extensions.AutoMapper\Rocket.Surgery.Extensions.AutoMapper.csproj" />
+        <ProjectReference Include="..\..\src\Conventions.AutoMapper.NewtonsoftJson\Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson.csproj" />
+        <ProjectReference Include="..\..\src\Extensions.AutoMapper.NewtonsoftJson\Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.csproj" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
     </ItemGroup>
     <ItemGroup>
