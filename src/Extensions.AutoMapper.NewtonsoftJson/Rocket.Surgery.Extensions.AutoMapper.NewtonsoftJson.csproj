@@ -4,7 +4,7 @@
         <AssemblyTitle>Rocket.Surgery FluentValidation with MediatR for .NET Core</AssemblyTitle>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="../AutoMapper/Rocket.Surgery.Extensions.AutoMapper.csproj" />
+        <ProjectReference Include="../Extensions.AutoMapper/Rocket.Surgery.Extensions.AutoMapper.csproj" />
         <PackageReference Include="NodaTime.Serialization.JsonNet" />
     </ItemGroup>
 </Project>

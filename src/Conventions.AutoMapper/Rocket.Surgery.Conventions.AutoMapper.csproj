@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+    <PackageDescription>Provides AutoMapper support for a Rocket Surgery Application</PackageDescription>
+    <PackageTags>$(PackageTags);automapper</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson" />
+    <InternalsVisibleTo Include="Rocket.Surgery.Extensions.AutoMapper.Tests" />
+    <PackageReference Include="Rocket.Surgery.Conventions" />
+    <ProjectReference Include="../Extensions.AutoMapper/Rocket.Surgery.Extensions.AutoMapper.csproj" />
+  </ItemGroup>
+</Project>
