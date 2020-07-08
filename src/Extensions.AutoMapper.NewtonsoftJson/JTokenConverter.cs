@@ -69,10 +69,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
             }
             catch (JsonReaderException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse byte[] to JArray and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse byte[] to JArray and failed!");
                 return GetDefault(destination, context);
             }
         }
@@ -88,10 +85,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
             }
             catch (JsonReaderException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse string to JArray and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse string to JArray and failed!");
                 return GetDefault(destination, context);
             }
         }
@@ -113,10 +107,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
             }
             catch (JsonReaderException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse byte[] to JObject and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse byte[] to JObject and failed!");
                 return GetDefault(destination, context);
             }
         }
@@ -132,10 +123,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
             }
             catch (JsonReaderException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse string to JToken and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse string to JToken and failed!");
                 return GetDefault(destination, context);
             }
         }

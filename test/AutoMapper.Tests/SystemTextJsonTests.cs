@@ -633,8 +633,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 
         protected override void Configure(IMapperConfigurationExpression expression)
         {
-            expression.AddProfile(new SystemJsonTextProfile());
             expression.AddProfile(new NewtonsoftJsonProfile());
+            expression.AddProfile(new SystemJsonTextProfile());
             expression.CreateMap<JsonElementA, JTokenA>().ReverseMap();
             expression.CreateMap<JsonElementB, JTokenA>().ReverseMap();
             expression.CreateMap<JsonElementA, JObjectA>().ReverseMap();

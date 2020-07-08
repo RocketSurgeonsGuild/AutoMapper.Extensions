@@ -3,7 +3,8 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
-namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson {
+namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
+{
     public class SystemTextJsonAndNewtonsoftJsonConverter :
         ITypeConverter<JsonElement?, JToken>,
         ITypeConverter<JToken?, JsonElement?>,
@@ -18,8 +19,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson {
         ITypeConverter<JsonElement, JObject?>,
         ITypeConverter<JObject?, JsonElement>
     {
-        
-
         public JsonElement Convert(JObject? source, JsonElement destination, ResolutionContext context)
         {
             if (source is null)
@@ -38,9 +37,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson {
                 return ConverterHelpers.GetDefault(destination, context);
             if (source.ValueKind != JsonValueKind.Object)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogWarning(
-                    "Tried to convert non array JsonElement to JObject"
-                );
+                Helpers.GetLogger(context)?.LogWarning("Tried to convert non array JsonElement to JObject");
                 return ConverterHelpers.GetDefault(destination, context);
             }
 
@@ -65,9 +62,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson {
                 return ConverterHelpers.GetDefault(destination, context);
             if (source.Value.ValueKind != JsonValueKind.Object)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogWarning(
-                    "Tried to convert non array JsonElement? to JObject"
-                );
+                Helpers.GetLogger(context)?.LogWarning("Tried to convert non array JsonElement? to JObject");
                 return ConverterHelpers.GetDefault(destination, context);
             }
 
@@ -92,9 +87,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson {
                 return ConverterHelpers.GetDefault(destination, context);
             if (source.ValueKind != JsonValueKind.Array)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogWarning(
-                    "Tried to convert non array JsonElement to JArray"
-                );
+                Helpers.GetLogger(context)?.LogWarning("Tried to convert non array JsonElement to JArray");
                 return ConverterHelpers.GetDefault(destination, context);
             }
 
@@ -119,9 +112,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson {
                 return ConverterHelpers.GetDefault(destination, context);
             if (source.Value.ValueKind != JsonValueKind.Array)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogWarning(
-                    "Tried to convert non array JsonElement? to JArray"
-                );
+                Helpers.GetLogger(context)?.LogWarning("Tried to convert non array JsonElement? to JArray");
                 return ConverterHelpers.GetDefault(destination, context);
             }
 
@@ -165,6 +156,5 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson {
                 return ConverterHelpers.GetDefaultToken(destination, context);
             return JToken.Parse(JsonSerializer.Serialize(source));
         }
-
     }
 }
