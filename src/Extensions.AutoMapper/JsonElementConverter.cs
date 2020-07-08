@@ -51,10 +51,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             }
             catch (JsonException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse JsonElement to byte[] and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse JsonElement to byte[] and failed!");
                 return Array.Empty<byte>();
             }
         }
@@ -69,10 +66,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             }
             catch (JsonException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse byte[] to JsonElement and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse byte[] to JsonElement and failed!");
                 return GetDefault(destination, context);
             }
         }
@@ -87,10 +81,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             }
             catch (JsonException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse JsonElement to string and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse JsonElement to string and failed!");
                 return string.Empty;
             }
         }
@@ -106,10 +97,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             }
             catch (JsonException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse string to JsonElement and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse string to JsonElement and failed!");
                 return GetDefault(destination, context);
             }
         }
@@ -124,10 +112,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             }
             catch (JsonException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse JsonElement? to byte[] and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse JsonElement? to byte[] and failed!");
                 return Array.Empty<byte>();
             }
         }
@@ -142,10 +127,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             }
             catch (JsonException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse byte[] to JsonElement? and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse byte[] to JsonElement? and failed!");
                 return GetDefault(destination, context);
             }
         }
@@ -160,10 +142,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             }
             catch (JsonException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse JsonElement? to string and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse JsonElement? to string and failed!");
                 return string.Empty;
             }
         }
@@ -178,10 +157,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper
             }
             catch (JsonException e)
             {
-                context.ConfigurationProvider.Features?.Get<AutoMapperLogger>().LogError(
-                    e,
-                    "Tried to parse string to JsonElement? and failed!"
-                );
+                Helpers.GetLogger(context)?.LogError(e, "Tried to parse string to JsonElement? and failed!");
                 return GetDefault(destination, context);
             }
         }

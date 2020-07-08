@@ -50,7 +50,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         [MemberData(nameof(GetTestCases))]
         public void AutomatedTests(Type source, Type destination, object sourceValue)
         {
-            var method = typeof(IMapper).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+            var method = typeof(IMapperBase).GetMethods(BindingFlags.Public | BindingFlags.Instance)
                .First(
                     x => x.ContainsGenericParameters && x.IsGenericMethodDefinition &&
                         x.GetGenericMethodDefinition().GetGenericArguments().Length == 2 &&
