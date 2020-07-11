@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using NodaTime;
 using NodaTime.Text;
 
-namespace Rocket.Surgery.Extensions.AutoMapper.Converters
+namespace Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters
 {
     /// <summary>
     /// PeriodConverter.

@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using AutoMapper;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
@@ -35,11 +34,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
         {
             if (source.ValueKind == JsonValueKind.Undefined)
                 return ConverterHelpers.GetDefault(destination, context);
-            if (source.ValueKind != JsonValueKind.Object)
-            {
-                Helpers.GetLogger(context)?.LogWarning("Tried to convert non array JsonElement to JObject");
-                return ConverterHelpers.GetDefault(destination, context);
-            }
 
             return JObject.Parse(JsonSerializer.Serialize(source));
         }
@@ -60,11 +54,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
         {
             if (!source.HasValue || source.Value.ValueKind == JsonValueKind.Undefined)
                 return ConverterHelpers.GetDefault(destination, context);
-            if (source.Value.ValueKind != JsonValueKind.Object)
-            {
-                Helpers.GetLogger(context)?.LogWarning("Tried to convert non array JsonElement? to JObject");
-                return ConverterHelpers.GetDefault(destination, context);
-            }
 
             return JObject.Parse(JsonSerializer.Serialize(source));
         }
@@ -85,11 +74,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
         {
             if (source.ValueKind == JsonValueKind.Undefined)
                 return ConverterHelpers.GetDefault(destination, context);
-            if (source.ValueKind != JsonValueKind.Array)
-            {
-                Helpers.GetLogger(context)?.LogWarning("Tried to convert non array JsonElement to JArray");
-                return ConverterHelpers.GetDefault(destination, context);
-            }
 
             return JArray.Parse(JsonSerializer.Serialize(source));
         }
@@ -110,11 +94,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
         {
             if (!source.HasValue || source.Value.ValueKind == JsonValueKind.Undefined)
                 return ConverterHelpers.GetDefault(destination, context);
-            if (source.Value.ValueKind != JsonValueKind.Array)
-            {
-                Helpers.GetLogger(context)?.LogWarning("Tried to convert non array JsonElement? to JArray");
-                return ConverterHelpers.GetDefault(destination, context);
-            }
 
             return JArray.Parse(JsonSerializer.Serialize(source));
         }

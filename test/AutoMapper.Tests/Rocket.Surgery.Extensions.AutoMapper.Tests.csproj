@@ -5,6 +5,8 @@
     <ItemGroup>
         <PackageReference Include="Rocket.Surgery.Conventions" />
         <ProjectReference Include="..\..\src\Conventions.AutoMapper\Rocket.Surgery.Conventions.AutoMapper.csproj" />
+        <ProjectReference Include="..\..\src\Extensions.AutoMapper.NodaTime\Rocket.Surgery.Extensions.AutoMapper.NodaTime.csproj" />
+        <ProjectReference Include="..\..\src\Extensions.AutoMapper.SystemTextJson\Rocket.Surgery.Extensions.AutoMapper.SystemTextJson.csproj" />
         <ProjectReference Include="..\..\src\Extensions.AutoMapper\Rocket.Surgery.Extensions.AutoMapper.csproj" />
         <ProjectReference Include="..\..\src\Conventions.AutoMapper.NewtonsoftJson\Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson.csproj" />
         <ProjectReference Include="..\..\src\Extensions.AutoMapper.NewtonsoftJson\Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.csproj" />

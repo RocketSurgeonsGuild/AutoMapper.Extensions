@@ -3,7 +3,8 @@ using AutoMapper;
 using AutoMapper.Features;
 using Microsoft.Extensions.Logging;
 
-namespace Rocket.Surgery.Extensions.AutoMapper {
+namespace Rocket.Surgery.Extensions.AutoMapper
+{
     class AutoMapperLogger : IRuntimeFeature, IGlobalFeature, ILogger
     {
         private readonly ILogger _iLoggerImplementation;

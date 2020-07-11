@@ -4,6 +4,7 @@ using AutoMapper;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
 using Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson;
+using Rocket.Surgery.Extensions.AutoMapper.SystemTextJson;
 using Xunit;
 using Xunit.Abstractions;
 

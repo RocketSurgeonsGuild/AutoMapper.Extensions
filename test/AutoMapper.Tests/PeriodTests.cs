@@ -4,7 +4,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using NodaTime;
 using NodaTime.Text;
-using Rocket.Surgery.Extensions.AutoMapper.Converters;
+using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
 using Xunit;
 using Xunit.Abstractions;
 using JsonSerializer = System.Text.Json.JsonSerializer;

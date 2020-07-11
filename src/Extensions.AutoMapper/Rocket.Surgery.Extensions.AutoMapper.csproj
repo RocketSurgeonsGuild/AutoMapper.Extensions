@@ -9,11 +9,13 @@
     <InternalsVisibleTo Include="Rocket.Surgery.Extensions.AutoMapper.Tests" />
     <InternalsVisibleTo Include="Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson" />
     <InternalsVisibleTo Include="Rocket.Surgery.Conventions.AutoMapper" />
-    <PackageReference Include="NodaTime" />
-    <PackageReference Include="NodaTime.Serialization.SystemTextJson" />
-    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="AutoMapper" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Extensions.AutoMapper.NewtonsoftJson\Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.csproj" />
+    <ProjectReference Include="..\Extensions.AutoMapper.NodaTime\Rocket.Surgery.Extensions.AutoMapper.NodaTime.csproj" />
+    <ProjectReference Include="..\Extensions.AutoMapper.SystemTextJson\Rocket.Surgery.Extensions.AutoMapper.SystemTextJson.csproj" />
   </ItemGroup>
 </Project>

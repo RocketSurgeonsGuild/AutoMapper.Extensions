@@ -1,8 +1,10 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using AutoMapper;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
 using Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson;
+using Rocket.Surgery.Extensions.AutoMapper.SystemTextJson;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -70,9 +72,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             {
                 Bar = value
             };
-            var result = Mapper.Map<JObjectA>(item);
-
-            result.Bar.Should().BeNull();
+            Action a = () => Mapper.Map<JObjectA>(item);
+            a.Should().Throw<AutoMapperMappingException>();
         }
 
         class ShouldNotMap_StringValue_To_JObject_Data : TheoryData<string>
@@ -184,9 +185,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             {
                 Bar = value
             };
-            var result = Mapper.Map<JArrayA>(item);
-
-            result.Bar.Should().BeNull();
+            Action a = () => Mapper.Map<JArrayA>(item);
+            a.Should().Throw<AutoMapperMappingException>();
         }
 
         class ShouldNotMap_StringValue_To_JArray_Data : TheoryData<string>
@@ -408,9 +408,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             {
                 Bar = value
             };
-            var result = Mapper.Map<JObjectA>(item);
-
-            result.Bar.Should().BeNull();
+            Action a = () =>  Mapper.Map<JObjectA>(item);
+            a.Should().Throw<AutoMapperMappingException>();
         }
 
         class ShouldNotMap_ByteArray_To_JObject_Data : TheoryData<byte[]>
@@ -558,9 +557,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             {
                 Bar = value
             };
-            var result = Mapper.Map<JArrayA>(item);
-
-            result.Bar.Should().BeNull();
+            Action a = () => Mapper.Map<JArrayA>(item);
+            a.Should().Throw<AutoMapperMappingException>();
         }
 
         class ShouldNotMap_ByteArray_To_JArray_Data : TheoryData<byte[]>

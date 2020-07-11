@@ -3,21 +3,21 @@ using AutoMapper;
 using JetBrains.Annotations;
 using NodaTime;
 
-namespace Rocket.Surgery.Extensions.AutoMapper.Converters
+namespace Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters
 {
     /// <summary>
-    /// OffsetConverter.
+    /// OffsetDateTimeConverter.
     /// Implements the <see cref="ITypeConverter{TSource,TDestination}" />
-    /// Implements the <see cref="ITypeConverter{TimeSpan, Offset}" />
+    /// Implements the <see cref="ITypeConverter{DateTimeOffset, OffsetDateTime}" />
     /// </summary>
-    /// <seealso cref="ITypeConverter{Offset, TimeSpan}" />
-    /// <seealso cref="ITypeConverter{TimeSpan, Offset}" />
+    /// <seealso cref="ITypeConverter{OffsetDateTime, DateTimeOffset}" />
+    /// <seealso cref="ITypeConverter{DateTimeOffset, OffsetDateTime}" />
     [PublicAPI]
-    public class OffsetConverter :
-        ITypeConverter<Offset, TimeSpan>,
-        ITypeConverter<Offset?, TimeSpan?>,
-        ITypeConverter<TimeSpan, Offset>,
-        ITypeConverter<TimeSpan?, Offset?>
+    public class OffsetDateTimeConverter :
+        ITypeConverter<OffsetDateTime, DateTimeOffset>,
+        ITypeConverter<OffsetDateTime?, DateTimeOffset?>,
+        ITypeConverter<DateTimeOffset, OffsetDateTime>,
+        ITypeConverter<DateTimeOffset?, OffsetDateTime?>
     {
         /// <summary>
         /// Performs conversion from source to destination type
@@ -26,7 +26,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
-        public TimeSpan Convert(Offset source, TimeSpan destination, ResolutionContext context) => source.ToTimeSpan();
+        public OffsetDateTime Convert(DateTimeOffset source, OffsetDateTime destination, ResolutionContext context)
+            => OffsetDateTime.FromDateTimeOffset(source);
 
         /// <summary>
         /// Performs conversion from source to destination type
@@ -35,8 +36,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
-        public TimeSpan? Convert(Offset? source, TimeSpan? destination, ResolutionContext context)
-            => source?.ToTimeSpan() ?? destination;
+        public OffsetDateTime? Convert(DateTimeOffset? source, OffsetDateTime? destination, ResolutionContext context)
+            => source.HasValue ? OffsetDateTime.FromDateTimeOffset(source.Value) : destination;
 
         /// <summary>
         /// Performs conversion from source to destination type
@@ -45,8 +46,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
-        public Offset Convert(TimeSpan source, Offset destination, ResolutionContext context)
-            => Offset.FromTicks(source.Ticks);
+        public DateTimeOffset Convert(OffsetDateTime source, DateTimeOffset destination, ResolutionContext context)
+            => source.ToDateTimeOffset();
 
         /// <summary>
         /// Performs conversion from source to destination type
@@ -55,7 +56,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Converters
         /// <param name="destination">Destination object</param>
         /// <param name="context">Resolution context</param>
         /// <returns>Destination object</returns>
-        public Offset? Convert(TimeSpan? source, Offset? destination, ResolutionContext context)
-            => source.HasValue ? Offset.FromTicks(source.Value.Ticks) : destination;
+        public DateTimeOffset? Convert(OffsetDateTime? source, DateTimeOffset? destination, ResolutionContext context)
+            => source?.ToDateTimeOffset() ?? destination;
     }
 }
