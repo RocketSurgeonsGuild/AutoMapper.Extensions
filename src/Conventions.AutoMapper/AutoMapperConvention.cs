@@ -35,24 +35,18 @@ namespace Rocket.Surgery.Conventions.AutoMapper
         private void AddAutoMapperClasses(IServiceConventionContext context)
         {
             var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(Extensions.AutoMapper)).ToArray();
-            context.Services.AddAutoMapper(assemblies, _options.ServiceLifetime);
-
-            context.Services.Configure<MapperConfigurationExpression>(expression => expression.Features.Set(_options));
-
-            context.Services.Replace(
-                ServiceDescriptor.Singleton<IConfigurationProvider>(
-                    _ =>
-                    {
-                        var options = _.GetService<IOptions<MapperConfigurationExpression>>();
-                        options.Value.AddMaps(assemblies);
-                        options.Value.Features.Set(
-                            new AutoMapperLogger(
-                                _.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(AutoMapperLogger))
-                            )
-                        );
-                        return new MapperConfiguration(options?.Value ?? new MapperConfigurationExpression());
-                    }
-                )
+            context.Services.AddAutoMapper(
+                (_, expression) =>
+                {
+                    expression.Features.Set(_options);
+                    expression.Features.Set(
+                        new AutoMapperLogger(
+                            _.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(AutoMapperLogger))
+                        )
+                    );
+                },
+                assemblies,
+                _options.ServiceLifetime
             );
         }
 
