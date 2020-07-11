@@ -1,12 +1,7 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 using AutoMapper;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using JsonException = System.Text.Json.JsonException;
 using static Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.ConverterHelpers;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
@@ -35,22 +30,15 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
             return WriteToBytes(source);
         }
 
-        public JToken? Convert(byte[]? source, JToken? destination, ResolutionContext context)
-        {
-            return source == null || source.Length == 0
-                ? GetDefaultToken(destination, context)
-                : JToken.Parse(Encoding.UTF8.GetString(source));
-        }
+        public JToken? Convert(byte[]? source, JToken? destination, ResolutionContext context) => source == null || source.Length == 0
+            ? GetDefaultToken(destination, context)
+            : JToken.Parse(Encoding.UTF8.GetString(source));
 
 
-        public string? Convert(JToken? source, string? destination, ResolutionContext context)
-            => source?.ToString(Formatting.None) ?? destination;
+        public string? Convert(JToken? source, string? destination, ResolutionContext context) => source?.ToString(Formatting.None) ?? destination;
 
 
-        public JToken? Convert(string? source, JToken? destination, ResolutionContext context)
-        {
-            return string.IsNullOrEmpty(source) ? GetDefaultToken(destination, context) : JToken.Parse(source);
-        }
+        public JToken? Convert(string? source, JToken? destination, ResolutionContext context) => string.IsNullOrEmpty(source) ? GetDefaultToken(destination, context) : JToken.Parse(source);
 
         public byte[]? Convert(JArray? source, byte[]? destination, ResolutionContext context)
         {
@@ -59,36 +47,13 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
             return WriteToBytes(source);
         }
 
-        public JArray? Convert(byte[]? source, JArray? destination, ResolutionContext context)
-        {
-            try
-            {
-                return source == null || source.Length == 0
-                    ? GetDefault(destination, context)
-                    : JArray.Parse(Encoding.UTF8.GetString(source));
-            }
-            catch (JsonReaderException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse byte[] to JArray and failed!");
-                return GetDefault(destination, context);
-            }
-        }
+        public JArray? Convert(byte[]? source, JArray? destination, ResolutionContext context) => source == null || source.Length == 0
+            ? GetDefault(destination, context)
+            : JArray.Parse(Encoding.UTF8.GetString(source));
 
-        public string? Convert(JArray? source, string? destination, ResolutionContext context)
-            => source?.ToString(Formatting.None) ?? destination;
+        public string? Convert(JArray? source, string? destination, ResolutionContext context) => source?.ToString(Formatting.None) ?? destination;
 
-        public JArray? Convert(string? source, JArray? destination, ResolutionContext context)
-        {
-            try
-            {
-                return string.IsNullOrEmpty(source) ? GetDefault(destination, context) : JArray.Parse(source);
-            }
-            catch (JsonReaderException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse string to JArray and failed!");
-                return GetDefault(destination, context);
-            }
-        }
+        public JArray? Convert(string? source, JArray? destination, ResolutionContext context) => string.IsNullOrEmpty(source) ? GetDefault(destination, context) : JArray.Parse(source);
 
         public byte[]? Convert(JObject? source, byte[]? destination, ResolutionContext context)
         {
@@ -97,36 +62,13 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
             return WriteToBytes(source);
         }
 
-        public JObject? Convert(byte[]? source, JObject? destination, ResolutionContext context)
-        {
-            try
-            {
-                return source == null || source.Length == 0
-                    ? GetDefault(destination, context)
-                    : JObject.Parse(Encoding.UTF8.GetString(source));
-            }
-            catch (JsonReaderException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse byte[] to JObject and failed!");
-                return GetDefault(destination, context);
-            }
-        }
+        public JObject? Convert(byte[]? source, JObject? destination, ResolutionContext context) => source == null || source.Length == 0
+            ? GetDefault(destination, context)
+            : JObject.Parse(Encoding.UTF8.GetString(source));
 
-        public string? Convert(JObject? source, string? destination, ResolutionContext context)
-            => source?.ToString(Formatting.None) ?? destination;
+        public string? Convert(JObject? source, string? destination, ResolutionContext context) => source?.ToString(Formatting.None) ?? destination;
 
-        public JObject? Convert(string? source, JObject? destination, ResolutionContext context)
-        {
-            try
-            {
-                return string.IsNullOrEmpty(source) ? GetDefault(destination, context) : JObject.Parse(source);
-            }
-            catch (JsonReaderException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse string to JToken and failed!");
-                return GetDefault(destination, context);
-            }
-        }
+        public JObject? Convert(string? source, JObject? destination, ResolutionContext context) => string.IsNullOrEmpty(source) ? GetDefault(destination, context) : JObject.Parse(source);
 
         public JObject? Convert(JObject? source, JObject? destination, ResolutionContext context) => source ?? GetDefault(destination, context);
 

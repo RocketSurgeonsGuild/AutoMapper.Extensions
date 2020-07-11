@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using AutoMapper;
-using Microsoft.Extensions.Logging;
 
-namespace Rocket.Surgery.Extensions.AutoMapper
+namespace Rocket.Surgery.Extensions.AutoMapper.SystemTextJson
 {
     public class JsonElementConverter :
         ITypeConverter<JsonElement, byte[]?>,
@@ -43,123 +41,58 @@ namespace Rocket.Surgery.Extensions.AutoMapper
 
         public byte[]? Convert(JsonElement source, byte[]? destination, ResolutionContext context)
         {
-            try
-            {
                 return source.ValueKind == JsonValueKind.Undefined
                     ? destination
                     : JsonSerializer.SerializeToUtf8Bytes(source);
-            }
-            catch (JsonException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse JsonElement to byte[] and failed!");
-                return Array.Empty<byte>();
-            }
         }
 
         public JsonElement Convert(byte[]? source, JsonElement destination, ResolutionContext context)
         {
-            try
-            {
                 return source == null || source.Length == 0
                     ? GetDefault(destination, context)
                     : JsonSerializer.Deserialize<JsonElement>(source);
-            }
-            catch (JsonException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse byte[] to JsonElement and failed!");
-                return GetDefault(destination, context);
-            }
         }
 
         public string? Convert(JsonElement source, string? destination, ResolutionContext context)
         {
-            try
-            {
                 return source.ValueKind == JsonValueKind.Undefined
                     ? destination
                     : JsonSerializer.Serialize(source);
-            }
-            catch (JsonException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse JsonElement to string and failed!");
-                return string.Empty;
-            }
         }
 
         public JsonElement Convert(string? source, JsonElement destination, ResolutionContext context)
         {
-            try
-            {
                 return string.IsNullOrEmpty(source)
                     ? GetDefault(destination, context)
                     : JsonSerializer.Deserialize<JsonElement>(source);
-
-            }
-            catch (JsonException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse string to JsonElement and failed!");
-                return GetDefault(destination, context);
-            }
         }
 
         public byte[]? Convert(JsonElement? source, byte[]? destination, ResolutionContext context)
         {
-            try
-            {
                 return !source.HasValue || source.Value.ValueKind == JsonValueKind.Undefined
                         ? destination
                         : JsonSerializer.SerializeToUtf8Bytes(source);
-            }
-            catch (JsonException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse JsonElement? to byte[] and failed!");
-                return Array.Empty<byte>();
-            }
         }
 
         public JsonElement? Convert(byte[]? source, JsonElement? destination, ResolutionContext context)
         {
-            try
-            {
                 return source == null || source.Length == 0
                     ? GetDefault(destination, context)
                     : JsonSerializer.Deserialize<JsonElement?>(source);
-            }
-            catch (JsonException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse byte[] to JsonElement? and failed!");
-                return GetDefault(destination, context);
-            }
         }
 
         public string? Convert(JsonElement? source, string? destination, ResolutionContext context)
         {
-            try
-            {
                 return !source.HasValue || source.Value.ValueKind == JsonValueKind.Undefined
                         ? destination
                         : JsonSerializer.Serialize(source);
-            }
-            catch (JsonException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse JsonElement? to string and failed!");
-                return string.Empty;
-            }
         }
 
         public JsonElement? Convert(string? source, JsonElement? destination, ResolutionContext context)
         {
-            try
-            {
                 return string.IsNullOrEmpty(source)
                     ? GetDefault(destination, context)
                     : JsonSerializer.Deserialize<JsonElement?>(source);
-            }
-            catch (JsonException e)
-            {
-                Helpers.GetLogger(context)?.LogError(e, "Tried to parse string to JsonElement? and failed!");
-                return GetDefault(destination, context);
-            }
         }
 
         public JsonElement Convert(JsonElement source, JsonElement destination, ResolutionContext context)

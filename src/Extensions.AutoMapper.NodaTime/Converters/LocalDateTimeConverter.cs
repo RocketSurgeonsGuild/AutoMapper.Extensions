@@ -2,7 +2,7 @@ using System;
 using AutoMapper;
 using NodaTime;
 
-namespace Rocket.Surgery.Extensions.AutoMapper.Converters
+namespace Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters
 {
     /// <summary>
     /// LocalDateTimeConverter.

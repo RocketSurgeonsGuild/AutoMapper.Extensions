@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using AutoMapper;
 
-namespace Rocket.Surgery.Extensions.AutoMapper
+namespace Rocket.Surgery.Extensions.AutoMapper.SystemTextJson
 {
     public class SystemJsonTextProfile : Profile
     {

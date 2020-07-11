@@ -14,10 +14,6 @@ namespace Rocket.Surgery.Conventions.AutoMapper
         /// </summary>
         /// <value>The service lifetime.</value>
         public ServiceLifetime ServiceLifetime { get; set; } = ServiceLifetime.Transient;
-        // /// <summary>
-        // /// The default value for json operations
-        // /// </summary>
-        // public JsonDefaultValue JsonDefaultValue { get; set; } = JsonDefaultValue.NotNull;
 
         void IRuntimeFeature.Seal(IConfigurationProvider configurationProvider) { }
 

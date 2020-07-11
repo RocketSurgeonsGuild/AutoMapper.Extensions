@@ -3,7 +3,7 @@ using AutoMapper;
 using JetBrains.Annotations;
 using NodaTime;
 
-namespace Rocket.Surgery.Extensions.AutoMapper.Converters
+namespace Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters
 {
     /// <summary>
     /// LocalDateConverter.

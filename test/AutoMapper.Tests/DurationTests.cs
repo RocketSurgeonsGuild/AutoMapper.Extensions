@@ -5,7 +5,7 @@ using AutoMapper;
 using FluentAssertions;
 using JetBrains.Annotations;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper.Converters;
+using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
 using Xunit;
 using Xunit.Abstractions;
 

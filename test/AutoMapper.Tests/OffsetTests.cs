@@ -2,7 +2,7 @@ using System;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper.Converters;
+using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
 using Xunit;
 using Xunit.Abstractions;
 

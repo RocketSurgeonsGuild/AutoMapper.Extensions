@@ -1,9 +1,9 @@
 using System;
 using AutoMapper;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper.Converters;
+using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
 
-namespace Rocket.Surgery.Extensions.AutoMapper
+namespace Rocket.Surgery.Extensions.AutoMapper.NodaTime
 {
     /// <summary>
     /// NodaTimeProfile.

@@ -8,6 +8,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson;
+using Rocket.Surgery.Extensions.AutoMapper.SystemTextJson;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -503,19 +504,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             {
                 Bar = element
             };
-            var result = Mapper.Map<JObjectA>(item);
-
-            A.CallTo(Logger)
-               .Where(x => x.Method.Name == nameof(Logger.Log))
-               .Where(x => x.Arguments.Get<LogLevel>(0) == LogLevel.Warning)
-               .Where(
-                    x => x.Arguments.Get<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(
-                        z => z.Value is string &&
-                            ( (string)z.Value ) == "Tried to convert non array JsonElement? to JObject"
-                    )
-                )
-               .MustHaveHappened();
-            result.Bar.Should().BeNull();
+            Action a = () => Mapper.Map<JObjectA>(item);
+            a.Should().Throw<AutoMapperMappingException>();
         }
 
         class ShouldNotMap_From_Nullable_JsonElement_To_JObject_Given_Invalid_Element_Data : TheoryData<JsonElement?>
@@ -537,19 +527,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             {
                 Bar = element
             };
-            var result = Mapper.Map<JObjectA>(item);
-
-            A.CallTo(Logger)
-               .Where(x => x.Method.Name == nameof(Logger.Log))
-               .Where(x => x.Arguments.Get<LogLevel>(0) == LogLevel.Warning)
-               .Where(
-                    x => x.Arguments.Get<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(
-                        z => z.Value is string &&
-                            ( (string)z.Value ) == "Tried to convert non array JsonElement to JObject"
-                    )
-                )
-               .MustHaveHappened();
-            result.Bar.Should().BeNull();
+            Action a = () => Mapper.Map<JObjectA>(item);
+            a.Should().Throw<AutoMapperMappingException>();
         }
 
         class ShouldNotMap_From_JsonElement_To_JObject_Given_Invalid_Element_Data : TheoryData<JsonElement>
@@ -571,19 +550,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             {
                 Bar = element
             };
-            var result = Mapper.Map<JArrayA>(item);
-
-            A.CallTo(Logger)
-               .Where(x => x.Method.Name == nameof(Logger.Log))
-               .Where(x => x.Arguments.Get<LogLevel>(0) == LogLevel.Warning)
-               .Where(
-                    x => x.Arguments.Get<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(
-                        z => z.Value is string &&
-                            ( (string)z.Value ) == "Tried to convert non array JsonElement? to JArray"
-                    )
-                )
-               .MustHaveHappened();
-            result.Bar.Should().BeNull();
+            Action a = () => Mapper.Map<JArrayA>(item);
+            a.Should().Throw<AutoMapperMappingException>();
         }
 
         class ShouldNotMap_From_Nullable_JsonElement_To_JArray_Given_Invalid_Element_Data : TheoryData<JsonElement?>
@@ -605,19 +573,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             {
                 Bar = element
             };
-            var result = Mapper.Map<JArrayA>(item);
-
-            A.CallTo(Logger)
-               .Where(x => x.Method.Name == nameof(Logger.Log))
-               .Where(x => x.Arguments.Get<LogLevel>(0) == LogLevel.Warning)
-               .Where(
-                    x => x.Arguments.Get<IReadOnlyList<KeyValuePair<string, object>>>(2).Any(
-                        z => z.Value is string &&
-                            ( (string)z.Value ) == "Tried to convert non array JsonElement to JArray"
-                    )
-                )
-               .MustHaveHappened();
-            result.Bar.Should().BeNull();
+            Action a = () => Mapper.Map<JArrayA>(item);
+            a.Should().Throw<AutoMapperMappingException>();
         }
 
         class ShouldNotMap_From_JsonElement_To_JArray_Given_Invalid_Element_Data : TheoryData<JsonElement>

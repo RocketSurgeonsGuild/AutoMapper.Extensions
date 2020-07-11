@@ -4,8 +4,7 @@
         <AssemblyTitle>Rocket.Surgery FluentValidation with MediatR for .NET Core</AssemblyTitle>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="AutoMapper" />
         <PackageReference Include="System.Text.Json" />
-        <PackageReference Include="Newtonsoft.Json" />
+        <PackageReference Include="AutoMapper" />
     </ItemGroup>
 </Project>
