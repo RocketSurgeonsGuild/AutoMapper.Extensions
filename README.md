@@ -21,8 +21,8 @@
 | Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson | [![nuget-version-bzht5npclwvq-badge]![nuget-downloads-bzht5npclwvq-badge]][nuget-bzht5npclwvq] |
 | Rocket.Surgery.Extensions.AutoMapper | [![nuget-version-g40cerr0u5ig-badge]![nuget-downloads-g40cerr0u5ig-badge]][nuget-g40cerr0u5ig] |
 | Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson | [![nuget-version-9vq2lyvvl54w-badge]![nuget-downloads-9vq2lyvvl54w-badge]][nuget-9vq2lyvvl54w] |
-| Rocket.Surgery.Extensions.AutoMapper.SystemTextJson | [![nuget-version-+jfln50w4pbg-badge]![nuget-downloads-+jfln50w4pbg-badge]][nuget-+jfln50w4pbg] |
 | Rocket.Surgery.Extensions.AutoMapper.NodaTime | [![nuget-version-y1bc0wuvai2q-badge]![nuget-downloads-y1bc0wuvai2q-badge]][nuget-y1bc0wuvai2q] |
+| Rocket.Surgery.Extensions.AutoMapper.SystemTextJson | [![nuget-version-+jfln50w4pbg-badge]![nuget-downloads-+jfln50w4pbg-badge]][nuget-+jfln50w4pbg] |
 <!-- nuget packages -->
 
 # Whats next?
@@ -54,12 +54,12 @@ TBD
 [nuget-9vq2lyvvl54w]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson/
 [nuget-version-9vq2lyvvl54w-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-9vq2lyvvl54w-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-+jfln50w4pbg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.AutoMapper.SystemTextJson/
-[nuget-version-+jfln50w4pbg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.AutoMapper.SystemTextJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-+jfln50w4pbg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.AutoMapper.SystemTextJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 [nuget-y1bc0wuvai2q]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.AutoMapper.NodaTime/
 [nuget-version-y1bc0wuvai2q-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.AutoMapper.NodaTime.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-y1bc0wuvai2q-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.AutoMapper.NodaTime.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
+[nuget-+jfln50w4pbg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.AutoMapper.SystemTextJson/
+[nuget-version-+jfln50w4pbg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.AutoMapper.SystemTextJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-+jfln50w4pbg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.AutoMapper.SystemTextJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 <!-- generated references -->
 
 <!-- nuke-data

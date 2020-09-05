@@ -32,10 +32,16 @@ namespace Rocket.Surgery.Conventions.AutoMapper
         /// <param name="options">The options.</param>
         public AutoMapperConvention(AutoMapperOptions? options = null) => _options = options ?? new AutoMapperOptions();
 
-        private void AddAutoMapperClasses(IServiceConventionContext context)
+        /// <summary>
+        /// Registers the specified context.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="configuration"></param>
+        /// <param name="services"></param>
+        public void Register([NotNull] IConventionContext context, Microsoft.Extensions.Configuration.IConfiguration configuration, IServiceCollection services)
         {
             var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(Extensions.AutoMapper)).ToArray();
-            context.Services.AddAutoMapper(
+            services.AddAutoMapper(
                 (_, expression) =>
                 {
                     expression.Features.Set(_options);
@@ -48,20 +54,6 @@ namespace Rocket.Surgery.Conventions.AutoMapper
                 assemblies,
                 _options.ServiceLifetime
             );
-        }
-
-        /// <summary>
-        /// Registers the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        public void Register([NotNull] IServiceConventionContext context)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            AddAutoMapperClasses(context);
         }
     }
 }
