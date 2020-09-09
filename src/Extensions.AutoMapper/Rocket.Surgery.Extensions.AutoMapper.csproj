@@ -13,9 +13,4 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Extensions.AutoMapper.NewtonsoftJson\Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.csproj" />
-    <ProjectReference Include="..\Extensions.AutoMapper.NodaTime\Rocket.Surgery.Extensions.AutoMapper.NodaTime.csproj" />
-    <ProjectReference Include="..\Extensions.AutoMapper.SystemTextJson\Rocket.Surgery.Extensions.AutoMapper.SystemTextJson.csproj" />
-  </ItemGroup>
 </Project>
