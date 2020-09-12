@@ -6,10 +6,7 @@ using AutoMapper.Features;
 using Bogus;
 using Bogus.Extensions;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using NodaTime;
-using Rocket.Surgery.Conventions.AutoMapper;
 using Rocket.Surgery.Extensions.AutoMapper.NodaTime;
 using Rocket.Surgery.Extensions.Testing;
 using Serilog.Events;
@@ -173,7 +170,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
             Config = new MapperConfiguration(
                 x =>
                 {
-                    x.SetFeature(Options);
                     x.SetFeature(new AutoMapperLogger(Logger));
                     x.AddProfile<NodaTimeProfile>();
                     foreach (var (source, destination) in GetValueTypePairs().SelectMany(
@@ -197,7 +193,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 
 
         protected IMapper Mapper { get; }
-        protected AutoMapperOptions Options { get; } = new AutoMapperOptions();
         protected MapperConfiguration Config { get; }
 
         protected abstract void Configure([NotNull] IMapperConfigurationExpression expression);

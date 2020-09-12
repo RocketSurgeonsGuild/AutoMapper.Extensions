@@ -17,8 +17,6 @@
 <!-- nuget packages -->
 | Package | NuGet |
 | ------- | ----- |
-| Rocket.Surgery.Conventions.AutoMapper | [![nuget-version-/wlx/bdorefw-badge]![nuget-downloads-/wlx/bdorefw-badge]][nuget-/wlx/bdorefw] |
-| Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson | [![nuget-version-bzht5npclwvq-badge]![nuget-downloads-bzht5npclwvq-badge]][nuget-bzht5npclwvq] |
 | Rocket.Surgery.Extensions.AutoMapper | [![nuget-version-g40cerr0u5ig-badge]![nuget-downloads-g40cerr0u5ig-badge]][nuget-g40cerr0u5ig] |
 | Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson | [![nuget-version-9vq2lyvvl54w-badge]![nuget-downloads-9vq2lyvvl54w-badge]][nuget-9vq2lyvvl54w] |
 | Rocket.Surgery.Extensions.AutoMapper.NodaTime | [![nuget-version-y1bc0wuvai2q-badge]![nuget-downloads-y1bc0wuvai2q-badge]][nuget-y1bc0wuvai2q] |
@@ -35,19 +33,13 @@ TBD
 [github-license-badge]: https://img.shields.io/github/license/RocketSurgeonsGuild/AutoMapper.Extensions.svg?style=flat "License"
 [codecov]: https://codecov.io/gh/RocketSurgeonsGuild/AutoMapper.Extensions
 [codecov-badge]: https://img.shields.io/codecov/c/github/RocketSurgeonsGuild/AutoMapper.Extensions.svg?color=E03997&label=codecov&logo=codecov&logoColor=E03997&style=flat "Code Coverage"
-[azurepipelines]: https://rocketsurgeonsguild.visualstudio.com/Libraries/_build/latest?definitionId=16&branchName=master
+[azurepipelines]: https://dev.azure.com/rocketsurgeonsguild/Libraries/_build/latest?definitionId=16&branchName=master
 [azurepipelines-badge]: https://img.shields.io/azure-devops/build/rocketsurgeonsguild/Libraries/16.svg?color=98C6FF&label=azure%20pipelines&logo=azuredevops&logoColor=98C6FF&style=flat "Azure Pipelines Status"
-[azurepipelines-history]: https://rocketsurgeonsguild.visualstudio.com/Libraries/_build?definitionId=16&branchName=master
+[azurepipelines-history]: https://dev.azure.com/rocketsurgeonsguild/Libraries/_build?definitionId=16&branchName=master
 [azurepipelines-history-badge]: https://buildstats.info/azurepipelines/chart/rocketsurgeonsguild/Libraries/16?includeBuildsFromPullRequest=false "Azure Pipelines History"
 [github]: https://github.com/RocketSurgeonsGuild/AutoMapper.Extensions/actions?query=workflow%3Aci
 [github-badge]: https://img.shields.io/github/workflow/status/RocketSurgeonsGuild/AutoMapper.Extensions/ci.svg?label=github&logo=github&color=b845fc&logoColor=b845fc&style=flat "GitHub Actions Status"
 [github-history-badge]: https://buildstats.info/github/chart/RocketSurgeonsGuild/AutoMapper.Extensions?includeBuildsFromPullRequest=false "GitHub Actions History"
-[nuget-/wlx/bdorefw]: https://www.nuget.org/packages/Rocket.Surgery.Conventions.AutoMapper/
-[nuget-version-/wlx/bdorefw-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Conventions.AutoMapper.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-/wlx/bdorefw-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Conventions.AutoMapper.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-bzht5npclwvq]: https://www.nuget.org/packages/Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson/
-[nuget-version-bzht5npclwvq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-bzht5npclwvq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Conventions.AutoMapper.NewtonsoftJson.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 [nuget-g40cerr0u5ig]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.AutoMapper/
 [nuget-version-g40cerr0u5ig-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.AutoMapper.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-g40cerr0u5ig-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.AutoMapper.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
