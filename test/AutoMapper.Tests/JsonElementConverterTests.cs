@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public class JsonElementConverterTests : TypeConverterTest<JsonElementConverter>
+    public class JsonElementConverterTests : TypeConverterTest
     {
         public JsonElementConverterTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 

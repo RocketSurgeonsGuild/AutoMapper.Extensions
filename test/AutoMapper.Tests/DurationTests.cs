@@ -5,7 +5,7 @@ using AutoMapper;
 using FluentAssertions;
 using JetBrains.Annotations;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -13,7 +13,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public class DurationTests : TypeConverterTest<DurationConverter>
+    public class DurationTests : TypeConverterTest<DurationTests.Converters>
     {
         public DurationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
@@ -181,8 +181,8 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         }
 
         [Theory]
-        [MemberData(nameof(GetTestCases))]
-        public void AutomatedTests(Type source, Type destination, object sourceValue)
+        [ClassData(typeof(TypeConverterData<Converters>))]
+        public void AutomatedTests(Type source, Type destination, object? sourceValue)
         {
             var method = typeof(IMapperBase).GetMethods(BindingFlags.Public | BindingFlags.Instance)
                .First(
@@ -244,6 +244,33 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         public class Foo9
         {
             public decimal Bar { get; set; }
+        }
+
+        public class Converters : TypeConverterFactory
+        {
+            public override IEnumerable<Type> GetTypeConverters()
+            {
+                yield return typeof(ITypeConverter<Duration, TimeSpan>);
+                yield return typeof(ITypeConverter<Duration?, TimeSpan?>);
+                yield return typeof(ITypeConverter<TimeSpan, Duration>);
+                yield return typeof(ITypeConverter<TimeSpan?, Duration?>);
+                yield return typeof(ITypeConverter<Duration, long>);
+                yield return typeof(ITypeConverter<Duration?, long?>);
+                yield return typeof(ITypeConverter<long, Duration>);
+                yield return typeof(ITypeConverter<long?, Duration?>);
+                yield return typeof(ITypeConverter<Duration, int>);
+                yield return typeof(ITypeConverter<Duration?, int?>);
+                yield return typeof(ITypeConverter<int, Duration>);
+                yield return typeof(ITypeConverter<int?, Duration?>);
+                yield return typeof(ITypeConverter<Duration, double>);
+                yield return typeof(ITypeConverter<Duration?, double?>);
+                yield return typeof(ITypeConverter<double, Duration>);
+                yield return typeof(ITypeConverter<double?, Duration?>);
+                yield return typeof(ITypeConverter<Duration, decimal>);
+                yield return typeof(ITypeConverter<Duration?, decimal?>);
+                yield return typeof(ITypeConverter<decimal, Duration>);
+                yield return typeof(ITypeConverter<decimal?, Duration?>);
+            }
         }
     }
 }

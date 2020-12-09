@@ -5,13 +5,13 @@ using AutoMapper;
 using FluentAssertions;
 using JetBrains.Annotations;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public class LocalDateTests : TypeConverterTest<LocalDateConverter>
+    public class LocalDateTests : TypeConverterTest<LocalDateTests.Converters>
     {
         public LocalDateTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
@@ -47,7 +47,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         }
 
         [Theory]
-        [MemberData(nameof(GetTestCases))]
+        [ClassData(typeof(TypeConverterData<Converters>))]
         public void AutomatedTests(Type source, Type destination, object sourceValue)
         {
             var method = typeof(IMapperBase).GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -86,6 +86,17 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         private class Foo3
         {
             public DateTime Bar { get; set; }
+        }
+
+        public class Converters : TypeConverterFactory
+        {
+            public override IEnumerable<Type> GetTypeConverters()
+            {
+                yield return typeof(ITypeConverter<LocalDate, DateTime>);
+                yield return typeof(ITypeConverter<LocalDate?, DateTime?>);
+                yield return typeof(ITypeConverter<DateTime, LocalDate>);
+                yield return typeof(ITypeConverter<DateTime?, LocalDate?>);
+            }
         }
     }
 }

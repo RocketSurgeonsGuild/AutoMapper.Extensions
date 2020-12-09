@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public class JTokenConverterTests : TypeConverterTest<JTokenConverter>
+    public class JTokenConverterTests : TypeConverterTest
     {
         public JTokenConverterTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
@@ -488,18 +488,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         }
 
         [Fact]
-        public void ShouldMap_JObject_To_JObject_From_Null()
-        {
-            var item = new JObjectA()
-            {
-                Bar = null
-            };
-            var result = Mapper.Map<JObjectA>(item);
-
-            result.Bar.Should().BeNull();
-        }
-
-        [Fact]
         public void ShouldMap_ByteArray_To_JArray()
         {
             var item = new ByteArray()
@@ -634,18 +622,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 
             result.Bar.Should().NotBeNull();
             result.Bar.Should().NotBeEmpty();
-        }
-
-        [Fact]
-        public void ShouldMap_JArray_To_JArray_From_Null()
-        {
-            var item = new JArrayA()
-            {
-                Bar = null
-            };
-            var result = Mapper.Map<JArrayA>(item);
-
-            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -789,18 +765,6 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 
             result.Bar.Should().NotBeNull();
             result.Bar.Should().NotBeEmpty();
-        }
-
-        [Fact]
-        public void ShouldMap_JToken_To_JToken_From_Null()
-        {
-            var item = new JTokenA()
-            {
-                Bar = null
-            };
-            var result = Mapper.Map<JTokenA>(item);
-
-            result.Bar.Should().BeNull();
         }
 
         [Fact]
