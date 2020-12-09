@@ -1,6 +1,10 @@
 ﻿using System.Text.Json;
 using AutoMapper;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text;
+using static Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson.ConverterHelpers;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
 {
@@ -9,37 +13,48 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson
         public NewtonsoftJsonProfile()
         {
             {
-                var converter = new JTokenConverter();
-                CreateMap<JArray?, byte[]?>().ConvertUsing(converter);
-                CreateMap<JArray?, string?>().ConvertUsing(converter);
-                CreateMap<JArray?, JArray?>().ConvertUsing(converter);
-                CreateMap<byte[]?, JArray?>().ConvertUsing(converter);
-                CreateMap<string?, JArray?>().ConvertUsing(converter);
-                CreateMap<JObject?, byte[]?>().ConvertUsing(converter);
-                CreateMap<JObject?, string?>().ConvertUsing(converter);
-                CreateMap<JObject?, JObject?>().ConvertUsing(converter);
-                CreateMap<byte[]?, JObject?>().ConvertUsing(converter);
-                CreateMap<string?, JObject?>().ConvertUsing(converter);
-                CreateMap<JToken?, byte[]?>().ConvertUsing(converter);
-                CreateMap<JToken?, string?>().ConvertUsing(converter);
-                CreateMap<JToken?, JToken?>().ConvertUsing(converter);
-                CreateMap<byte[]?, JToken?>().ConvertUsing(converter);
-                CreateMap<string?, JToken?>().ConvertUsing(converter);
+                CreateMap<JToken?, byte[]?>().ConvertUsing(source => source == null || source.Type == JTokenType.None ? default : WriteToBytes(source));
+                CreateMap<byte[]?, JToken?>().ConvertUsing(source => source == null || source.Length == 0 ? default : JToken.Parse(Encoding.UTF8.GetString(source)));
+                CreateMap<JToken?, string?>().ConvertUsing(source => source == default ? default : source.ToString(Formatting.None));
+                CreateMap<string?, JToken?>().ConvertUsing(source => string.IsNullOrEmpty(source) ? default : JToken.Parse(source));
+                CreateMap<JArray?, byte[]?>().ConvertUsing(source => source == null || source.Type == JTokenType.None ? default : WriteToBytes(source));
+                CreateMap<byte[]?, JArray?>().ConvertUsing(source => source == null || source.Length == 0 ? default : JArray.Parse(Encoding.UTF8.GetString(source)));
+                CreateMap<JArray?, string?>().ConvertUsing(source => source == null ? default : source.ToString(Formatting.None));
+                CreateMap<string?, JArray?>().ConvertUsing(source => string.IsNullOrEmpty(source) ? default : JArray.Parse(source));
+                CreateMap<JObject?, byte[]?>().ConvertUsing(source => source == null || source.Type == JTokenType.None ? default : WriteToBytes(source));
+                CreateMap<byte[]?, JObject?>().ConvertUsing(source => source == null || source.Length == 0 ? default : JObject.Parse(Encoding.UTF8.GetString(source)));
+                CreateMap<JObject?, string?>().ConvertUsing(source => source == null ? default : source.ToString(Formatting.None));
+                CreateMap<string?, JObject?>().ConvertUsing(source => string.IsNullOrEmpty(source) ? default : JObject.Parse(source));
             }
             {
-                var converter = new SystemTextJsonAndNewtonsoftJsonConverter();
-                CreateMap<JsonElement, JObject?>().ConvertUsing(converter);
-                CreateMap<JObject?, JsonElement>().ConvertUsing(converter);
-                CreateMap<JsonElement?, JObject?>().ConvertUsing(converter);
-                CreateMap<JObject?, JsonElement?>().ConvertUsing(converter);
-                CreateMap<JsonElement, JArray?>().ConvertUsing(converter);
-                CreateMap<JArray?, JsonElement>().ConvertUsing(converter);
-                CreateMap<JsonElement?, JArray?>().ConvertUsing(converter);
-                CreateMap<JArray?, JsonElement?>().ConvertUsing(converter);
-                CreateMap<JsonElement, JToken?>().ConvertUsing(converter);
-                CreateMap<JToken?, JsonElement>().ConvertUsing(converter);
-                CreateMap<JsonElement?, JToken?>().ConvertUsing(converter);
-                CreateMap<JToken?, JsonElement?>().ConvertUsing(converter);
+                CreateMap<JObject?, JsonElement>().ConvertUsing(source => source == null ? default : JsonDocument.Parse(WriteToBytes(source), default).RootElement.Clone());
+                CreateMap<JsonElement, JObject?>()
+                   .ConvertUsing(source => source.ValueKind == JsonValueKind.Undefined ? default : JObject.Parse(JsonSerializer.Serialize(source, default)));
+                CreateMap<JObject?, JsonElement?>().ConvertUsing(
+                    source => source == default ? default(JsonElement?) : JsonDocument.Parse(WriteToBytes(source), default).RootElement.Clone()
+                );
+                CreateMap<JsonElement?, JObject?>().ConvertUsing(
+                    source => !source.HasValue || source.Value.ValueKind == JsonValueKind.Undefined ? default : JObject.Parse(JsonSerializer.Serialize(source, default))
+                );
+                CreateMap<JArray?, JsonElement>()
+                   .ConvertUsing(source => source == default ? default : JsonDocument.Parse(WriteToBytes(source), default).RootElement.Clone());
+                CreateMap<JsonElement, JArray?>()
+                   .ConvertUsing(source => source.ValueKind == JsonValueKind.Undefined ? default : JArray.Parse(JsonSerializer.Serialize(source, default)));
+                CreateMap<JArray?, JsonElement?>().ConvertUsing(
+                    source => source == null ? default(JsonElement?) : JsonDocument.Parse(WriteToBytes(source), default).RootElement.Clone()
+                );
+                CreateMap<JsonElement?, JArray?>().ConvertUsing(
+                    source => !source.HasValue || source.Value.ValueKind == JsonValueKind.Undefined ? default : JArray.Parse(JsonSerializer.Serialize(source, default))
+                );
+                CreateMap<JToken?, JsonElement>().ConvertUsing(source => source == null ? default : JsonDocument.Parse(WriteToBytes(source), default).RootElement.Clone());
+                CreateMap<JsonElement, JToken?>()
+                   .ConvertUsing(source => source.ValueKind == JsonValueKind.Undefined ? default : JToken.Parse(JsonSerializer.Serialize(source, default), default));
+                CreateMap<JToken?, JsonElement?>().ConvertUsing(
+                    source => source == default ? default(JsonElement?) : JsonDocument.Parse(WriteToBytes(source), default).RootElement.Clone()
+                );
+                CreateMap<JsonElement?, JToken?>().ConvertUsing(
+                    source => !source.HasValue || source.Value.ValueKind == JsonValueKind.Undefined ? default : JToken.Parse(JsonSerializer.Serialize(source, default))
+                );
             }
         }
 

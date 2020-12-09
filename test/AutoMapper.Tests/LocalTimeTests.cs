@@ -5,13 +5,13 @@ using AutoMapper;
 using FluentAssertions;
 using JetBrains.Annotations;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public class LocalTimeTests : TypeConverterTest<LocalTimeConverter>
+    public class LocalTimeTests : TypeConverterTest<LocalTimeTests.Converters>
     {
         public LocalTimeTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
@@ -75,7 +75,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         }
 
         [Theory]
-        [MemberData(nameof(GetTestCases))]
+        [ClassData(typeof(TypeConverterData<Converters>))]
         public void AutomatedTests(Type source, Type destination, object sourceValue)
         {
             var method = typeof(IMapperBase).GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -120,6 +120,21 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         private class Foo5
         {
             public DateTime Bar { get; set; }
+        }
+
+        public class Converters : TypeConverterFactory
+        {
+            public override IEnumerable<Type> GetTypeConverters()
+            {
+                yield return typeof(ITypeConverter<LocalTime, TimeSpan>);
+                yield return typeof(ITypeConverter<LocalTime?, TimeSpan?>);
+                yield return typeof(ITypeConverter<TimeSpan, LocalTime>);
+                yield return typeof(ITypeConverter<TimeSpan?, LocalTime?>);
+                yield return typeof(ITypeConverter<LocalTime, DateTime>);
+                yield return typeof(ITypeConverter<LocalTime?, DateTime?>);
+                yield return typeof(ITypeConverter<DateTime, LocalTime>);
+                yield return typeof(ITypeConverter<DateTime?, LocalTime?>);
+            }
         }
     }
 }

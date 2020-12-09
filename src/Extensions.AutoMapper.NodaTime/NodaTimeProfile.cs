@@ -1,7 +1,8 @@
 using System;
 using AutoMapper;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
+using NodaTime.Text;
+using System.Data;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.NodaTime
 {
@@ -35,96 +36,94 @@ namespace Rocket.Surgery.Extensions.AutoMapper.NodaTime
 
         private void CreateMappingsForDurationConverter()
         {
-            var converter = new DurationConverter();
-            CreateMap<Duration, TimeSpan>().ConvertUsing(converter);
-            CreateMap<Duration?, TimeSpan?>().ConvertUsing(converter);
-            CreateMap<TimeSpan, Duration>().ConvertUsing(converter);
-            CreateMap<TimeSpan?, Duration?>().ConvertUsing(converter);
-            CreateMap<Duration, long>().ConvertUsing(converter);
-            CreateMap<Duration?, long?>().ConvertUsing(converter);
-            CreateMap<long, Duration>().ConvertUsing(converter);
-            CreateMap<long?, Duration?>().ConvertUsing(converter);
-            CreateMap<Duration, int>().ConvertUsing(converter);
-            CreateMap<Duration?, int?>().ConvertUsing(converter);
-            CreateMap<int, Duration>().ConvertUsing(converter);
-            CreateMap<int?, Duration?>().ConvertUsing(converter);
-            CreateMap<Duration, double>().ConvertUsing(converter);
-            CreateMap<Duration?, double?>().ConvertUsing(converter);
-            CreateMap<double, Duration>().ConvertUsing(converter);
-            CreateMap<double?, Duration?>().ConvertUsing(converter);
-            CreateMap<Duration, decimal>().ConvertUsing(converter);
-            CreateMap<Duration?, decimal?>().ConvertUsing(converter);
-            CreateMap<decimal, Duration>().ConvertUsing(converter);
-            CreateMap<decimal?, Duration?>().ConvertUsing(converter);
+            CreateMap<decimal, Duration>().ConvertUsing(source => Duration.FromTicks((long)( source * NodaConstants.TicksPerMillisecond )));
+            CreateMap<decimal?, Duration?>().ConvertUsing(source => source.HasValue ? Duration.FromTicks((long)( source.Value * NodaConstants.TicksPerMillisecond )) : default);
+            CreateMap<double, Duration>().ConvertUsing(source => Duration.FromTicks((long)( source * NodaConstants.TicksPerMillisecond )));
+            CreateMap<double?, Duration?>().ConvertUsing(source => source.HasValue ? Duration.FromTicks((long)( source.Value * NodaConstants.TicksPerMillisecond )) : default);
+            CreateMap<Duration, decimal>().ConvertUsing(source => (decimal)source.BclCompatibleTicks / NodaConstants.TicksPerMillisecond);
+            CreateMap<Duration, double>().ConvertUsing(source => (double)source.BclCompatibleTicks / NodaConstants.TicksPerMillisecond);
+            CreateMap<Duration, int>().ConvertUsing(source => (int)( source.BclCompatibleTicks / NodaConstants.TicksPerSecond ));
+            CreateMap<Duration, long>().ConvertUsing(source => source.BclCompatibleTicks / NodaConstants.TicksPerMillisecond);
+            CreateMap<Duration, TimeSpan>().ConvertUsing(source => source.ToTimeSpan());
+            CreateMap<Duration?, decimal?>().ConvertUsing(source => source.HasValue ? (decimal)source.Value.BclCompatibleTicks / NodaConstants.TicksPerMillisecond : default);
+            CreateMap<Duration?, double?>().ConvertUsing(source => source.HasValue ? (double)source.Value.BclCompatibleTicks / NodaConstants.TicksPerMillisecond : default);
+            CreateMap<Duration?, int?>().ConvertUsing(source => source.HasValue ? (int)( source.Value.BclCompatibleTicks / NodaConstants.TicksPerSecond ) : default);
+            CreateMap<Duration?, long?>().ConvertUsing(source => source.HasValue ? source.Value.BclCompatibleTicks / NodaConstants.TicksPerMillisecond : default);
+            CreateMap<Duration?, TimeSpan?>().ConvertUsing(source => source.HasValue ? source.Value.ToTimeSpan() : default);
+            CreateMap<int, Duration>().ConvertUsing(source => Duration.FromTicks(source * NodaConstants.TicksPerSecond));
+            CreateMap<int?, Duration?>().ConvertUsing(source => source.HasValue ? Duration.FromTicks(source.Value * NodaConstants.TicksPerSecond) : default);
+            CreateMap<long, Duration>().ConvertUsing(source => Duration.FromTicks(source * NodaConstants.TicksPerMillisecond));
+            CreateMap<long?, Duration?>().ConvertUsing(source => source.HasValue ? Duration.FromTicks(source.Value * NodaConstants.TicksPerMillisecond) : default);
+            CreateMap<TimeSpan, Duration>().ConvertUsing(source => Duration.FromTimeSpan(source));
+            CreateMap<TimeSpan?, Duration?>().ConvertUsing(source => source.HasValue ? Duration.FromTimeSpan(source.Value) : default);
         }
 
         private void CreateMappingsForInstantConvertor()
         {
-            var converter = new InstantConverter();
-            CreateMap<Instant, DateTime>().ConvertUsing(converter);
-            CreateMap<Instant?, DateTime?>().ConvertUsing(converter);
-            CreateMap<Instant, DateTimeOffset>().ConvertUsing(converter);
-            CreateMap<Instant?, DateTimeOffset?>().ConvertUsing(converter);
-            CreateMap<DateTime, Instant>().ConvertUsing(converter);
-            CreateMap<DateTime?, Instant?>().ConvertUsing(converter);
-            CreateMap<DateTimeOffset, Instant>().ConvertUsing(converter);
-            CreateMap<DateTimeOffset?, Instant?>().ConvertUsing(converter);
+            CreateMap<DateTime, Instant>().ConvertUsing(
+                source => Instant.FromDateTimeUtc(source.Kind == DateTimeKind.Unspecified ? DateTime.SpecifyKind(source, DateTimeKind.Utc) : source.ToUniversalTime())
+            );
+            CreateMap<DateTime?, Instant?>().ConvertUsing(
+                source => source.HasValue
+                    ? Instant.FromDateTimeUtc(source.Value.Kind == DateTimeKind.Unspecified ? DateTime.SpecifyKind(source.Value, DateTimeKind.Utc) : source.Value.ToUniversalTime())
+                    : default
+            );
+            CreateMap<DateTimeOffset, Instant>().ConvertUsing(source => Instant.FromDateTimeOffset(source));
+            CreateMap<DateTimeOffset?, Instant?>().ConvertUsing(source => source.HasValue ? Instant.FromDateTimeOffset(source.Value) : default);
+            CreateMap<Instant, DateTime>().ConvertUsing(source => source.ToDateTimeUtc());
+            CreateMap<Instant, DateTimeOffset>().ConvertUsing(source => source.ToDateTimeOffset());
+            CreateMap<Instant?, DateTime?>().ConvertUsing(source => source.HasValue ? source.Value.ToDateTimeUtc() : default);
+            CreateMap<Instant?, DateTimeOffset?>().ConvertUsing(source => source.HasValue ? source.Value.ToDateTimeOffset() : default);
         }
 
         private void CreateMappingsForLocalDateConverter()
         {
-            var converter = new LocalDateConverter();
-            CreateMap<LocalDate, DateTime>().ConvertUsing(converter);
-            CreateMap<LocalDate?, DateTime?>().ConvertUsing(converter);
-            CreateMap<DateTime, LocalDate>().ConvertUsing(converter);
-            CreateMap<DateTime?, LocalDate?>().ConvertUsing(converter);
+            CreateMap<DateTime, LocalDate>().ConvertUsing(source => LocalDateTime.FromDateTime(source).Date);
+            CreateMap<DateTime?, LocalDate?>().ConvertUsing(source => source.HasValue ? LocalDateTime.FromDateTime(source.Value).Date : default);
+            CreateMap<LocalDate, DateTime>().ConvertUsing(source => source.AtMidnight().ToDateTimeUnspecified());
+            CreateMap<LocalDate?, DateTime?>().ConvertUsing(source => source.HasValue ? source.Value.AtMidnight().ToDateTimeUnspecified() : default);
         }
 
         private void CreateMappingsForLocalDateTimeConverter()
         {
-            var converter = new LocalDateTimeConverter();
-            CreateMap<LocalDateTime, DateTime>().ConvertUsing(converter);
-            CreateMap<LocalDateTime?, DateTime?>().ConvertUsing(converter);
-            CreateMap<DateTime, LocalDateTime>().ConvertUsing(converter);
-            CreateMap<DateTime?, LocalDateTime?>().ConvertUsing(converter);
+            CreateMap<DateTime, LocalDateTime>().ConvertUsing(source => LocalDateTime.FromDateTime(source));
+            CreateMap<DateTime?, LocalDateTime?>().ConvertUsing(source => source.HasValue ? LocalDateTime.FromDateTime(source.Value) : default);
+            CreateMap<LocalDateTime, DateTime>().ConvertUsing(source => source.ToDateTimeUnspecified());
+            CreateMap<LocalDateTime?, DateTime?>().ConvertUsing(source => source.HasValue ? source.Value.ToDateTimeUnspecified() : default);
         }
 
         private void CreateMappingsForLocalTimeConverter()
         {
-            var converter = new LocalTimeConverter();
-            CreateMap<LocalTime, TimeSpan>().ConvertUsing(converter);
-            CreateMap<LocalTime?, TimeSpan?>().ConvertUsing(converter);
-            CreateMap<TimeSpan, LocalTime>().ConvertUsing(converter);
-            CreateMap<TimeSpan?, LocalTime?>().ConvertUsing(converter);
-            CreateMap<LocalTime, DateTime>().ConvertUsing(converter);
-            CreateMap<LocalTime?, DateTime?>().ConvertUsing(converter);
-            CreateMap<DateTime, LocalTime>().ConvertUsing(converter);
-            CreateMap<DateTime?, LocalTime?>().ConvertUsing(converter);
+            CreateMap<DateTime, LocalTime>().ConvertUsing(source => LocalDateTime.FromDateTime(source).TimeOfDay);
+            CreateMap<DateTime?, LocalTime?>().ConvertUsing(source => source.HasValue ? LocalDateTime.FromDateTime(source.Value).TimeOfDay : default);
+            CreateMap<LocalTime, DateTime>().ConvertUsing(source => source.On(new LocalDate(1, 1, 1)).ToDateTimeUnspecified());
+            CreateMap<LocalTime, TimeSpan>().ConvertUsing(source => new TimeSpan(source.TickOfDay));
+            CreateMap<LocalTime?, DateTime?>().ConvertUsing(source => source.HasValue ? source.Value.On(new LocalDate(1, 1, 1)).ToDateTimeUnspecified() : default);
+            CreateMap<LocalTime?, TimeSpan?>().ConvertUsing(source => source.HasValue ? new TimeSpan(source.Value.TickOfDay) : default);
+            CreateMap<TimeSpan, LocalTime>().ConvertUsing(source => LocalTime.FromTicksSinceMidnight(source.Ticks));
+            CreateMap<TimeSpan?, LocalTime?>().ConvertUsing(source => source.HasValue ? LocalTime.FromTicksSinceMidnight(source.Value.Ticks) : default);
         }
 
         private void CreateMappingsForOffsetConverter()
         {
-            var converter = new OffsetConverter();
-            CreateMap<Offset, TimeSpan>().ConvertUsing(converter);
-            CreateMap<Offset?, TimeSpan?>().ConvertUsing(converter);
-            CreateMap<TimeSpan, Offset>().ConvertUsing(converter);
-            CreateMap<TimeSpan?, Offset?>().ConvertUsing(converter);
+            CreateMap<Offset, TimeSpan>().ConvertUsing(source => source.ToTimeSpan());
+            CreateMap<Offset?, TimeSpan?>().ConvertUsing(source => source.HasValue ? source.Value.ToTimeSpan() : default);
+            CreateMap<TimeSpan, Offset>().ConvertUsing(source => Offset.FromTicks(source.Ticks));
+            CreateMap<TimeSpan?, Offset?>().ConvertUsing(source => source.HasValue ? Offset.FromTicks(source.Value.Ticks) : default);
         }
 
         private void CreateMappingsForOffsetDateTimeConverter()
         {
-            var converter = new OffsetDateTimeConverter();
-            CreateMap<OffsetDateTime, DateTimeOffset>().ConvertUsing(converter);
-            CreateMap<OffsetDateTime?, DateTimeOffset?>().ConvertUsing(converter);
-            CreateMap<DateTimeOffset, OffsetDateTime>().ConvertUsing(converter);
-            CreateMap<DateTimeOffset?, OffsetDateTime?>().ConvertUsing(converter);
+            CreateMap<DateTimeOffset, OffsetDateTime>().ConvertUsing(source => OffsetDateTime.FromDateTimeOffset(source));
+            CreateMap<DateTimeOffset?, OffsetDateTime?>().ConvertUsing(source => source.HasValue ? OffsetDateTime.FromDateTimeOffset(source.Value) : default);
+            CreateMap<OffsetDateTime, DateTimeOffset>().ConvertUsing(source => source.ToDateTimeOffset());
+            CreateMap<OffsetDateTime?, DateTimeOffset?>().ConvertUsing(source => source.HasValue ? source.Value.ToDateTimeOffset() : default);
         }
 
         private void CreateMappingsForPeriodConverter()
         {
-            var converter = new PeriodConverter();
-            CreateMap<Period, string>().ConvertUsing(converter);
-            CreateMap<string, Period>().ConvertUsing(converter);
+            CreateMap<Period?, string?>().ConvertUsing(source => source == default ? default : source.ToString());
+            CreateMap<string?, Period?>().ConvertUsing(source => ( source == default ? default : PeriodPattern.Roundtrip.Parse(source).Value ) ?? default);
         }
     }
 }

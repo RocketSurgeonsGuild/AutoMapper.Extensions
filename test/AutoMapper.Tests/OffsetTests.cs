@@ -2,13 +2,13 @@ using System;
 using AutoMapper;
 using FluentAssertions;
 using NodaTime;
-using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public class OffsetTests : TypeConverterTest<OffsetConverter>
+    public class OffsetTests : TypeConverterTest<OffsetTests.Converters>
     {
         public OffsetTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
@@ -61,6 +61,17 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         private class Foo3
         {
             public TimeSpan Bar { get; set; }
+        }
+
+        public class Converters : TypeConverterFactory
+        {
+            public override IEnumerable<Type> GetTypeConverters()
+            {
+                yield return typeof(ITypeConverter<Offset, TimeSpan>);
+                yield return typeof(ITypeConverter<Offset?, TimeSpan?>);
+                yield return typeof(ITypeConverter<TimeSpan, Offset>);
+                yield return typeof(ITypeConverter<TimeSpan?, Offset?>);
+            }
         }
     }
 }

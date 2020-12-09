@@ -4,14 +4,14 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using NodaTime;
 using NodaTime.Text;
-using Rocket.Surgery.Extensions.AutoMapper.NodaTime.Converters;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public class PeriodTests : TypeConverterTest<PeriodConverter>
+    public class PeriodTests : TypeConverterTest<PeriodTests.Converters>
     {
         public PeriodTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
@@ -64,6 +64,15 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
         private class Foo3
         {
             public string? Bar { get; set; }
+        }
+
+        public class Converters : TypeConverterFactory
+        {
+            public override IEnumerable<Type> GetTypeConverters()
+            {
+                yield return typeof(ITypeConverter<Period, string>);
+                yield return typeof(ITypeConverter<string, Period>);
+            }
         }
     }
 }

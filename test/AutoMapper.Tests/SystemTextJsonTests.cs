@@ -9,12 +9,13 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Rocket.Surgery.Extensions.AutoMapper.NewtonsoftJson;
 using Rocket.Surgery.Extensions.AutoMapper.SystemTextJson;
+using Rocket.Surgery.Extensions.Testing;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.AutoMapper.Tests
 {
-    public class SystemTextJsonWithNewtonsoftJsonTests : TypeConverterTest<SystemTextJsonAndNewtonsoftJsonConverter>
+    public class SystemTextJsonWithNewtonsoftJsonTests : TypeConverterTest
     {
         public SystemTextJsonWithNewtonsoftJsonTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
 
@@ -88,8 +89,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
                 Bar = null
             };
             var result = Mapper.Map<JsonElementA>(item);
-            result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
+            result.Bar.Should().BeNull();
         }
 
         [Fact]
@@ -100,8 +100,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
                 Bar = null
             };
             var result = Mapper.Map<JsonElementA>(item);
-            result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -248,8 +247,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
                 Bar = null
             };
             var result = Mapper.Map<JsonElementA>(item);
-            result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
+            result.Bar.Should().BeNull();
         }
 
         [Fact]
@@ -260,8 +258,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
                 Bar = null
             };
             var result = Mapper.Map<JsonElementA>(item);
-            result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
@@ -404,8 +401,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
                 Bar = null
             };
             var result = Mapper.Map<JsonElementA>(item);
-            result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
+            result.Bar.Should().BeNull();
         }
 
         [Fact]
@@ -416,8 +412,7 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests
                 Bar = null
             };
             var result = Mapper.Map<JsonElementA>(item);
-            result.Bar.Should().NotBeNull();
-            result.Bar.Value.ValueKind.Should().Be(JsonValueKind.Undefined);
+            result.Bar.Should().BeNull();
         }
 
         [Theory]
