@@ -40,7 +40,7 @@ namespace Rocket.Surgery.Conventions.AutoMapper
         /// <param name="services"></param>
         public void Register([NotNull] IConventionContext context, Microsoft.Extensions.Configuration.IConfiguration configuration, IServiceCollection services)
         {
-            var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(Extensions.AutoMapper)).ToArray();
+            var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(AutoMapper)).ToArray();
             services.AddAutoMapper(
                 (_, expression) =>
                 {
