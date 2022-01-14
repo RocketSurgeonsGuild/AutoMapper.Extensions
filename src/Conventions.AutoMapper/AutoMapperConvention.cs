@@ -1,3 +1,4 @@
+using AutoMapper.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
@@ -34,18 +35,6 @@ public class AutoMapperConvention : IServiceConvention
     public void Register(IConventionContext context, Microsoft.Extensions.Configuration.IConfiguration configuration, IServiceCollection services)
     {
         var assemblies = context.AssemblyCandidateFinder.GetCandidateAssemblies(nameof(AutoMapper)).ToArray();
-        services.AddAutoMapper(
-            (_, expression) =>
-            {
-                expression.Features.Set(_options);
-                expression.Features.Set(
-                    new AutoMapperLogger(
-                        _.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(AutoMapperLogger))
-                    )
-                );
-            },
-            assemblies,
-            _options.ServiceLifetime
-        );
+        services.AddAutoMapper((_, _) => { }, assemblies, _options.ServiceLifetime);
     }
 }

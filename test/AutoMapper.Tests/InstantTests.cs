@@ -9,7 +9,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests;
 
 public class InstantTests : TypeConverterTest<InstantTests.Converters>
 {
-    public InstantTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+    public InstantTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+    {
+    }
 
     [Fact]
     public void ValidateMapping() => Config.AssertConfigurationIsValid();
@@ -17,56 +19,48 @@ public class InstantTests : TypeConverterTest<InstantTests.Converters>
     [Fact]
     public void MapsFrom_DateTime()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = Instant.FromDateTimeOffset(DateTimeOffset.Now)
         };
 
-        var result = mapper.Map<Foo3>(foo).Bar;
+        var result = Mapper.Map<Foo3>(foo).Bar;
         result.Should().Be(foo.Bar.ToDateTimeOffset().UtcDateTime);
     }
 
     [Fact]
     public void MapsTo_DateTime()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo3
         {
             Bar = DateTime.UtcNow
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(Instant.FromDateTimeUtc(foo.Bar));
     }
 
     [Fact]
     public void MapsFrom_DateTimeOffset()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = Instant.FromDateTimeOffset(DateTimeOffset.Now)
         };
 
-        var result = mapper.Map<Foo5>(foo).Bar;
+        var result = Mapper.Map<Foo5>(foo).Bar;
         result.Should().Be(foo.Bar.ToDateTimeOffset());
     }
 
     [Fact]
     public void MapsTo_DateTimeOffset()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo5
         {
             Bar = DateTimeOffset.Now
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(Instant.FromDateTimeOffset(foo.Bar));
     }
 
@@ -92,7 +86,7 @@ public class InstantTests : TypeConverterTest<InstantTests.Converters>
         }
     }
 
-    protected override void Configure([NotNull] IMapperConfigurationExpression x)
+    protected override void Configure(IMapperConfigurationExpression x)
     {
         if (x == null)
         {

@@ -11,7 +11,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests;
 
 public class DurationTests : TypeConverterTest<DurationTests.Converters>
 {
-    public DurationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+    public DurationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+    {
+    }
 
     [Fact]
     public void ValidateMapping() => Config.AssertConfigurationIsValid();
@@ -39,140 +41,120 @@ public class DurationTests : TypeConverterTest<DurationTests.Converters>
     [Fact]
     public void MapsFrom_TimeSpan()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = Duration.FromDays(1)
         };
 
-        var result = mapper.Map<Foo3>(foo).Bar;
+        var result = Mapper.Map<Foo3>(foo).Bar;
         result.Should().Be(foo.Bar.ToTimeSpan());
     }
 
     [Fact]
     public void MapsTo_TimeSpan()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo3
         {
             Bar = TimeSpan.FromDays(1)
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(Duration.FromTimeSpan(foo.Bar));
     }
 
     [Fact]
     public void MapsFrom_Int64()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = Duration.FromDays(1)
         };
 
-        var result = mapper.Map<Foo5>(foo).Bar;
+        var result = Mapper.Map<Foo5>(foo).Bar;
         result.Should().Be(Convert.ToInt64(foo.Bar.BclCompatibleTicks / NodaConstants.TicksPerMillisecond));
     }
 
     [Fact]
     public void MapsTo_Int64()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo5
         {
             Bar = 10000L
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(Duration.FromTicks(foo.Bar * NodaConstants.TicksPerMillisecond));
     }
 
     [Fact]
     public void MapsFrom_Int32()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = Duration.FromDays(1)
         };
 
-        var result = mapper.Map<Foo7>(foo).Bar;
+        var result = Mapper.Map<Foo7>(foo).Bar;
         result.Should().Be(Convert.ToInt32(foo.Bar.BclCompatibleTicks / NodaConstants.TicksPerSecond));
     }
 
     [Fact]
     public void MapsTo_Int32()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo7
         {
             Bar = 10000
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(Duration.FromTicks(foo.Bar * NodaConstants.TicksPerSecond));
     }
 
     [Fact]
     public void MapsFrom_Double()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = Duration.FromDays(1)
         };
 
-        var result = mapper.Map<Foo8>(foo).Bar;
+        var result = Mapper.Map<Foo8>(foo).Bar;
         result.Should().Be(Convert.ToInt32(foo.Bar.BclCompatibleTicks / NodaConstants.TicksPerMillisecond));
     }
 
     [Fact]
     public void MapsTo_Double()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo8
         {
             Bar = 10000.1256d
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(Duration.FromTicks(foo.Bar * NodaConstants.TicksPerMillisecond));
     }
 
     [Fact]
     public void MapsFrom_Decimal()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = Duration.FromDays(1)
         };
 
-        var result = mapper.Map<Foo9>(foo).Bar;
+        var result = Mapper.Map<Foo9>(foo).Bar;
         result.Should().Be(Convert.ToInt32(foo.Bar.BclCompatibleTicks / NodaConstants.TicksPerMillisecond));
     }
 
     [Fact]
     public void MapsTo_Decimal()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo9
         {
             Bar = 10000.125M
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(Duration.FromTicks((double)foo.Bar * NodaConstants.TicksPerMillisecond));
     }
 
@@ -198,7 +180,7 @@ public class DurationTests : TypeConverterTest<DurationTests.Converters>
         }
     }
 
-    protected override void Configure([NotNull] IMapperConfigurationExpression x)
+    protected override void Configure(IMapperConfigurationExpression x)
     {
         if (x == null)
         {

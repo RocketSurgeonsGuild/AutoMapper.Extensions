@@ -9,7 +9,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests;
 
 public class LocalDateTests : TypeConverterTest<LocalDateTests.Converters>
 {
-    public LocalDateTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+    public LocalDateTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+    {
+    }
 
     [Fact]
     public void ValidateMapping() => Config.AssertConfigurationIsValid();
@@ -17,28 +19,24 @@ public class LocalDateTests : TypeConverterTest<LocalDateTests.Converters>
     [Fact]
     public void MapsFrom()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = LocalDate.FromDateTime(DateTime.Now)
         };
 
-        var result = mapper.Map<Foo3>(foo).Bar;
+        var result = Mapper.Map<Foo3>(foo).Bar;
         result.Should().Be(foo.Bar.ToDateTimeUnspecified());
     }
 
     [Fact]
     public void MapsTo()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo3
         {
             Bar = DateTime.Now
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(LocalDate.FromDateTime(foo.Bar));
     }
 
@@ -64,7 +62,7 @@ public class LocalDateTests : TypeConverterTest<LocalDateTests.Converters>
         }
     }
 
-    protected override void Configure([NotNull] IMapperConfigurationExpression x)
+    protected override void Configure(IMapperConfigurationExpression x)
     {
         if (x == null)
         {
