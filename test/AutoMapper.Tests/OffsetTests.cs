@@ -8,7 +8,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests;
 
 public class OffsetTests : TypeConverterTest<OffsetTests.Converters>
 {
-    public OffsetTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+    public OffsetTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+    {
+    }
 
     [Fact]
     public void ValidateMapping() => Config.AssertConfigurationIsValid();
@@ -16,28 +18,24 @@ public class OffsetTests : TypeConverterTest<OffsetTests.Converters>
     [Fact]
     public void MapsFrom()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = Offset.FromHours(11)
         };
 
-        var result = mapper.Map<Foo3>(foo).Bar;
+        var result = Mapper.Map<Foo3>(foo).Bar;
         result.Should().Be(foo.Bar.ToTimeSpan());
     }
 
     [Fact]
     public void MapsTo()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo3
         {
             Bar = TimeSpan.FromHours(10)
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(Offset.FromTimeSpan(foo.Bar));
     }
 

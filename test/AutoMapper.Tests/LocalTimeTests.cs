@@ -9,7 +9,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests;
 
 public class LocalTimeTests : TypeConverterTest<LocalTimeTests.Converters>
 {
-    public LocalTimeTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+    public LocalTimeTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+    {
+    }
 
     [Fact]
     public void ValidateMapping() => Config.AssertConfigurationIsValid();
@@ -17,56 +19,48 @@ public class LocalTimeTests : TypeConverterTest<LocalTimeTests.Converters>
     [Fact]
     public void MapsFrom_DateTime()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = LocalTime.FromTicksSinceMidnight(10000)
         };
 
-        var result = mapper.Map<Foo3>(foo).Bar;
+        var result = Mapper.Map<Foo3>(foo).Bar;
         result.Should().Be(new TimeSpan(foo.Bar.TickOfDay));
     }
 
     [Fact]
     public void MapsTo_DateTime()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo3
         {
             Bar = TimeSpan.FromMinutes(502)
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(new LocalTime(502 / 60, 502 % 60));
     }
 
     [Fact]
     public void MapsFrom_DateTimeOffset()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = LocalTime.FromTicksSinceMidnight(10000)
         };
 
-        var result = mapper.Map<Foo5>(foo).Bar;
+        var result = Mapper.Map<Foo5>(foo).Bar;
         result.Should().Be(foo.Bar.On(new LocalDate(1, 1, 1)).ToDateTimeUnspecified());
     }
 
     [Fact]
     public void MapsTo_DateTimeOffset()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo5
         {
             Bar = DateTime.Now
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(LocalDateTime.FromDateTime(foo.Bar).TimeOfDay);
     }
 
@@ -92,7 +86,7 @@ public class LocalTimeTests : TypeConverterTest<LocalTimeTests.Converters>
         }
     }
 
-    protected override void Configure([NotNull] IMapperConfigurationExpression x)
+    protected override void Configure(IMapperConfigurationExpression x)
     {
         if (x == null)
         {

@@ -164,37 +164,35 @@ abstract class TypeConverterData : TheoryData<Type, Type, object?>
 
 public abstract class TypeConverterTest : AutoFakeTest
 {
+    private readonly Lazy<IMapper> _mapper;
     protected TypeConverterTest(ITestOutputHelper testOutputHelper) : base(testOutputHelper, LogEventLevel.Debug)
     {
         Config = new MapperConfiguration(
             x =>
             {
-                x.SetFeature(Options);
-                x.SetFeature(new AutoMapperLogger(Logger));
                 x.AddProfile<NodaTimeProfile>();
                 Configure(x);
             }
         );
-        Mapper = Config.CreateMapper();
+        _mapper = new Lazy<IMapper>(() => Config.CreateMapper());
     }
 
-    protected IMapper Mapper { get; }
-    protected AutoMapperOptions Options { get; } = new AutoMapperOptions();
+    protected IMapper Mapper => _mapper.Value;
     protected MapperConfiguration Config { get; }
-    protected abstract void Configure([NotNull] IMapperConfigurationExpression expression);
+    protected abstract void Configure(IMapperConfigurationExpression expression);
 }
 
 public abstract class TypeConverterTest<T> : AutoFakeTest
     where T : TypeConverterFactory, new()
 {
+    private readonly Lazy<IMapper> _mapper;
+
     // TODO: Refactor this to forward parent class constructor values
     protected TypeConverterTest(ITestOutputHelper testOutputHelper) : base(testOutputHelper, LogEventLevel.Debug)
     {
         Config = new MapperConfiguration(
             x =>
             {
-                x.SetFeature(Options);
-                x.SetFeature(new AutoMapperLogger(Logger));
                 x.AddProfile<NodaTimeProfile>();
                 foreach (var (source, destination) in TypeConverterData.GetValueTypePairs(new T().GetTypeConverters()).SelectMany(
                              item => new[]
@@ -212,12 +210,13 @@ public abstract class TypeConverterTest<T> : AutoFakeTest
                 Configure(x);
             }
         );
-        Mapper = Config.CreateMapper();
+        _mapper = new Lazy<IMapper>(() => Config.CreateMapper());
     }
 
-    protected IMapper Mapper { get; }
+    protected IMapper Mapper => _mapper.Value;
+
     protected AutoMapperOptions Options { get; } = new AutoMapperOptions();
     protected MapperConfiguration Config { get; }
 
-    protected abstract void Configure([NotNull] IMapperConfigurationExpression expression);
+    protected abstract void Configure(IMapperConfigurationExpression expression);
 }

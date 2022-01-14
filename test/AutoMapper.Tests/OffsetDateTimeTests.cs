@@ -9,7 +9,9 @@ namespace Rocket.Surgery.Extensions.AutoMapper.Tests;
 
 public class OffsetDateTimeTests : TypeConverterTest<OffsetDateTimeTests.Converters>
 {
-    public OffsetDateTimeTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper) { }
+    public OffsetDateTimeTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+    {
+    }
 
     [Fact]
     public void ValidateMapping() => Config.AssertConfigurationIsValid();
@@ -17,28 +19,24 @@ public class OffsetDateTimeTests : TypeConverterTest<OffsetDateTimeTests.Convert
     [Fact]
     public void MapsFrom()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo1
         {
             Bar = OffsetDateTime.FromDateTimeOffset(DateTimeOffset.Now)
         };
 
-        var result = mapper.Map<Foo3>(foo).Bar;
+        var result = Mapper.Map<Foo3>(foo).Bar;
         result.Should().Be(foo.Bar.ToDateTimeOffset());
     }
 
     [Fact]
     public void MapsTo()
     {
-        var mapper = Config.CreateMapper();
-
         var foo = new Foo3
         {
             Bar = DateTimeOffset.Now
         };
 
-        var result = mapper.Map<Foo1>(foo).Bar;
+        var result = Mapper.Map<Foo1>(foo).Bar;
         result.Should().Be(OffsetDateTime.FromDateTimeOffset(foo.Bar));
     }
 
