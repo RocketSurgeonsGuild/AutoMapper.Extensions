@@ -28,7 +28,7 @@
     <PackageVersion Include="NodaTime" Version="3.0.9" />
     <PackageVersion Include="NodaTime.Serialization.JsonNet" Version="3.0.0" />
     <PackageVersion Include="NodaTime.Serialization.SystemTextJson" Version="1.0.0" />
-    <PackageVersion Include="Rocket.Surgery.Conventions" Version="11.0.2" />
+    <PackageVersion Include="Rocket.Surgery.Conventions" Version="11.1.0" />
     <PackageVersion Include="System.Text.Json" Version="6.0.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
